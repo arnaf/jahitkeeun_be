@@ -1,0 +1,1 @@
+[14-Nov-2022 13:52:44 UTC] PHP Fatal error:  Cannot declare class CreatePermissionTables, because the name is already in use in /home/mvlrzxvo/subdomain/api.tepat.co.id/blog/database/migrations/2022_11_14_130919_create_permission_tables.php on line 8
