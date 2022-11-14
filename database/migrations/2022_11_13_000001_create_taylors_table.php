@@ -16,10 +16,10 @@ class CreateTaylorsTable extends Migration
         Schema::create('taylors', function (Blueprint $table) {
             $table->id();
             // $table->string('name');
-            $table->string('photo');
-            $table->string('phone');
-            $table->date('dateBirth');
-            $table->string('placeBirth');
+            $table->string('photo')->nullable();
+            $table->string('phone')->nullable();
+            $table->date('dateBirth')->nullable();
+            $table->string('placeBirth')->nullable();
             $table->string('status');
             $table->foreignId('user_id')->constrained('users')->onUpdate('cascade')->onDelete('cascade');
             $table->timestamps();

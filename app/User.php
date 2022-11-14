@@ -1,14 +1,20 @@
 <?php
 
 namespace App;
+use App\Admin;
+use App\Client;
+use App\Taylor;
+use App\Convection;
 
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Laravel\Passport\HasApiTokens;
+use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable
 {
-    use Notifiable;
+    use Notifiable, HasApiTokens, HasRoles;
 
     /**
      * The attributes that are mass assignable.
@@ -36,4 +42,27 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+
+
+    public function client()
+    {
+        return $this->hasOne(Client::class);
+    }
+
+    public function taylor()
+    {
+        return $this->hasOne(Taylor::class);
+    }
+
+    public function convection()
+    {
+        return $this->hasOne(Convection::class);
+    }
+
+    public function admin()
+    {
+        return $this->hasOne(Admin::class);
+    }
+
 }

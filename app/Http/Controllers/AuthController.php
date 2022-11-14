@@ -19,58 +19,6 @@ use Illuminate\Support\Facades\Validator;
 
 class AuthController extends Controller
 {
-    public function login(Request $request) {
-        $rules = [
-            'email'     => 'required|email',
-            'password'  => 'required|min:8',
-        ];
-
-        $message = [
-            'email.required'    => 'Mohon isikan email anda',
-            'email.email'       => 'Mohon isikan email valid',
-            'password.required' => 'Mohon isikan password anda',
-            'password.min'      => 'Password wajib mengandung minimal 8 karakter',
-        ];
-
-        $validator = Validator::make($request->all(), $rules, $message);
-
-        if($validator->fails()) {
-            return apiResponse(400, 'error', 'Data tidak lengkap ', $validator->errors());
-        }
-
-        $data = [
-            'email'     => $request->email,
-            'password'  => $request->password,
-        ];
-
-        if(!Auth::attempt($data)) {
-            return apiResponse(400, 'error', 'Data tidak terdaftar, akun bodong nya?');
-        }
-
-        $token = Auth::user()->createToken('API Token')->accessToken;
-
-        $data   = [
-            'token'     => $token,
-            'user'      => Auth::user()->detail,
-        ];
-
-        return apiResponse(200, 'success', 'berhasil login', $data);
-    }
-
-    public function logout() {
-        $tokens = Auth::user()->tokens->pluck('id');
-
-        Token::whereIn('id', $tokens)->update([
-            'revoked' => true
-        ]);
-
-        RefreshToken::whereIn('access_token_id', $tokens)->update([
-            'revoked' => true
-        ]);
-
-        return apiResponse(200, 'success', 'berhasil logout');
-    }
-
     public function register(Request $request) {
         $rules = [
             'name'      => 'required',
@@ -113,9 +61,61 @@ class AuthController extends Controller
 
             });
 
-            return apiResponse(201, 'success', 'user berhasil daftar');
+            return apiResponse(201, 'success', 'user berhasil mendaftar');
         } catch(Exception $e) {
             return apiResponse(400, 'error', 'error', $e);
         }
+    }
+
+    public function login(Request $request) {
+        $rules = [
+            'email'     => 'required|email',
+            'password'  => 'required|min:8',
+        ];
+
+        $message = [
+            'email.required'    => 'Mohon isikan email anda',
+            'email.email'       => 'Mohon isikan email valid',
+            'password.required' => 'Mohon isikan password anda',
+            'password.min'      => 'Password wajib mengandung minimal 8 karakter',
+        ];
+
+        $validator = Validator::make($request->all(), $rules, $message);
+
+        if($validator->fails()) {
+            return apiResponse(400, 'error', 'Data tidak lengkap ', $validator->errors());
+        }
+
+        $data = [
+            'email'     => $request->email,
+            'password'  => $request->password,
+        ];
+
+        if(!Auth::attempt($data)) {
+            return apiResponse(400, 'error', 'Akun belum terdaftar, silakan daftar terlebih dahulu!');
+        }
+
+        $token = Auth::user()->createToken('API Token')->accessToken;
+
+        $data   = [
+            'token'     => $token,
+            'user'      => Auth::user()->name,
+        ];
+
+        return apiResponse(200, 'success', 'berhasil login', $data);
+    }
+
+    public function logout() {
+        $tokens = Auth::user()->tokens->pluck('id');
+
+        Token::whereIn('id', $tokens)->update([
+            'revoked' => true
+        ]);
+
+        RefreshToken::whereIn('access_token_id', $tokens)->update([
+            'revoked' => true
+        ]);
+
+        return apiResponse(200, 'success', 'user berhasil logout');
     }
 }
