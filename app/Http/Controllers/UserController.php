@@ -8,7 +8,7 @@ use App\UserDetail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
-
+use Spatie\Permission\Models\Role;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Validator;
 
@@ -16,7 +16,7 @@ class UserController extends Controller
 {
     public function index()
     {
-        $user = User::get();
+        $user = DB::table('users')->get();
 
         return apiResponse(200, 'success', 'List user', $user);
     }

@@ -2,6 +2,7 @@
 use Illuminate\Support\Facades\Route;
 
 require_once('includes/auth.php');
+require_once('includes/taylor.php');
 
 Route::group(
     ['middleware' => 'auth:api'],

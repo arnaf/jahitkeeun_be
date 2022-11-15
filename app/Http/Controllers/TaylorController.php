@@ -2,8 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\User;
+use Exception;
 use App\Taylor;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Response;
 
 class TaylorController extends Controller
 {
@@ -12,10 +16,119 @@ class TaylorController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function getAll()
     {
-        //
+        try {
+            $taylor = Taylor::get();
+
+            return apiResponse(200, 'success', 'List taylor', $taylor);
+
+        } catch(Exception $e) {
+
+            return apiResponse(400, 'error', 'error', $e);
+
+        }
+
     }
+
+    public function getTaylor($name)
+    {
+
+        try{
+            $user = db::table('users')
+            ->join('taylors', 'users.id', '=', 'taylors.user_id')
+            ->where('name', 'like', '%'.$name.'%' )->first();
+
+
+                $meta = [
+                    'code' => 200,
+                    'status' => 'success',
+                    'message' => 'Taylor ditemukan'
+                ];
+                $dataTaylor = [
+                    'nama taylor' => $user->name,
+                    'photo' => $user->photo,
+                    'phone' => $user->phone
+
+                ];
+
+                $dataItem = [
+                    'nama taylor' => 'tes1',
+
+
+                ];
+
+                $dataService = [
+                    'nama taylor' => 'tes2',
+
+
+                ];
+
+
+
+
+            return response()->json(['meta' => $meta, 'data taylor' => $dataTaylor, 'item' => $dataItem, 'service' => $dataService], 200);
+        } catch(Exception $e) {
+            return apiResponse(400, 'error', 'taylor tidak dapat ditemukan', $e);
+        }
+
+
+
+
+    }
+
+
+
+        // $reqsearch = $request->search;
+        // $datas = User::role('client')
+        // ->where('name' ,'like', $reqsearch)
+        // ->get();
+        // ->join('taylors', 'users.id', '=', 'taylors.user_id')
+        // ->join('services', 'taylors.id', '=', 'services.taylor_id')
+        // ->join('service_categories', 'services.id', '=', 'service_categories.service_id')
+        // ->select(['users.name as taylorName', 'service_categories.name as itemName', 'service.name as serviceName', 'service.price as servicePrice'])
+        // ->orderBy('taylors.name', 'asc');
+
+
+
+
+        // $getItem = DB::table('service_categories')
+        //            ->where($taylor->id, '=', 'taylor_id')
+        //            ->select('service_categories.name');
+
+
+
+        // $getService = DB::table('taylor_has_services')
+        //               ->join('serivces', 'taylor_has_services.service_id', '=', 'services.id')
+        //               ->join('taylors', 'taylor_has_services.taylor_id', '=', 'taylors.id')
+        //               ->select([
+        //                 'services.name as serviceName', 'services.price as servicePrice', 'taylors.name as taylorName', 'service.serviceCategory_id'
+        //               ]);
+
+
+
+    //     $data = [
+    //         'caripenjahit' => 'tes',
+    //         'name' => $datas,
+    //         // 'item' => [
+
+    //         //     // 'taylor_id' => $datas->taylorName,
+    //         // ],
+    //         'service' => [
+    //             'name' => 'tes',
+    //             // 'price' => $datas->servicePrice,
+    //             // 'serviceCategory_id' => $datas->itemName,
+    //         ]
+    //      ];
+
+    //      return apiResponse(200, 'success', 'List taylor', $data);
+
+    //     } catch(Exception $e) {
+
+    //         return apiResponse(400, 'error', 'error', $e);
+
+    //     }
+    // }
 
     /**
      * Show the form for creating a new resource.

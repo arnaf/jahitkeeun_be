@@ -44,6 +44,8 @@ class User extends Authenticatable
     ];
 
 
+    public $guard_name = 'api';
+
 
     public function client()
     {
