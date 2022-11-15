@@ -16,7 +16,15 @@ class UserController extends Controller
 {
     public function index()
     {
-        $user = User::get();
+        //$user = User::get();
+        $user = DB::table('users')
+            ->join('model_has_roles', 'model_has_roles.model_id', '=', 'users.id')
+            ->join('roles', 'model_has_roles.role_id', '=', 'roles.id')
+            ->select([
+                'users.id','users.name','users.email', 'roles.name as role'
+            ])
+            ->orderBy('users.id', 'desc');
+        $user = $user->get();
 
         return apiResponse(200, 'success', 'List user', $user);
     }

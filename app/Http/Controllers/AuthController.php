@@ -95,11 +95,22 @@ class AuthController extends Controller
             return apiResponse(400, 'error', 'Akun belum terdaftar, silakan daftar terlebih dahulu!');
         }
 
+
+        $user = \App\User::find(1);
+        $roles = $user->roles->pluck('name');
+
+
         $token = Auth::user()->createToken('API Token')->accessToken;
 
         $data   = [
-            'token'     => $token,
-            'user'      => Auth::user()->name,
+            'token'         => $token,
+            'nama'          => Auth::user()->name,
+            'role'          => $user->roles = \App\User::find($user->id)->getRoleNames()[0],
+            'client'        => Auth::user()->client,
+            'admin'         => Auth::user()->admin,
+            'taylor'        => Auth::user()->taylor,
+            'convection'    => Auth::user()->convection,
+
         ];
 
         return apiResponse(200, 'success', 'berhasil login', $data);
