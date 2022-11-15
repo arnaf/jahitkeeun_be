@@ -16,7 +16,9 @@ class UserController extends Controller
 {
     public function index()
     {
+        
         $user = DB::table('users')->get();
+
 
         return apiResponse(200, 'success', 'List user', $user);
     }

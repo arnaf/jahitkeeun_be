@@ -17,6 +17,7 @@ class DatabaseSeeder extends Seeder
             IndoRegionDistrictSeeder::class,
             IndoRegionVillageSeeder::class,
             RoleSeeder::class,
+            IndexSeeder::class,
         ]);
     }
 }
