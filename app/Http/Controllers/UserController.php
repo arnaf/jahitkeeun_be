@@ -8,7 +8,7 @@ use App\UserDetail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
-
+use Spatie\Permission\Models\Role;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Validator;
 
@@ -16,15 +16,9 @@ class UserController extends Controller
 {
     public function index()
     {
-        //$user = User::get();
-        $user = DB::table('users')
-            ->join('model_has_roles', 'model_has_roles.model_id', '=', 'users.id')
-            ->join('roles', 'model_has_roles.role_id', '=', 'roles.id')
-            ->select([
-                'users.id','users.name','users.email', 'roles.name as role'
-            ])
-            ->orderBy('users.id', 'desc');
-        $user = $user->get();
+        
+        $user = DB::table('users')->get();
+
 
         return apiResponse(200, 'success', 'List user', $user);
     }

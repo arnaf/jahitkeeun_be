@@ -17,7 +17,8 @@ class CreateServicesTable extends Migration
             $table->id();
             $table->string('name');
             $table->decimal('price', 14, 2);
-            $table->foreignId('serviceCategories_id')->constrained('service_categories')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreignId('service_categories_id')->constrained('service_categories')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreignId('taylor_id')->constrained('taylors')->onUpdate('cascade')->onDelete('cascade');
 
 
             $table->timestamps();

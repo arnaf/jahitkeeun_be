@@ -14,25 +14,25 @@ class RoleSeeder extends Seeder
     {
         $client = Role::create([
             'name' => 'client',
-            'guard_name' => 'web',
+            'guard_name' => 'api',
 
         ]);
 
         $taylor = Role::create([
             'name' => 'taylor',
-            'guard_name' => 'web',
+            'guard_name' => 'api',
 
         ]);
 
         $convection = Role::create([
             'name' => 'convection',
-            'guard_name' => 'web',
+            'guard_name' => 'api',
 
         ]);
 
         $admin = Role::create([
             'name' => 'admin',
-            'guard_name' => 'web',
+            'guard_name' => 'api',
 
         ]);
     }
