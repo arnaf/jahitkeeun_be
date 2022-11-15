@@ -95,9 +95,24 @@ class AuthController extends Controller
             return apiResponse(400, 'error', 'Akun belum terdaftar, silakan daftar terlebih dahulu!');
         }
 
-
+        $token = Auth::user()->createToken('API Token')->accessToken;
         $user = \App\User::find(1);
-        $roles = $user->roles->pluck('name');
+        if($user->roles = \App\User::find(Auth::user()->id)->getRoleNames()[0] == 'admin') {
+                $detail = Auth::user()->admin->photo;
+        }
+        elseif($user->roles = \App\User::find(Auth::user()->id)->getRoleNames()[0] == 'client'){
+                $detail = Auth::user()->client->photo;
+        }
+        elseif($user->roles = \App\User::find(Auth::user()->id)->getRoleNames()[0] == 'taylor'){
+            $detail = Auth::user()->taylor->photo;
+        }
+        elseif($user->roles = \App\User::find(Auth::user()->id)->getRoleNames()[0] == 'convection'){
+            $detail = Auth::user()->convection->photo;
+        }
+
+        $image = asset('photo-user/'.$detail);
+
+
 
 
         $token = Auth::user()->createToken('API Token')->accessToken;
@@ -105,7 +120,9 @@ class AuthController extends Controller
         $data   = [
             'token'         => $token,
             'nama'          => Auth::user()->name,
-            'role'          => $user->roles = \App\User::find($user->id)->getRoleNames()[0],
+            'email'         => Auth::user()->email,
+            'role'          => $user->roles = \App\User::find(Auth::user()->id)->getRoleNames()[0],
+            'image'        => $image,
             'client'        => Auth::user()->client,
             'admin'         => Auth::user()->admin,
             'taylor'        => Auth::user()->taylor,
