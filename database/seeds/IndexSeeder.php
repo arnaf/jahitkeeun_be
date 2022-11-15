@@ -1,5 +1,6 @@
 <?php
 
+use App\AddressLabel;
 use App\User;
 use App\Admin;
 use App\Client;
@@ -9,6 +10,7 @@ use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
+use Spatie\Permission\Traits\HasRoles;
 
 class IndexSeeder extends Seeder
 {
@@ -20,6 +22,13 @@ class IndexSeeder extends Seeder
     public function run()
     {
         $faker = \Faker\Factory::create();
+
+
+
+        $addressesLabel1 = AddressLabel::insert([
+            'name' => 'Utama'
+        ]);
+
 
         $superadmin1 = User::create([
             'name' => 'admin',

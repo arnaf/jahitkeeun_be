@@ -44,7 +44,7 @@ class User extends Authenticatable
     ];
 
 
-    public $guard_name = 'api';
+    protected $guard_name = 'api';
 
 
     public function client()
@@ -67,6 +67,6 @@ class User extends Authenticatable
         return $this->hasOne(Admin::class);
     }
 
-    
+
 
 }

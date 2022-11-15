@@ -35,39 +35,47 @@ class TaylorController extends Controller
     {
 
         try{
-            $user = db::table('users')
+            $user = DB::table('users')
             ->join('taylors', 'users.id', '=', 'taylors.user_id')
-            ->where('name', 'like', '%'.$name.'%' )->first();
+            ->join('addresses', 'users.id', '=', 'addresses.user_id')
+            ->join('districts', 'addresses.district_id', '=', 'districts.id')
+            ->where('name', 'like', '%'.$name.'%' )
+            // ->join('address_labels', 'addresses.addresslabel_id', '=', 'address_labels.id')
+            ->select([
+                'districts.name as districtName', 'users.name as userName'
+            ])
+            // ->select([
+            //     'users.id as userId', 'users.name as userName', 'districts.name as districtName', 'taylors.rating as taylorRating', 'taylors.completedTrans'
+            // ]);
+            ->first();
 
 
-                $meta = [
-                    'code' => 200,
-                    'status' => 'success',
-                    'message' => 'Taylor ditemukan'
-                ];
+            // $service = DB::table('taylors')
+            // ->where($user->id, 'user_id')
+            // ->first();
+
+            // $category = DB::table('service_categories')
+
+
+
+
+
+
+
                 $dataTaylor = [
-                    'nama taylor' => $user->name,
-                    'photo' => $user->photo,
-                    'phone' => $user->phone
-
-                ];
-
-                $dataItem = [
-                    'nama taylor' => 'tes1',
-
-
-                ];
-
-                $dataService = [
-                    'nama taylor' => 'tes2',
-
+                    'id'          => $user->user_id,
+                    'nama taylor' => $user->userName,
+                    'location'    => $user->districtName,
+                    // 'rating'      => $user->rating,
+                    // 'completed transaction'  => $user->photo,
 
                 ];
 
 
 
+            return apiResponse(200, 'success', 'List taylor', $dataTaylor);
 
-            return response()->json(['meta' => $meta, 'data taylor' => $dataTaylor, 'item' => $dataItem, 'service' => $dataService], 200);
+            // return response()->json(['meta' => $meta, 'data taylor' => $dataTaylor, 'item' => $dataItem, 'service' => $dataService], 200);
         } catch(Exception $e) {
             return apiResponse(400, 'error', 'taylor tidak dapat ditemukan', $e);
         }

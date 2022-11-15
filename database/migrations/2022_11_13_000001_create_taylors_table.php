@@ -20,6 +20,8 @@ class CreateTaylorsTable extends Migration
             $table->string('phone')->nullable();
             $table->date('dateBirth')->nullable();
             $table->string('placeBirth')->nullable();
+            $table->integer('rating')->nullable();
+            $table->integer('completedTrans')->nullable();
             $table->string('status');
             $table->foreignId('user_id')->constrained('users')->onUpdate('cascade')->onDelete('cascade');
             $table->timestamps();
