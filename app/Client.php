@@ -13,4 +13,6 @@ class Client extends Model
     protected $hidden = [
 
     ];
+
+    
 }
