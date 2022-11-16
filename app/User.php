@@ -52,10 +52,10 @@ class User extends Authenticatable
         return $this->hasOne(Client::class);
     }
 
-    public function taylor()
-    {
-        return $this->hasOne(Taylor::class);
-    }
+    // public function service()
+    // {
+    //     return $this->hasOneThrough(Taylor::class, Service::class,'');
+    // }
 
     public function convection()
     {
