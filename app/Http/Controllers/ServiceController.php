@@ -13,7 +13,7 @@ class ServiceController extends Controller
 
 
 
-        $item = DB::table('users')
+        $service = DB::table('users')
         ->join('taylors', 'users.id', '=', 'taylors.user_id')
         ->join('services', 'taylors.id', '=', 'services.taylor_id')
         ->join('service_categories', 'services.service_categories_id', '=', 'service_categories.id')
@@ -21,23 +21,26 @@ class ServiceController extends Controller
         ->select([
             'taylors.id as taylorId', 'users.name as taylorName', 'services.id as serviceId', 'services.name as serviceName'
         ])
-        ->first();
+        ->get();
 
 
 
 
-            if(!$item == NULL) {
-                $dataItem = [
-                    'taylorId'          => $item->taylorId,
-                    'taylorName'        => $item->taylorName,
-                    'serviceId'            => $item->itemId,
-                    'serviceName'          => $item->itemName,
+            if(!$service == NULL) {
+                foreach($service as $s) {
+                    $dataJasa[] = [
+                        'taylorId'          => $s->taylorId,
+                        'taylorName'        => $s->taylorName,
+                        'serviceId'         => $s->itemId,
+                        'serviceName'       => $s->itemName,
 
-                ];
+                    ];
+                }
+
             }
 
-        if($item) {
-            return apiResponse(200, 'success', 'list data jasa', $dataItem);
+        if($service) {
+            return apiResponse(200, 'success', 'list data jasa', $dataJasa);
         }
         return Response::json(apiResponse(404, 'not found', 'Jasa tidak ditemukan'), 404);
 

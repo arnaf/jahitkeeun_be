@@ -10,21 +10,24 @@ class ItemController extends Controller
 {
     public function getAllItem() {
 
-        $item = DB::table('service_categories')
+        $items = DB::table('service_categories')
             ->select([
-                'service_categories.id', 'service_categories.name'
+                'service_categories.id', 'service_categories.name', 'service_categories.photo'
             ])
-            ->first();
+            ->get();
 
-            if(!$item == NULL) {
-                $dataItem = [
-                    'id'          => $item->id,
-                    'name'        => $item->name,
+            if(!$items == NULL) {
+                foreach($items as $i){
+                    $dataItem[] = [
+                        'id'          => $i->id,
+                        'name'        => $i->name,
+                        'photo'       => $i->photo
+                    ];
+                }
 
-                ];
             }
 
-        if($item) {
+        if($items) {
             return apiResponse(200, 'success', 'list data Item', $dataItem);
         }
         return Response::json(apiResponse(404, 'not found', 'Item tidak ditemukan'), 404);
@@ -42,16 +45,19 @@ class ItemController extends Controller
             ->select([
                 'taylors.id as taylorId', 'users.name as taylorName', 'service_categories.id as itemId', 'service_categories.name as itemName'
             ])
-            ->first();
+            ->get();
 
             if(!$item == NULL) {
-                $dataItem = [
-                    'taylorId'          => $item->taylorId,
-                    'taylorName'        => $item->taylorName,
-                    'itemId'            => $item->itemId,
-                    'itemName'           => $item->itemName,
+                foreach($item as $i) {
+                    $dataItem[] = [
+                        'taylorId'          => $i->taylorId,
+                        'taylorName'        => $i->taylorName,
+                        'itemId'            => $i->itemId,
+                        'itemName'          => $i->itemName,
 
-                ];
+                    ];
+                }
+
             }
 
         if($item) {

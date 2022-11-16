@@ -2,13 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Client;
 use App\User;
 use Exception;
+use App\Taylor;
 use App\UserDetail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Hash;
 use Spatie\Permission\Models\Role;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Validator;
 
@@ -16,7 +18,7 @@ class UserController extends Controller
 {
     public function index()
     {
-        
+
         $user = DB::table('users')->get();
 
 
