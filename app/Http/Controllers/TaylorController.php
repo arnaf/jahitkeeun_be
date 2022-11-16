@@ -18,68 +18,77 @@ class TaylorController extends Controller
      */
     public function getAllTaylor() {
         //$user = User::where('name', $id)->first();
-        $user = DB::table('users')
+        $taylors = DB::table('users')
             ->join('taylors', 'users.id', '=', 'taylors.user_id')
             ->join('addresses', 'users.id', '=', 'addresses.user_id')
             ->join('districts', 'addresses.district_id', '=', 'districts.id')
             // ->where('users.name', 'like', '%'.$name.'%' )
             // ->join('address_labels', 'addresses.addresslabel_id', '=', 'address_labels.id')
             ->select([
-                  'users.id','users.name', 'districts.name as districtName', 'taylors.rating', 'taylors.completedTrans'
+                  'users.id', 'users.name', 'districts.name as districtName', 'taylors.rating', 'taylors.completedTrans'
             ])
             // ->select([
             //     'users.id as userId', 'users.name as userName', 'districts.name as districtName', 'taylors.rating as taylorRating', 'taylors.completedTrans'
             // ]);
-            ->first();
+            ->get();
 
-            if(!$user == NULL) {
-                $dataTaylor = [
-                    'taylorId'          => $user->id,
-                    'taylorName'        => $user->name,
-                    'taylorLocation'    => $user->districtName,
-                    'taylorRating'      => $user->rating,
-                    'taylorComTrans'    => $user->completedTrans,
+            if(!$taylors == NULL) {
 
-                ];
+                foreach($taylors as $t) {
+                    $dataPenjahit[] = [
+                        'userId'            => $t->id,
+                        'taylorName'        => $t->name,
+                        'taylorLocation'    => $t->districtName,
+                        'taylorRating'      => $t->rating,
+                        'taylorComTrans'    => $t->completedTrans,
+                    ];
+                }
+
+
             }
 
-        if($user) {
-            return apiResponse(200, 'success', 'list data taylor', $dataTaylor);
+
+        if($taylors) {
+            return apiResponse(200, 'success', 'list data taylor', $dataPenjahit);
         }
 
         return Response::json(apiResponse(404, 'not found', 'Taylor tidak ditemukan'), 404);
     }
+
 
     public function getTaylorByName($keyword) //Mencari data taylor search bar
     {
 
 
 
-        $item = DB::table('users')
+        $taylor = DB::table('users')
         ->join('taylors', 'users.id', '=', 'taylors.user_id')
+
         ->join('services', 'taylors.id', '=', 'services.taylor_id')
         ->join('service_categories', 'services.service_categories_id', '=', 'service_categories.id')
         ->where('users.name', 'like', '%'.$keyword.'%' )
         ->select([
-            'taylors.id as taylorId', 'users.name as taylorName', 'service_categories.id as itemId', 'service_categories.name as itemName'
+            'users.id as userId', 'users.name as taylorName', 'service_categories.id as itemId', 'service_categories.name as itemName'
         ])
-        ->first();
+        ->get();
 
 
 
 
-            if(!$item == NULL) {
-                $dataItem = [
-                    'taylorId'          => $item->taylorId,
-                    'taylorName'        => $item->taylorName,
-                    'itemId'            => $item->itemId,
-                    'itemName'          => $item->itemName,
+        if(!$taylor == NULL) {
+            foreach($taylor as $t) {
+                    $dataPenjahit[] = [
+                        'UserId'            => $t->userId,
+                        'taylorName'        => $t->taylorName,
+                        'itemId'            => $t->itemId,
+                        'itemName'          => $t->itemName,
+                    ];
+                }
 
-                ];
             }
 
-        if($item) {
-            return apiResponse(200, 'success', 'list data penjahit', $dataItem);
+        if($taylor) {
+            return apiResponse(200, 'success', 'list data penjahit', $dataPenjahit);
         }
         return Response::json(apiResponse(404, 'not found', 'Penjahit tidak ditemukan'), 404);
 

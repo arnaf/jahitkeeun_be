@@ -1,17 +1,18 @@
 <?php
 
-use App\AddressLabel;
-use App\Address;
 use App\User;
 use App\Admin;
 use App\Client;
 use App\Taylor;
+use App\Address;
 use App\Convection;
-use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\Artisan;
-use Illuminate\Support\Facades\Hash;
+use App\AddressLabel;
 use Illuminate\Support\Str;
+use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 use Spatie\Permission\Traits\HasRoles;
+use Illuminate\Support\Facades\Artisan;
 
 class IndexSeeder extends Seeder
 {
