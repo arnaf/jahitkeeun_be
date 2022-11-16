@@ -16,73 +16,141 @@ class TaylorController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function getAll()
-    {
-        try {
-            $taylor = Taylor::get();
-
-            return apiResponse(200, 'success', 'List taylor', $taylor);
-
-        } catch(Exception $e) {
-
-            return apiResponse(400, 'error', 'error', $e);
-
-        }
-
-    }
-
-    public function getTaylor($name)
-    {
-
-        try{
-            $user = DB::table('users')
+    public function getAllTaylor() {
+        //$user = User::where('name', $id)->first();
+        $user = DB::table('users')
             ->join('taylors', 'users.id', '=', 'taylors.user_id')
             ->join('addresses', 'users.id', '=', 'addresses.user_id')
             ->join('districts', 'addresses.district_id', '=', 'districts.id')
-            ->where('name', 'like', '%'.$name.'%' )
+            // ->where('users.name', 'like', '%'.$name.'%' )
             // ->join('address_labels', 'addresses.addresslabel_id', '=', 'address_labels.id')
             ->select([
-                'districts.name as districtName', 'users.name as userName'
+                  'users.id','users.name', 'districts.name as districtName', 'taylors.rating', 'taylors.completedTrans'
             ])
             // ->select([
             //     'users.id as userId', 'users.name as userName', 'districts.name as districtName', 'taylors.rating as taylorRating', 'taylors.completedTrans'
             // ]);
             ->first();
 
-
-            // $service = DB::table('taylors')
-            // ->where($user->id, 'user_id')
-            // ->first();
-
-            // $category = DB::table('service_categories')
-
-
-
-
-
-
-
+            if(!$user == NULL) {
                 $dataTaylor = [
-                    'id'          => $user->user_id,
-                    'nama taylor' => $user->userName,
-                    'location'    => $user->districtName,
-                    // 'rating'      => $user->rating,
-                    // 'completed transaction'  => $user->photo,
+                    'taylorId'          => $user->id,
+                    'taylorName'        => $user->name,
+                    'taylorLocation'    => $user->districtName,
+                    'taylorRating'      => $user->rating,
+                    'taylorComTrans'    => $user->completedTrans,
 
                 ];
+            }
 
-
-
-            return apiResponse(200, 'success', 'List taylor', $dataTaylor);
-
-            // return response()->json(['meta' => $meta, 'data taylor' => $dataTaylor, 'item' => $dataItem, 'service' => $dataService], 200);
-        } catch(Exception $e) {
-            return apiResponse(400, 'error', 'taylor tidak dapat ditemukan', $e);
+        if($user) {
+            return apiResponse(200, 'success', 'list data taylor', $dataTaylor);
         }
 
+        return Response::json(apiResponse(404, 'not found', 'Taylor tidak ditemukan'), 404);
+    }
+
+    public function getTaylorByName($keyword) //Mencari data taylor search bar
+    {
 
 
 
+        $item = DB::table('users')
+        ->join('taylors', 'users.id', '=', 'taylors.user_id')
+        ->join('services', 'taylors.id', '=', 'services.taylor_id')
+        ->join('service_categories', 'services.service_categories_id', '=', 'service_categories.id')
+        ->where('users.name', 'like', '%'.$keyword.'%' )
+        ->select([
+            'taylors.id as taylorId', 'users.name as taylorName', 'service_categories.id as itemId', 'service_categories.name as itemName'
+        ])
+        ->first();
+
+
+
+
+            if(!$item == NULL) {
+                $dataItem = [
+                    'taylorId'          => $item->taylorId,
+                    'taylorName'        => $item->taylorName,
+                    'itemId'            => $item->itemId,
+                    'itemName'          => $item->itemName,
+
+                ];
+            }
+
+        if($item) {
+            return apiResponse(200, 'success', 'list data penjahit', $dataItem);
+        }
+        return Response::json(apiResponse(404, 'not found', 'Penjahit tidak ditemukan'), 404);
+
+
+
+
+    }
+
+
+
+    public function getTaylorRatingAsc() {
+
+        $user = DB::table('users')
+            ->join('taylors', 'users.id', '=', 'taylors.user_id')
+            ->join('addresses', 'users.id', '=', 'addresses.user_id')
+            ->join('districts', 'addresses.district_id', '=', 'districts.id')
+
+            ->select([
+                  'users.id','users.name', 'districts.name as districtName', 'taylors.rating', 'taylors.completedTrans'
+            ])
+
+            ->orderBy('taylors.rating', 'asc');
+
+            if(!$user == NULL) {
+                $dataTaylor = [
+                    'taylorId'          => $user->id,
+                    'taylorName'        => $user->name,
+                    'taylorLocation'    => $user->districtName,
+                    'taylorRating'      => $user->rating,
+                    'taylorComTrans'    => $user->completedTrans,
+
+                ];
+            }
+
+        if($user) {
+            return apiResponse(200, 'success', 'list data taylor', $dataTaylor);
+        }
+
+        return Response::json(apiResponse(404, 'not found', 'Taylor tidak ditemukan'), 404);
+    }
+
+
+    public function getTaylorRatingDesc() {
+
+        $user = DB::table('users')
+            ->join('taylors', 'users.id', '=', 'taylors.user_id')
+            ->join('addresses', 'users.id', '=', 'addresses.user_id')
+            ->join('districts', 'addresses.district_id', '=', 'districts.id')
+
+            ->select([
+                  'users.id','users.name', 'districts.name as districtName', 'taylors.rating', 'taylors.completedTrans'
+            ])
+
+            ->orderBy('taylors.rating', 'desc');
+
+            if(!$user == NULL) {
+                $dataTaylor = [
+                    'taylorId'          => $user->id,
+                    'taylorName'        => $user->name,
+                    'taylorLocation'    => $user->districtName,
+                    'taylorRating'      => $user->rating,
+                    'taylorComTrans'    => $user->completedTrans,
+
+                ];
+            }
+
+        if($user) {
+            return apiResponse(200, 'success', 'list data taylor', $dataTaylor);
+        }
+
+        return Response::json(apiResponse(404, 'not found', 'Taylor tidak ditemukan'), 404);
     }
 
 
