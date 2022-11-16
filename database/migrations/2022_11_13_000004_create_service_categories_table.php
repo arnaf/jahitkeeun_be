@@ -17,6 +17,7 @@ class CreateServiceCategoriesTable extends Migration
             $table->id();
 
             $table->string('name');
+            $table->text('photo');
 
             $table->timestamps();
         });
