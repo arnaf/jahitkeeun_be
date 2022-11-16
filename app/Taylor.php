@@ -13,4 +13,5 @@ class Taylor extends Model
     protected $hidden = [
 
     ];
+
 }

@@ -8,8 +8,20 @@ use Illuminate\Support\Facades\Response;
 
 class ServiceController extends Controller
 {
+
+
+
+    // public function index() {
+    //     $services = DB::table('services')->get();
+
+    //     return apiResponse(200, 'success', 'List jasa', $services);
+    // }
+
+
+
     public function getServiceByName($keyword) //Mencari data service search bar
     {
+
 
 
 
@@ -19,31 +31,20 @@ class ServiceController extends Controller
         ->join('service_categories', 'services.service_categories_id', '=', 'service_categories.id')
         ->where('services.name', 'like', '%'.$keyword.'%' )
         ->select([
-            'taylors.id as taylorId', 'users.name as taylorName', 'services.id as serviceId', 'services.name as serviceName'
+            'users.id as userId', 'users.name as taylorName', 'service_categories.id as itemId', 'service_categories.name as itemName', 'taylors.photo as taylorPhoto', 'service_categories.photo as servicePhoto', 'services.price as servicePrice'
         ])
-        ->get();
+        ->limit(10)->get();
 
 
+        if(count($service) > 0) {
 
+            return apiResponse(200, 'success', 'list data jasa', $service);
 
-            if(!$service == NULL) {
-                foreach($service as $s) {
-                    $dataJasa[] = [
-                        'taylorId'          => $s->taylorId,
-                        'taylorName'        => $s->taylorName,
-                        'serviceId'         => $s->itemId,
-                        'serviceName'       => $s->itemName,
+        } elseif(count($service) < 1) {
 
-                    ];
-                }
+            return Response::json(apiResponse(404, 'not found', 'Jasa tidak ditemukan'), 404);
 
-            }
-
-        if($service) {
-            return apiResponse(200, 'success', 'list data jasa', $dataJasa);
         }
-        return Response::json(apiResponse(404, 'not found', 'Jasa tidak ditemukan'), 404);
-
 
 
 

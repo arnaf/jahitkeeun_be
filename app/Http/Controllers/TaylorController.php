@@ -22,34 +22,15 @@ class TaylorController extends Controller
             ->join('taylors', 'users.id', '=', 'taylors.user_id')
             ->join('addresses', 'users.id', '=', 'addresses.user_id')
             ->join('districts', 'addresses.district_id', '=', 'districts.id')
-            // ->where('users.name', 'like', '%'.$name.'%' )
-            // ->join('address_labels', 'addresses.addresslabel_id', '=', 'address_labels.id')
             ->select([
-                  'users.id', 'users.name', 'districts.name as districtName', 'taylors.rating', 'taylors.completedTrans'
+                  'taylors.id as taylorId', 'users.name as taylorName', 'districts.name as districtName', 'taylors.rating as taylorRating', 'taylors.completedTrans as taylorComtrans', 'taylors.photo as taylorPhoto'
             ])
-            // ->select([
-            //     'users.id as userId', 'users.name as userName', 'districts.name as districtName', 'taylors.rating as taylorRating', 'taylors.completedTrans'
-            // ]);
             ->get();
 
-            if(!$taylors == NULL) {
-
-                foreach($taylors as $t) {
-                    $dataPenjahit[] = [
-                        'userId'            => $t->id,
-                        'taylorName'        => $t->name,
-                        'taylorLocation'    => $t->districtName,
-                        'taylorRating'      => $t->rating,
-                        'taylorComTrans'    => $t->completedTrans,
-                    ];
-                }
-
-
-            }
 
 
         if($taylors) {
-            return apiResponse(200, 'success', 'list data taylor', $dataPenjahit);
+            return apiResponse(200, 'success', 'list data taylor', $taylors);
         }
 
         return Response::json(apiResponse(404, 'not found', 'Taylor tidak ditemukan'), 404);
@@ -68,29 +49,21 @@ class TaylorController extends Controller
         ->join('service_categories', 'services.service_categories_id', '=', 'service_categories.id')
         ->where('users.name', 'like', '%'.$keyword.'%' )
         ->select([
-            'users.id as userId', 'users.name as taylorName', 'service_categories.id as itemId', 'service_categories.name as itemName'
+            'users.id as userId', 'users.name as taylorName', 'service_categories.id as itemId', 'service_categories.name as itemName', 'taylors.photo as taylorPhoto', 'service_categories.photo as servicePhoto', 'services.price as servicePrice'
         ])
-        ->get();
+        ->limit(10)->get();
 
 
 
+        if(count($taylor) > 0) {
 
-        if(!$taylor == NULL) {
-            foreach($taylor as $t) {
-                    $dataPenjahit[] = [
-                        'UserId'            => $t->userId,
-                        'taylorName'        => $t->taylorName,
-                        'itemId'            => $t->itemId,
-                        'itemName'          => $t->itemName,
-                    ];
-                }
+            return apiResponse(200, 'success', 'list data penjahit', $taylor);
 
-            }
+        } else if (count($taylor) < 1) {
 
-        if($taylor) {
-            return apiResponse(200, 'success', 'list data penjahit', $dataPenjahit);
+            return Response::json(apiResponse(404, 'not found', 'Penjahit tidak ditemukan'), 404);
+
         }
-        return Response::json(apiResponse(404, 'not found', 'Penjahit tidak ditemukan'), 404);
 
 
 
