@@ -465,7 +465,8 @@ class KategoriSeeder extends Seeder
                 'deliveries_id' => 1,
                 'payment_method_id' => 1,
                 'shipping_method_id' => 1,
-                'user_id' => $i
+                'user_id' => $i,
+                'created_at' => date('Y-m-d H:i:s'),
 
             ]);
         }
@@ -483,7 +484,8 @@ class KategoriSeeder extends Seeder
                 'deliveries_id' => 1,
                 'payment_method_id' => 1,
                 'shipping_method_id' => 1,
-                'user_id' => $a
+                'user_id' => $a,
+                'created_at' => date('Y-m-d H:i:s'),
 
             ]);
             $a++;
@@ -492,14 +494,16 @@ class KategoriSeeder extends Seeder
         for($i = 1; $i <= 10; $i++) {
             $order = Payment::insert([
                 'paymentAmount' => 0,
-                'order_id' => $i
+                'order_id' => $i,
+                'created_at' => date('Y-m-d H:i:s'),
             ]);
         }
 
         for($i = 11; $i <= 20; $i++) {
             $order = Payment::insert([
                 'paymentAmount' => 280000,
-                'order_id' => $i
+                'order_id' => $i,
+                'created_at' => date('Y-m-d H:i:s'),
             ]);
         }
 
