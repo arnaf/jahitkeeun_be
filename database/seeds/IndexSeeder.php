@@ -168,6 +168,7 @@ class IndexSeeder extends Seeder
                 'phone' => $faker->unique()->numberBetween(6281111200111,6281111200130),
                 'dateBirth' => date('1997-01-01 H:i:s'),
                 'placeBirth' => 'Bandung',
+                'rating' => rand(0, 5),
                 'status' => '1',
                 'created_at'    => date('Y-m-d H:i:s')
             ]);

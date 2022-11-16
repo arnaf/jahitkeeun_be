@@ -2,9 +2,9 @@
 use Illuminate\Support\Facades\Route;
 
 require_once('includes/auth.php');
-require_once('includes/taylor.php');
+require_once('includes/taylorsection.php');
 require_once('includes/item.php');
-require_once('includes/service.php');
+require_once('includes/searchbar.php');
 require_once('includes/user.php');
 
 Route::group(
