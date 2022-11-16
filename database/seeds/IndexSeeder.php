@@ -1,6 +1,7 @@
 <?php
 
 use App\AddressLabel;
+use App\Address;
 use App\User;
 use App\Admin;
 use App\Client;
@@ -29,6 +30,14 @@ class IndexSeeder extends Seeder
             'name' => 'Utama'
         ]);
 
+        $addressesLabel2 = AddressLabel::insert([
+            'name' => 'Pengiriman'
+        ]);
+
+        $addressesLabel3 = AddressLabel::insert([
+            'name' => 'Penjemputan'
+        ]);
+
 
         $superadmin1 = User::create([
             'name' => 'admin',
@@ -48,9 +57,49 @@ class IndexSeeder extends Seeder
             'created_at'    => date('Y-m-d H:i:s')
         ]);
 
+        $id = DB::table('villages')->get()->random()->id;
+
+        $alamat = DB::table('provinces')
+        ->join('regencies', 'provinces.id', '=', 'regencies.province_id')
+        ->join('districts', 'regencies.id', '=', 'districts.regency_id')
+        ->join('villages', 'districts.id', '=', 'villages.district_id')
+        ->where('villages.id' ,'=', $id)
+            ->select([
+                'provinces.id as provinsi', 'regencies.id as regencies',
+                'districts.id as districts','villages.id as village'
+            ])
+            // ->select([
+            //     'provinces.name as provinsi', 'regencies.name as regencies',
+            //     'districts.name as districts','villages.name as village'
+            // ])
+            ->first();
+
+
+        $id = Address::insertGetId([
+            'user_id' => $superadmin1->id,
+            'fullAddress' => 'Jl Kenangan',
+            'posCode' => '40000',
+            'province_id' => $alamat->provinsi,
+            'regency_id' => $alamat->regencies,
+            'district_id' => $alamat->districts,
+            'village_id' => $alamat->village,
+            'lat' => '',
+            'long' => '',
+            'addresslabel_id' => 1,
+            'created_at'    => date('Y-m-d H:i:s')
+        ]);
+
+
+
+
+
+
+
+
 
 
         for($i = 0; $i < 10; $i++) {
+
             $superadmin2 = User::create([
                 'name' => 'client'.''.$faker->unique()->numberBetween(1,10),
                 'email'=> 'client'.''.$faker->unique()->numberBetween(11,20).''.'@gmail.com',
@@ -67,6 +116,39 @@ class IndexSeeder extends Seeder
                 'status' => '1',
                 'created_at'    => date('Y-m-d H:i:s')
             ]);
+
+
+            $id = DB::table('villages')->get()->random()->id;
+
+        $alamat = DB::table('provinces')
+        ->join('regencies', 'provinces.id', '=', 'regencies.province_id')
+        ->join('districts', 'regencies.id', '=', 'districts.regency_id')
+        ->join('villages', 'districts.id', '=', 'villages.district_id')
+        ->where('villages.id' ,'=', $id)
+            ->select([
+                'provinces.id as provinsi', 'regencies.id as regencies',
+                'districts.id as districts','villages.id as village'
+            ])
+            // ->select([
+            //     'provinces.name as provinsi', 'regencies.name as regencies',
+            //     'districts.name as districts','villages.name as village'
+            // ])
+            ->first();
+
+
+        $id = Address::insertGetId([
+            'user_id' => $superadmin2->id,
+            'fullAddress' => 'Jl Kenangan',
+            'posCode' => '40000',
+            'province_id' => $alamat->provinsi,
+            'regency_id' => $alamat->regencies,
+            'district_id' => $alamat->districts,
+            'village_id' => $alamat->village,
+            'lat' => '',
+            'long' => '',
+            'addresslabel_id' => 1,
+            'created_at'    => date('Y-m-d H:i:s')
+        ]);
 
 
         }
@@ -88,6 +170,38 @@ class IndexSeeder extends Seeder
                 'status' => '1',
                 'created_at'    => date('Y-m-d H:i:s')
             ]);
+            $id = DB::table('villages')->get()->random()->id;
+
+            $alamat = DB::table('provinces')
+            ->join('regencies', 'provinces.id', '=', 'regencies.province_id')
+            ->join('districts', 'regencies.id', '=', 'districts.regency_id')
+            ->join('villages', 'districts.id', '=', 'villages.district_id')
+            ->where('villages.id' ,'=', $id)
+                ->select([
+                    'provinces.id as provinsi', 'regencies.id as regencies',
+                    'districts.id as districts','villages.id as village'
+                ])
+                // ->select([
+                //     'provinces.name as provinsi', 'regencies.name as regencies',
+                //     'districts.name as districts','villages.name as village'
+                // ])
+                ->first();
+
+
+            $id = Address::insertGetId([
+                'user_id' => $superadmin3->id,
+                'fullAddress' => 'Jl Kenangan',
+                'posCode' => '40000',
+                'province_id' => $alamat->provinsi,
+                'regency_id' => $alamat->regencies,
+                'district_id' => $alamat->districts,
+                'village_id' => $alamat->village,
+                'lat' => '',
+                'long' => '',
+                'addresslabel_id' => 1,
+                'created_at'    => date('Y-m-d H:i:s')
+            ]);
+
         }
         for($i = 0; $i < 10; $i++) {
             $superadmin4 = User::create([
@@ -104,6 +218,38 @@ class IndexSeeder extends Seeder
                 'dateBirth' => date('1997-01-01 H:i:s'),
                 'placeBirth' => 'Bandung',
                 'status' => '1',
+                'created_at'    => date('Y-m-d H:i:s')
+            ]);
+
+            $id = DB::table('villages')->get()->random()->id;
+
+            $alamat = DB::table('provinces')
+            ->join('regencies', 'provinces.id', '=', 'regencies.province_id')
+            ->join('districts', 'regencies.id', '=', 'districts.regency_id')
+            ->join('villages', 'districts.id', '=', 'villages.district_id')
+            ->where('villages.id' ,'=', $id)
+                ->select([
+                    'provinces.id as provinsi', 'regencies.id as regencies',
+                    'districts.id as districts','villages.id as village'
+                ])
+                // ->select([
+                //     'provinces.name as provinsi', 'regencies.name as regencies',
+                //     'districts.name as districts','villages.name as village'
+                // ])
+                ->first();
+
+
+            $id = Address::insertGetId([
+                'user_id' => $superadmin4->id,
+                'fullAddress' => 'Jl Kenangan',
+                'posCode' => '40000',
+                'province_id' => $alamat->provinsi,
+                'regency_id' => $alamat->regencies,
+                'district_id' => $alamat->districts,
+                'village_id' => $alamat->village,
+                'lat' => '',
+                'long' => '',
+                'addresslabel_id' => 1,
                 'created_at'    => date('Y-m-d H:i:s')
             ]);
         }
