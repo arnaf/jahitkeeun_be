@@ -13,6 +13,8 @@ Route::group(
 
         require_once('includes/profile.php');
 
+        require_once('includes/datamaster.php');
+
         require_once('includes/kategori.php');;
     }
 );
