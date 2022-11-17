@@ -43,12 +43,13 @@ class SectionTaylorController extends Controller
             ->join('taylors', 'users.id', '=', 'taylors.user_id')
             ->join('addresses', 'users.id', '=', 'addresses.user_id')
             ->join('districts', 'addresses.district_id', '=', 'districts.id')
-            ->orderBy('taylors.rating', 'desc')
 
             ->select([
-                  'users.id','users.name', 'districts.name as districtName', 'taylors.rating', 'taylors.completedTrans'
-            ])
-            ->get();
+                'users.id','users.name', 'districts.name as districtName', 'taylors.rating', 'taylors.completedTrans'
+                ])
+            ->orderBy('taylors.rating', 'desc')
+            ->groupBy('taylors.rating')
+            ->paginate();
 
 
                 return apiResponse(200, 'success', 'list data taylor', $user);
@@ -58,12 +59,12 @@ class SectionTaylorController extends Controller
                 ->join('taylors', 'users.id', '=', 'taylors.user_id')
                 ->join('addresses', 'users.id', '=', 'addresses.user_id')
                 ->join('districts', 'addresses.district_id', '=', 'districts.id')
-                ->orderBy('taylors.rating', 'asc')
-
                 ->select([
                     'users.id','users.name', 'districts.name as districtName', 'taylors.rating', 'taylors.completedTrans'
                 ])
-                ->get();
+                ->orderBy('taylors.rating', 'desc')
+                ->groupBy('taylors.rating')
+                ->paginate();
 
                 return apiResponse(200, 'success', 'list data taylor', $user);
             } else {
@@ -73,8 +74,6 @@ class SectionTaylorController extends Controller
             }
 
     }
-
-
 
 
     public function getTaylorByPrice($i) {
@@ -87,12 +86,12 @@ class SectionTaylorController extends Controller
             ->join('addresses', 'users.id', '=', 'addresses.user_id')
             ->join('districts', 'addresses.district_id', '=', 'districts.id')
             ->join('services', 'taylors.id', '=', 'services.taylor_id')
-            ->orderBy('services.price', 'desc')
-
             ->select([
                   'users.id','users.name', 'districts.name as districtName', 'taylors.rating', 'services.price as servicePrice'
             ])
-            ->get();
+            ->orderBy('services.price ', 'desc')
+            ->groupBy('services.price ')
+            ->paginate();
 
 
                 return apiResponse(200, 'success', 'list data taylor berdasarkan harga jasa', $user);
@@ -103,12 +102,12 @@ class SectionTaylorController extends Controller
                 ->join('addresses', 'users.id', '=', 'addresses.user_id')
                 ->join('districts', 'addresses.district_id', '=', 'districts.id')
                 ->join('services', 'taylors.id', '=', 'services.taylor_id')
-                ->orderBy('services.price', 'asc')
-
                 ->select([
                       'users.id','users.name', 'districts.name as districtName', 'taylors.rating', 'services.price as servicePrice'
                 ])
-                ->get();
+                ->orderBy('services.price ', 'desc')
+                ->groupBy('services.price ')
+                ->paginate();
 
                 return apiResponse(200, 'success', 'list data taylor berdasarkan harga jasa', $user);
             } else {
@@ -117,7 +116,6 @@ class SectionTaylorController extends Controller
             }
 
     }
-
 
 
     public function getTaylorByRegency($id) {
@@ -131,15 +129,17 @@ class SectionTaylorController extends Controller
             ->select([
                   'users.id', 'users.name', 'regencies.name as regencyName', 'taylors.rating',
             ])
-            ->get();
+            ->orderBy('regencies.name', 'desc')
+            ->groupBy('regencies.name')
+            ->paginate();
 
 
 
-            if(count($user) > 0) {
+            if($user > 0) {
 
                 return apiResponse(200, 'success', 'list data taylor', $user);
 
-            } elseif(count($user) < 1 ) {
+            } elseif($user < 1 ) {
 
                 return Response::json(apiResponse(404, 'not found', 'Data tidak ditemukan'), 404);
 
