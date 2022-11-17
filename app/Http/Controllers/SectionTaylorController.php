@@ -48,7 +48,6 @@ class SectionTaylorController extends Controller
                 'users.id','users.name', 'districts.name as districtName', 'taylors.rating', 'taylors.completedTrans'
                 ])
             ->orderBy('taylors.rating', 'desc')
-            ->groupBy('taylors.rating')
             ->paginate();
 
 
@@ -62,8 +61,7 @@ class SectionTaylorController extends Controller
                 ->select([
                     'users.id','users.name', 'districts.name as districtName', 'taylors.rating', 'taylors.completedTrans'
                 ])
-                ->orderBy('taylors.rating', 'desc')
-                ->groupBy('taylors.rating')
+                ->orderBy('taylors.rating', 'asc')
                 ->paginate();
 
                 return apiResponse(200, 'success', 'list data taylor', $user);
@@ -89,8 +87,7 @@ class SectionTaylorController extends Controller
             ->select([
                   'users.id','users.name', 'districts.name as districtName', 'taylors.rating', 'services.price as servicePrice'
             ])
-            ->orderBy('services.price ', 'desc')
-            ->groupBy('services.price ')
+            ->orderBy('services.price', 'desc')
             ->paginate();
 
 
@@ -105,8 +102,7 @@ class SectionTaylorController extends Controller
                 ->select([
                       'users.id','users.name', 'districts.name as districtName', 'taylors.rating', 'services.price as servicePrice'
                 ])
-                ->orderBy('services.price ', 'desc')
-                ->groupBy('services.price ')
+                ->orderBy('services.price', 'asc')
                 ->paginate();
 
                 return apiResponse(200, 'success', 'list data taylor berdasarkan harga jasa', $user);
@@ -118,28 +114,27 @@ class SectionTaylorController extends Controller
     }
 
 
-    public function getTaylorByRegency($id) {
+    public function getTaylorByRegency($keyword) {
 
 
         $user = DB::table('users')
             ->join('taylors', 'users.id', '=', 'taylors.user_id')
             ->join('addresses', 'users.id', '=', 'addresses.user_id')
             ->join('regencies', 'addresses.regency_id', '=', 'regencies.id')
-            ->where('regencies.id', '=', $id)
+            ->where('regencies.name', 'LIKE', '%'.$keyword.'%')
             ->select([
                   'users.id', 'users.name', 'regencies.name as regencyName', 'taylors.rating',
             ])
             ->orderBy('regencies.name', 'desc')
-            ->groupBy('regencies.name')
             ->paginate();
 
+            $count_user = $user->total();
 
-
-            if($user > 0) {
+            if($count_user >= 1) {
 
                 return apiResponse(200, 'success', 'list data taylor', $user);
 
-            } elseif($user < 1 ) {
+            } elseif ($count_user < 1){
 
                 return Response::json(apiResponse(404, 'not found', 'Data tidak ditemukan'), 404);
 
