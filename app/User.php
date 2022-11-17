@@ -2,6 +2,7 @@
 
 namespace App;
 use App\Admin;
+use App\Service;
 use App\Client;
 use App\Taylor;
 use App\Convection;
@@ -65,6 +66,11 @@ class User extends Authenticatable
     public function admin()
     {
         return $this->hasOne(Admin::class);
+    }
+
+    public function cart()
+    {
+        return $this->belongsToMany(Service::class, 'carts')->withPivot('quantity');
     }
 
 
