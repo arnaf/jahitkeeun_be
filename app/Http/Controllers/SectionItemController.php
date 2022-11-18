@@ -24,19 +24,13 @@ class SectionItemController extends Controller
             ->join('regencies as d', 'd.id', '=', 'a.regency_id')
             ->join('districts as e', 'e.id', '=', 'a.district_id')
             ->join('villages as f', 'f.id', '=', 'a.village_id')
+            ->select([
+                'a.user_id as userId','a.id as alamatId','b.name as jenisAlamat',
+                DB::raw("CONCAT(a.fullAddress,' ','Kel/Ds.',' ', f.name, ' Kec. ', e.name,' Kab/Kota. ', d.name,' Prov. ', c.name,' ', a.posCode) as alamat")
+            ])->where('a.user_id', $id)->
+            get();
 
-            ->whereRaw('a.user_id', $id)
-            ->selectRaw([
-                'a.id as alamatId','b.name as jenisAlamat','CONCAT(a.fullAddress) as alamat'
-            ])->get();
-            // ->orderBy('a.id')
-            // ->groupBy('a.id','b.name')
-            // ->paginate();
 
-            $sub = DB::table('users as u')->selectRaw("u.*, CONCAT(first_name,' ',last_name) as full_name");
-            $users = DB::table(DB::raw("({$sub->toSql()}) as sub"))
-            ->whereRaw("full_name LIKE '{$fullName}%'")
-            ->get();
 
 
 
