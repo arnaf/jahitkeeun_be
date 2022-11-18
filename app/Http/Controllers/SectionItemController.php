@@ -15,6 +15,37 @@ use Illuminate\Support\Facades\Validator;
 
 class SectionItemController extends Controller
 {
+    public function getAlamat($id) {
+
+
+        $address = DB::table('addresses as a')
+            ->join('address_labels as b', 'a.addresslabel_id', '=', 'b.id')
+            ->join('provinces as c', 'c.id', '=', 'a.province_id')
+            ->join('regencies as d', 'd.id', '=', 'a.regency_id')
+            ->join('districts as e', 'e.id', '=', 'a.district_id')
+            ->join('villages as f', 'f.id', '=', 'a.village_id')
+
+            ->whereRaw('a.user_id', $id)
+            ->selectRaw([
+                'a.id as alamatId','b.name as jenisAlamat','CONCAT(a.fullAddress) as alamat'
+            ])->get();
+            // ->orderBy('a.id')
+            // ->groupBy('a.id','b.name')
+            // ->paginate();
+
+            $sub = DB::table('users as u')->selectRaw("u.*, CONCAT(first_name,' ',last_name) as full_name");
+            $users = DB::table(DB::raw("({$sub->toSql()}) as sub"))
+            ->whereRaw("full_name LIKE '{$fullName}%'")
+            ->get();
+
+
+
+        if($address) {
+            return apiResponse(200, 'success', 'list data Alamat', $address);
+        }
+        return Response::json(apiResponse(404, 'not found', 'Item tidak ditemukan'), 404);
+    }
+
     public function getAllItem() {
 
 
@@ -150,7 +181,7 @@ class SectionItemController extends Controller
         try {
 
             DB::transaction(function () use ($request,$name) {
-               
+
                 $id = Cart::insertGetId([
                     'user_id'  => $request->user_id,
                     'service_id'  => $request->service_id,
