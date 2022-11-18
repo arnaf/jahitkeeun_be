@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 
+Route::get('/sectionitemalamat/{id}', 'SectionItemController@getAlamat');
 Route::get('/sectionitem', 'SectionItemController@getAllItem');
 Route::get('/sectionitem/{id}', 'SectionItemController@getItemById');
 Route::get('/sectionitem/taylorId/{id}', 'SectionItemController@getItemByTaylorId');

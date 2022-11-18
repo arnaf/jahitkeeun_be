@@ -86,12 +86,12 @@ class KategoriSeeder extends Seeder
         ]);
 
         $serviceCategory2 = ServiceCategory::insert([
-            'name' => 'Kebaya / Atasan Tanpa Payet',
+            'name' => 'Kebaya',
             'photo' => 'kebaya.png'
         ]);
 
         $serviceCategory3 = ServiceCategory::insert([
-            'name' => 'Kemeja / Atasan ',
+            'name' => 'Kemeja',
             'photo' => 'kemeja.png'
         ]);
 
@@ -106,18 +106,35 @@ class KategoriSeeder extends Seeder
         ]);
 
         $serviceCategory6 = ServiceCategory::insert([
-            'name' => 'Kupnat',
-            'photo' => 'kupnat.png'
+            'name' => 'Blouse',
+            'photo' => 'blouse.png'
         ]);
 
+
+
         $serviceCategory7 = ServiceCategory::insert([
-            'name' => 'Robek / Berlubang',
-            'photo' => 'robek.png'
+            'name' => 'Celana',
+            'photo' => 'celana.png'
         ]);
 
         $serviceCategory8 = ServiceCategory::insert([
             'name' => 'Kancing',
             'photo' => 'kancing.png'
+        ]);
+
+        $serviceCategory6 = ServiceCategory::insert([
+            'name' => 'Rok',
+            'photo' => 'rok.png'
+        ]);
+
+        $serviceCategory6 = ServiceCategory::insert([
+            'name' => 'Dress',
+            'photo' => 'dress.png'
+        ]);
+
+        $serviceCategory6 = ServiceCategory::insert([
+            'name' => 'Celana',
+            'photo' => 'celana.png'
         ]);
 
     for($i = 1; $i <= 20; $i++) {
