@@ -20,5 +20,18 @@ Route::post('/datamaster/taylor/create', 'MasterTaylorController@create');
 Route::post('/datamaster/taylor/update/{id}', 'MasterTaylorController@update');
 Route::delete('/datamaster/taylor/delete/{id}', 'MasterTaylorController@delete');
 
+Route::get('/datamaster/address', 'MasterAddressController@index');
+Route::get('/datamaster/address/{id}', 'MasterAddressController@show');
+Route::post('/datamaster/address/create', 'MasterAddressController@create');
+Route::post('/datamaster/address/update/{id}', 'MasterAddressController@update');
+Route::delete('/datamaster/address/delete/{id}', 'MasterAddressController@delete');
+
+Route::get('/datamaster/delivery', 'MasterDeliveryController@index');
+Route::get('/datamaster/delivery/{id}', 'MasterDeliveryController@show');
+Route::post('/datamaster/delivery/create', 'MasterDeliveryController@create');
+Route::post('/datamaster/delivery/update/{id}', 'MasterDeliveryController@update');
+Route::delete('/datamaster/delivery/delete/{id}', 'MasterDeliveryController@delete');
+
+
 
 
