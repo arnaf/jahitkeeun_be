@@ -47,11 +47,12 @@ class SectionItemController extends Controller
             ->where('service_categories_id', $id)
             ->select([
                 'taylors.id as taylorId','users.name as taylorName','taylors.photo as photo',
-                'taylors.phone as phone','regencies.name as kota','taylors.rating as rating'
+                'taylors.phone as phone','regencies.name as kota','taylors.rating as rating',
+                'taylors.completedTrans as jumlah_transaksi'
             ])
             ->orderBy('users.name')
             ->groupBy('users.name','taylors.id','taylors.photo','taylors.phone','regencies.name',
-            'taylors.rating')
+            'taylors.rating', 'taylors.completedTrans')
             ->paginate();
 
 
@@ -155,14 +156,17 @@ class SectionItemController extends Controller
 
         $cart1 = DB::table('carts as a')
         ->join('users as b', 'b.id', '=', 'a.user_id')
+
         ->join('services as c', 'a.id', '=', 'c.id')
         ->join('service_categories as d', 'c.service_categories_id', '=', 'd.id')
         ->join('taylors as e', 'c.taylor_id', '=', 'e.id')
         ->join('users as f', 'e.user_id', '=', 'f.id')
+        ->join('addresses as g', 'g.user_id', '=', 'b.id')
 
         ->where('a.user_id', $userid)
         ->select([
             'b.id as userId','b.name as namapembeli',
+            'g.fullAddress as alamatpembeli',
             'd.name as item','d.photo as photoItem',
             'f.name as namataylor',
             'c.id as serviceId',
@@ -249,13 +253,22 @@ class SectionItemController extends Controller
     {
 
         $rules = [
-            'user_id'         => 'required',
-            'amount'         => 'required',
+            'user_id'                       => 'required',
+            'amount'                        => 'required',
+            'address'                       => 'required',
+            'deliveries_id'                 => 'required',
+            'payment_method_id'             => 'required',
+            'shipping_method_id'            => 'required',
+
         ];
 
         $message = [
-            'user_id.required'        => 'Mohon isikan user id',
-            'amount.required'        => 'Mohon isikan amount',
+            'user_id.required'                  => 'Mohon isikan user id',
+            'amount.required'                   => 'Mohon isikan amount',
+            'addreess.required'                 => 'Mohon isikan alamat',
+            'deliveries_id.required'            => 'Mohon isikan alamat',
+            'payment_method_id.required'        => 'Mohon isikan alamat',
+            'shipping_method_id.required'       => 'Mohon isikan alamat',
 
         ];
 
@@ -273,11 +286,11 @@ class SectionItemController extends Controller
                     'totalPayment' => $request->amount,
                     'paymentStatus' => 'BELUM BAYAR',
                     'orderStatus' => 'Menunggu Pickup',
-                     'invoice' => 'INV',
-                     'address' => 'Bandung',
-                     'deliveries_id' => '1',
-                     'payment_method_id' => '1',
-                     'shipping_method_id' => '1',
+                    'invoice' => 'INV',
+                    'address' => $request->address,
+                    'deliveries_id' => $request->deliveries_id,
+                    'payment_method_id' => $request->payment_method_id,
+                    'shipping_method_id' => $request->shipping_method_id,
                 ]);
 
                 $cart = $request->user()->cart()->get();
@@ -286,6 +299,11 @@ class SectionItemController extends Controller
                         'price' => $item->price * $item->pivot->quantity,
                         'quantity' => $item->pivot->quantity,
                         'service_id' => $item->id,
+                        'photoClient1' => $request->photoClient1,
+                        'photoClient2' => $request->photoClient2,
+                        'photoClient3' => $request->photoClient3,
+                        'photoClient4' => $request->photoClient4,
+                        'photoClient5' => $request->photoClient5,
                     ]);
                     // $item->quantity = $item->quantity - $item->pivot->quantity;
                     // $item->save();
