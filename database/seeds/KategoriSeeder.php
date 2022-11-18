@@ -132,10 +132,7 @@ class KategoriSeeder extends Seeder
             'photo' => 'dress.png'
         ]);
 
-        $serviceCategory6 = ServiceCategory::insert([
-            'name' => 'Celana',
-            'photo' => 'celana.png'
-        ]);
+        
 
     for($i = 1; $i <= 20; $i++) {
         $jasa1 = Service::insert([
