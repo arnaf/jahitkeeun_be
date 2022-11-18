@@ -13,4 +13,14 @@ class Service extends Model
     protected $hidden = [
 
     ];
+
+    public function service_categories()
+    {
+        return $this->hasOne(ServiceCategory::class);
+    }
+
+    public function taylor()
+    {
+        return $this->hasMany(Taylor::class);
+    }
 }

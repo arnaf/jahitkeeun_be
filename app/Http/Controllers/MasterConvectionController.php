@@ -40,7 +40,6 @@ class MasterConvectionController extends Controller
         return Response::json(apiResponse(404, 'not found', 'User tidak ditemukan'), 404);
     }
 
-
     public function create(Request $request) {
 
 

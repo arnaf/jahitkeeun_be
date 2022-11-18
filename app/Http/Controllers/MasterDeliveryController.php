@@ -79,7 +79,7 @@ class MasterDeliveryController extends Controller
 
                 $request->file('photo')->move($path, $deliveryPhoto);
 
-                }
+            }
 
             DB::transaction(function () use ($request, $deliveryPhoto) {
                 $delivery = Delivery::create([
