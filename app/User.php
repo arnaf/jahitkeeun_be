@@ -6,6 +6,7 @@ use App\Service;
 use App\Client;
 use App\Taylor;
 use App\Convection;
+use App\Address;
 
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -68,9 +69,15 @@ class User extends Authenticatable
         return $this->hasOne(Admin::class);
     }
 
+    public function address()
+    {
+        return $this->hasMany(Address::class);
+    }
+
     public function cart()
     {
         return $this->belongsToMany(Service::class, 'carts')->withPivot('quantity');
+
     }
 
 

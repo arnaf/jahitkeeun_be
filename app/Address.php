@@ -19,4 +19,29 @@ class Address extends Model
         return $this->hasOne(AaddressLabel::class);
     }
 
+    public function province()
+    {
+        return $this->hasOne(Province::class);
+    }
+
+    public function regency()
+    {
+        return $this->hasOne(Regency::class);
+    }
+
+    public function district()
+    {
+        return $this->hasOne(District::class);
+    }
+
+    public function village()
+    {
+        return $this->hasOne(Village::class);
+    }
+
+    public function user()
+    {
+        return $this->hasOne(User::class);
+    }
+
 }

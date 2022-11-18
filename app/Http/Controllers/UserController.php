@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Client;
 use App\User;
 use Exception;
+use App\Client;
 use App\Taylor;
+use App\Convection;
 use App\UserDetail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -168,7 +169,6 @@ class UserController extends Controller
                 ]);
 
                 Client::where('user_id', $id)->update([
-
                     'photo'         => $clientPhoto,
                     'phone'         => $request->phone,
                     'dateBirth'     => $request->dateBirth,
