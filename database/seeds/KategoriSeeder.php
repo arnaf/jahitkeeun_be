@@ -393,6 +393,7 @@ class KategoriSeeder extends Seeder
             'quantity' => 1,
             'service_id' => 2,
             'user_id' => $i,
+            'pickup' => now(),
         ]);
     }
 
@@ -401,6 +402,7 @@ class KategoriSeeder extends Seeder
             'quantity' => 1,
             'service_id' => 22,
             'user_id' => $i,
+            'pickup' => now(),
         ]);
     }
 
@@ -409,6 +411,7 @@ class KategoriSeeder extends Seeder
             'quantity' => 15,
             'service_id' => 2,
             'user_id' => $i,
+            'pickup' => now(),
         ]);
     }
 
@@ -417,6 +420,7 @@ class KategoriSeeder extends Seeder
             'quantity' => 5,
             'service_id' => 22,
             'user_id' => $i,
+            'pickup' => now(),
         ]);
     }
 
@@ -513,6 +517,7 @@ class KategoriSeeder extends Seeder
                 'price'  => 145000,
                 'service_id'  => 2,
                 'order_id'  => $i,
+                'pickup' => now(),
                 'photoClient1'  => 'photoclient1.png',
                 'photoClient2'  => 'photoclient2.png',
                 'photoClient3'  => 'photoclient3.png',
@@ -533,6 +538,7 @@ class KategoriSeeder extends Seeder
                 'price'  => 135000,
                 'service_id'  => 22,
                 'order_id'  => $i,
+                'pickup' => now(),
                 'photoClient1'  => 'photoclient1.png',
                 'photoClient2'  => 'photoclient2.png',
                 'photoClient3'  => 'photoclient3.png',
@@ -554,6 +560,7 @@ class KategoriSeeder extends Seeder
                 'price'  => 145000,
                 'service_id'  => 2,
                 'order_id'  => $i,
+                'pickup' => now(),
                 'photoClient1'  => 'photoclient1.png',
                 'photoClient2'  => 'photoclient2.png',
                 'photoClient3'  => 'photoclient3.png',
@@ -574,6 +581,7 @@ class KategoriSeeder extends Seeder
                 'price'  => 135000,
                 'service_id'  => 22,
                 'order_id'  => $i,
+                'pickup' => now(),
                 'photoClient1'  => 'photoclient1.png',
                 'photoClient2'  => 'photoclient2.png',
                 'photoClient3'  => 'photoclient3.png',
