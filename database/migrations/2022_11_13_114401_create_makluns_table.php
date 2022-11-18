@@ -22,9 +22,8 @@ class CreateMaklunsTable extends Migration
             $table->date('dueTime');
             $table->string('status');
 
-            $table->foreignId('taylor_id')->constrained('taylors')->onUpdate('cascade')->onDelete('restrict');
-            $table->foreignId('client_id')->constrained('clients')->onUpdate('cascade')->onDelete('restrict');
-            $table->foreignId('convection_id')->constrained('convections')->onUpdate('cascade')->onDelete('restrict');
+            $table->foreignId('maklun_maker_id')->constrained('users')->onUpdate('cascade')->onDelete('restrict');
+
             $table->timestamps();
         });
     }

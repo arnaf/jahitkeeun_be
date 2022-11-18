@@ -199,7 +199,7 @@ class MasterClientController extends Controller
         }
     }
 
-    public function delete($id) {
+    public function destroy($id) {
         $userDetail = Client::where('user_id','=',$id)->first();
         $oldImage = $userDetail->photo;
 
@@ -216,7 +216,7 @@ class MasterClientController extends Controller
                 User::where('id', $id)->delete();
             });
 
-            return apiResponse(202, 'success', 'user berhasil dihapus');
+            return apiResponse(202, 'success', 'user berhasil dihapus :(');
         } catch(Exception $e) {
             return apiResponse(400, 'error', 'error', $e);
         }
