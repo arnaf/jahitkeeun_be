@@ -16,16 +16,22 @@ class SearchBarController extends Controller
 
         $data = DB::table('users')
         ->join('taylors', 'users.id', '=', 'taylors.user_id')
+        ->join('addresses', 'users.id', '=', 'addresses.user_id')
+        ->join('regencies', 'regencies.id', '=', 'addresses.regency_id')
         ->join('services', 'taylors.id', '=', 'services.taylor_id')
         ->join('service_categories', 'services.service_categories_id', '=', 'service_categories.id')
          ->where('services.name', 'like', '%'.$keyword.'%' )
          ->orwhere('users.name', 'like', '%'.$keyword.'%' )
          ->orwhere('service_categories.name', 'like', '%'.$keyword.'%' )
         ->select([
-            'users.id as userId', 'users.name as taylorName', 'service_categories.id as itemId', 'service_categories.name as itemName', 'taylors.photo as taylorPhoto', 'service_categories.photo as servicePhoto', 'services.price as servicePrice', 'services.name as serviceName'
+            'services.id as serviceId', 'services.name as serviceName', 'services.price',
+            'taylor_id as taylorId','users.name as taylorName'
         ])
-        ->get();
-
+        ->orderBy('users.name')
+        ->groupBy('services.id','services.name','services.price','taylor_id',
+        'users.name'
+         )
+        ->paginate();
 
 
         if($data) {

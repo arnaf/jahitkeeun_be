@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Taylor extends Model
 {
     protected $fillable = [
-        'dateBirth', 'placeBirth', 'photo', 'user_id', 'phone', 'status',
+        'dateBirth', 'placeBirth', 'photo', 'user_id', 'phone', 'status', 'rating', 'completedTrans'
     ];
 
     protected $hidden = [

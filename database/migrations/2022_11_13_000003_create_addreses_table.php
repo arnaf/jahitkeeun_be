@@ -24,8 +24,8 @@ class CreateAddresesTable extends Migration
 
             // $table->string('phone');
             // $table->date('dateBirth');
-            $table->string('lat');
-            $table->string('long');
+            $table->string('lat')->nullable();
+            $table->string('long')->nullable();
             // $table->string('status');
             $table->foreign('province_id')
             ->references('id')
