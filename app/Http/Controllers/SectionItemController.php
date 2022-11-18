@@ -118,6 +118,7 @@ class SectionItemController extends Controller
             'user_id'         => 'required',
             'service_id'         => 'required',
             'quantity'         => 'required',
+            'pickup'         => 'required',
 
 
         ];
@@ -126,6 +127,7 @@ class SectionItemController extends Controller
             'user_id.required'        => 'Mohon isikan user id',
             'service_id.required'        => 'Mohon isikan product id',
             'quantity.required'        => 'Mohon isikan quantity',
+            'pickup.required'        => 'Mohon isikan tanggal pickup',
 
         ];
 
@@ -134,14 +136,29 @@ class SectionItemController extends Controller
         if($validator->fails()) {
             return apiResponse(400, 'error', 'Data tidak lengkap ', $validator->errors());
         }
+        if($request->has('photoClient1')) {
+
+
+            $extension = $request->file('photoClient1')->getClientOriginalExtension();
+            //$name = date('YmdHis').'.'.$extension;
+            $name = date('YmdHis').''.$request->service_id.''.$request->user_id.'.'.$extension;
+            $path = base_path('public/photo-cart/');
+            $request->file('photoClient1')->move($path, $name);
+
+        }
 
         try {
-            DB::transaction(function () use ($request) {
+
+            DB::transaction(function () use ($request,$name) {
+               
                 $id = Cart::insertGetId([
                     'user_id'  => $request->user_id,
                     'service_id'  => $request->service_id,
                     'quantity'  => $request->quantity,
+                    'pickup'  => $request->pickup,
+                    'photoClient1'  => $name,
                 ]);
+
 
 
             });
@@ -281,17 +298,19 @@ class SectionItemController extends Controller
         try {
             DB::transaction(function () use ($request) {
 
+
                 $order = Order::create([
                     'user_id' => $request->user()->id,
                     'totalPayment' => $request->amount,
                     'paymentStatus' => 'BELUM BAYAR',
                     'orderStatus' => 'Menunggu Pickup',
-                    'invoice' => 'INV',
+
                     'address' => $request->address,
                     'deliveries_id' => $request->deliveries_id,
                     'payment_method_id' => $request->payment_method_id,
                     'shipping_method_id' => $request->shipping_method_id,
                 ]);
+
 
                 $cart = $request->user()->cart()->get();
                 foreach ($cart as $item) {
@@ -299,6 +318,7 @@ class SectionItemController extends Controller
                         'price' => $item->price * $item->pivot->quantity,
                         'quantity' => $item->pivot->quantity,
                         'service_id' => $item->id,
+                        'pickup' => $item->pickup,
                         'photoClient1' => $request->photoClient1,
                         'photoClient2' => $request->photoClient2,
                         'photoClient3' => $request->photoClient3,
@@ -319,7 +339,7 @@ class SectionItemController extends Controller
 
             });
 
-            return apiResponse(201, 'success', 'Cart berhasil ditambahkan');
+            return apiResponse(201, 'success', 'Checkout berhasil ditambahkan');
         } catch(Exception $e) {
             return apiResponse(400, 'error', 'error', $e);
         }
