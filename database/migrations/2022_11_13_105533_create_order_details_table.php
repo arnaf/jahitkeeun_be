@@ -18,16 +18,16 @@ class CreateOrderDetailsTable extends Migration
 
             $table->decimal('price', 14, 2);
             $table->integer('quantity');
-            $table->text('photoClient1');
-            $table->text('photoClient2');
-            $table->text('photoClient3');
-            $table->text('photoClient4');
-            $table->text('photoClient5');
-            $table->text('photoTaylor1');
-            $table->text('photoTaylor2');
-            $table->text('photoTaylor3');
-            $table->text('photoTaylor4');
-            $table->text('photoTaylor5');
+            $table->text('photoClient1')->nullable();
+            $table->text('photoClient2')->nullable();
+            $table->text('photoClient3')->nullable();
+            $table->text('photoClient4')->nullable();
+            $table->text('photoClient5')->nullable();
+            $table->text('photoTaylor1')->nullable();
+            $table->text('photoTaylor2')->nullable();
+            $table->text('photoTaylor3')->nullable();
+            $table->text('photoTaylor4')->nullable();
+            $table->text('photoTaylor5')->nullable();
 
             $table->foreignId('service_id')->constrained('services')->onUpdate('cascade')->onDelete('restrict');
             $table->foreignId('order_id')->constrained('orders')->onUpdate('cascade')->onDelete('restrict');
