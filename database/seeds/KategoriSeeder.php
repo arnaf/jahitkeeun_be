@@ -132,7 +132,7 @@ class KategoriSeeder extends Seeder
             'photo' => 'dress.png'
         ]);
 
-        
+
 
     for($i = 1; $i <= 20; $i++) {
         $jasa1 = Service::insert([
@@ -542,6 +542,7 @@ class KategoriSeeder extends Seeder
                 'photoTaylor3'  => 'phototaylor1.png',
                 'photoTaylor4'  => 'phototaylor1.png',
                 'photoTaylor5'  => 'phototaylor1.png',
+                'orderStatus'=> 'Proses Order Customer',
 
             ]);
         }
@@ -563,6 +564,7 @@ class KategoriSeeder extends Seeder
                 'photoTaylor3'  => 'phototaylor1.png',
                 'photoTaylor4'  => 'phototaylor1.png',
                 'photoTaylor5'  => 'phototaylor1.png',
+                'orderStatus'=> 'Proses Order Customer',
 
             ]);
         }
@@ -585,6 +587,7 @@ class KategoriSeeder extends Seeder
                 'photoTaylor3'  => 'phototaylor1.png',
                 'photoTaylor4'  => 'phototaylor1.png',
                 'photoTaylor5'  => 'phototaylor1.png',
+                'orderStatus'=> 'Proses Order Customer',
 
             ]);
         }
@@ -606,6 +609,7 @@ class KategoriSeeder extends Seeder
                 'photoTaylor3'  => 'phototaylor1.png',
                 'photoTaylor4'  => 'phototaylor1.png',
                 'photoTaylor5'  => 'phototaylor1.png',
+                'orderStatus'=> 'Proses Order Customer',
 
             ]);
         }
