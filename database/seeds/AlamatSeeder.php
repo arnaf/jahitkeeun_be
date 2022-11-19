@@ -45,9 +45,9 @@ class AlamatSeeder extends Seeder
                 'status' => '1',
                 'created_at'    => date('Y-m-d H:i:s')
             ]);
+            $id=$faker->randomElement((['3204290001','3204290002','3204290003','3204290004',
+            '3204290005','3204290006']));
 
-
-            $id = $faker->numberBetween(3204290001,3204290006);
 
         $alamat = DB::table('provinces')
         ->join('regencies', 'provinces.id', '=', 'regencies.province_id')
@@ -100,7 +100,8 @@ class AlamatSeeder extends Seeder
                 'status' => '1',
                 'created_at'    => date('Y-m-d H:i:s')
             ]);
-            $id = $faker->numberBetween(3204290001,3204290006);
+            $id=$faker->randomElement((['3204290001','3204290002','3204290003','3204290004',
+            '3204290005','3204290006']));
 
             $alamat = DB::table('provinces')
             ->join('regencies', 'provinces.id', '=', 'regencies.province_id')
@@ -151,7 +152,8 @@ class AlamatSeeder extends Seeder
                 'created_at'    => date('Y-m-d H:i:s')
             ]);
 
-            $id = $faker->numberBetween(3204290001,3204290006);
+            $id=$faker->randomElement((['3204290001','3204290002','3204290003','3204290004',
+            '3204290005','3204290006']));
 
             $alamat = DB::table('provinces')
             ->join('regencies', 'provinces.id', '=', 'regencies.province_id')

@@ -47,7 +47,8 @@ class UjungberungSeeder extends Seeder
             ]);
 
 
-            $id = $faker->numberBetween(3273120003,3273120007);
+            $number = $faker->numberBetween(3273120003,3273120007);
+            $id = strlen($number);
 
         $alamat = DB::table('provinces')
         ->join('regencies', 'provinces.id', '=', 'regencies.province_id')
@@ -100,7 +101,8 @@ class UjungberungSeeder extends Seeder
                 'status' => '1',
                 'created_at'    => date('Y-m-d H:i:s')
             ]);
-            $id = $faker->numberBetween(3273120003,3273120007);
+            $number = $faker->numberBetween(3273120003,3273120007);
+            $id = strlen($number);
 
             $alamat = DB::table('provinces')
             ->join('regencies', 'provinces.id', '=', 'regencies.province_id')
@@ -151,7 +153,8 @@ class UjungberungSeeder extends Seeder
                 'created_at'    => date('Y-m-d H:i:s')
             ]);
 
-            $id = $faker->numberBetween(3273120003,3273120007);
+            $number = $faker->numberBetween(3273120003,3273120007);
+            $id = strlen($number);
 
             $alamat = DB::table('provinces')
             ->join('regencies', 'provinces.id', '=', 'regencies.province_id')
