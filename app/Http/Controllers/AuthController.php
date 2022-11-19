@@ -69,13 +69,14 @@ class AuthController extends Controller
 
     public function login(Request $request) {
         $rules = [
-            'email'     => 'required|email',
-            'password'  => 'required|min:8',
+            'email'     => 'required|email|exists:users,email',
+            'password'  => 'required|exists:users,password',
         ];
 
         $message = [
             'email.required'    => 'Mohon isikan email anda',
             'email.email'       => 'Mohon isikan email valid',
+            'email.exist'       => 'Email belum terdaftar',
             'password.required' => 'Mohon isikan password anda',
             'password.min'      => 'Password wajib mengandung minimal 8 karakter',
         ];
