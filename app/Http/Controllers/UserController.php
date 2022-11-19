@@ -175,19 +175,31 @@ class UserController extends Controller
             DB::transaction(function () use ($request, $id, $clientPhoto, $authRole) {
 
 
-                $user = User::where('id', $id)->update([
+                $user = User::where('id', $id)->first();
+                $user->update([
                     'name'  => $request->name,
                     'email' => $request->email,
                     'updated_at' => date('Y-m-d H:i:s')
                 ]);
 
-                if($request->role == 'taylor'){
+
+                if($request->role == '2'){
                     $user->syncRoles('taylor');
-                } elseif($request->role == 'taylor') {
+                } elseif($request->role == '3') {
                     $user->syncRoles('convection');
                 }
 
-                if($authRole == 'client'){
+
+            });
+
+            DB::transaction(function () use ($request, $id, $clientPhoto) {
+
+
+                $authRoleNew = Auth::user()->getRoleNames();
+
+                dd($authRoleNew);
+
+                if($authRoleNew == 'client'){
                 Client::where('user_id', $id)->update([
                     'photo'         => $clientPhoto,
                     'phone'         => $request->phone,
@@ -195,7 +207,7 @@ class UserController extends Controller
                     'placeBirth'    => $request->placeBirth,
                     'updated_at'    => date('Y-m-d H:i:s')
                 ]);
-                } elseif($authRole == 'taylor'){
+                } elseif($authRoleNew == 'taylor'){
                     Taylor::where('user_id', $id)->update([
                         'photo'         => $clientPhoto,
                         'phone'         => $request->phone,
@@ -203,7 +215,7 @@ class UserController extends Controller
                         'placeBirth'    => $request->placeBirth,
                         'updated_at'    => date('Y-m-d H:i:s')
                     ]);
-                } elseif($authRole == 'convection'){
+                } elseif($authRoleNew == 'convection'){
                     Convection::where('user_id', $id)->update([
                         'photo'         => $clientPhoto,
                         'phone'         => $request->phone,
@@ -211,7 +223,7 @@ class UserController extends Controller
                         'placeBirth'    => $request->placeBirth,
                         'updated_at'    => date('Y-m-d H:i:s')
                     ]);
-                } elseif($authRole == 'admin'){
+                } elseif($authRoleNew == 'admin'){
                     Admin::where('user_id', $id)->update([
                         'photo'         => $clientPhoto,
                         'phone'         => $request->phone,
@@ -222,7 +234,6 @@ class UserController extends Controller
                 }
 
 
-
             });
 
             return apiResponse(202, 'success', 'data pengguna berhasil diperbaharui');
@@ -231,20 +242,32 @@ class UserController extends Controller
         }
     }
 
+
+
+
+
+
+
+
+
+
+
+
+
     public function passwordUpdateByID(Request $request, $id) {
 
 
         $rules = [
-            'name'          => 'required',
-            'email'         => 'required|email',
+            // 'name'          => 'required',
+            // 'email'         => 'required|email',
             'password'      => 'required|min:8'
 
         ];
 
         $message = [
-            'name.required'     => 'Mohon isikan nama anda',
-            'email.required'    => 'Mohon isikan email anda',
-            'email.email'       => 'Mohon isikan email valid',
+            // 'name.required'     => 'Mohon isikan nama anda',
+            // 'email.required'    => 'Mohon isikan email anda',
+            // 'email.email'       => 'Mohon isikan email valid',
             'password.min'      => 'Password wajib mengandung minimal 8 karakter'
 
         ];
@@ -260,9 +283,9 @@ class UserController extends Controller
 
 
                 $user = User::where('id', $id)->update([
-                    'name'      => Auth::User()->name,
-                    'email'     => Auth::User()->email,
-                    'password'  => $request->password,
+                    // 'name'      => Auth::User()->name,
+                    // 'email'     => Auth::User()->email,
+                    'password'  => Hash::make($request->password),
                     'updated_at' => date('Y-m-d H:i:s')
                 ]);
 
