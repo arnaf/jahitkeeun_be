@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/dashboardtayloralamat/{id}', 'DashboardTaylorController@getAlamat');
 Route::get('/dashboardtaylororder/{id}', 'DashboardTaylorController@getOrder');
 Route::post('/ubahprosespengerjaanorderdetailId/{id}', 'DashboardTaylorController@update');
+Route::post('/ubahkonfirmasipengerjaanorderdetailId/{id}', 'DashboardTaylorController@updatekonfirmasi');
 Route::get('/dashboardtaylor', 'DashboardTaylorController@getAllItem');
 
 Route::get('/dashboardtaylor/{id}', 'DashboardTaylorController@getItemById');

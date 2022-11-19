@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Service;
 use App\Order;
 use App\OrderDetail;
+use Illuminate\Support\Str;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -55,61 +56,7 @@ class DashboardTaylorController extends Controller
     }
 
 
-    public function store(Request $request) {
-        $rules = [
-            'user_id'         => 'required',
-            'service_id'         => 'required',
-            'quantity'         => 'required',
-            'pickup'         => 'required',
 
-
-        ];
-
-        $message = [
-            'user_id.required'        => 'Mohon isikan user id',
-            'service_id.required'        => 'Mohon isikan product id',
-            'quantity.required'        => 'Mohon isikan quantity',
-            'pickup.required'        => 'Mohon isikan tanggal pickup',
-
-        ];
-
-        $validator = Validator::make($request->all(), $rules, $message);
-
-        if($validator->fails()) {
-            return apiResponse(400, 'error', 'Data tidak lengkap ', $validator->errors());
-        }
-        if($request->has('photoClient1')) {
-
-
-            $extension = $request->file('photoClient1')->getClientOriginalExtension();
-            //$name = date('YmdHis').'.'.$extension;
-            $name = date('YmdHis').''.$request->service_id.''.$request->user_id.'.'.$extension;
-            $path = base_path('public/photo-cart/');
-            $request->file('photoClient1')->move($path, $name);
-
-        }
-
-        try {
-
-            DB::transaction(function () use ($request,$name) {
-
-                $id = Cart::insertGetId([
-                    'user_id'  => $request->user_id,
-                    'service_id'  => $request->service_id,
-                    'quantity'  => $request->quantity,
-                    'pickup'  => $request->pickup,
-                    'photoClient1'  => $name,
-                ]);
-
-
-
-            });
-
-            return apiResponse(201, 'success', 'Cart berhasil ditambahkan');
-        } catch(Exception $e) {
-            return apiResponse(400, 'error', 'error', $e);
-        }
-    }
 
 
 
@@ -144,101 +91,56 @@ class DashboardTaylorController extends Controller
           }
       }
 
-      public function destroy($id) {
-        try {
-
-            DB::transaction(function () use ($id) {
-              Cart::where('user_id', $id)->delete();
-
-            });
-
-            return apiResponse(202, 'success', 'cart berhasil dikosongkan :(');
-        } catch(Exception $e) {
-            return apiResponse(400, 'error', 'error', $e);
-        }
-    }
-
-
-
-
-    public function checkout(Request $request)
-    {
-
+      public function updatekonfirmasi(Request $request, $id) {
         $rules = [
-            'user_id'                       => 'required',
-            'amount'                        => 'required',
-            'address'                       => 'required',
-            'deliveries_id'                 => 'required',
-            'payment_method_id'             => 'required',
-            'shipping_method_id'            => 'required',
-
+             'photoTaylor1'         => 'required',
         ];
 
         $message = [
-            'user_id.required'                  => 'Mohon isikan user id',
-            'amount.required'                   => 'Mohon isikan amount',
-            'addreess.required'                 => 'Mohon isikan alamat',
-            'deliveries_id.required'            => 'Mohon isikan alamat',
-            'payment_method_id.required'        => 'Mohon isikan alamat',
-            'shipping_method_id.required'       => 'Mohon isikan alamat',
-
+            'photoTaylor1.required'        => 'Mohon isikan Photo',
         ];
 
-        $validator = Validator::make($request->all(), $rules, $message);
+          $validator = Validator::make($request->all(), $rules, $message);
 
-        if($validator->fails()) {
-            return apiResponse(400, 'error', 'Data tidak lengkap ', $validator->errors());
+          if($validator->fails()) {
+              return apiResponse(400, 'error', 'Data tidak lengkap ', $validator->errors());
+          }
+
+          if($request->has('photoTaylor1')) {
+
+
+            $extension = $request->file('photoTaylor1')->getClientOriginalExtension();
+            //$name = date('YmdHis').'.'.$extension;
+            $name = date('YmdHis').''.Str::uuid().'.'.$extension;
+            $path = base_path('public/photo-orderdetail/');
+            $request->file('photoTaylor1')->move($path, $name);
+
+
+
         }
 
-        try {
-            DB::transaction(function () use ($request) {
+          try {
+              DB::transaction(function () use ($request, $id,$name) {
+                  OrderDetail::where('id', $id)->
 
+                  update([
 
-                $order = Order::create([
-                    'user_id' => $request->user()->id,
-                    'totalPayment' => $request->amount,
-                    'paymentStatus' => 'BELUM BAYAR',
-                    'orderStatus' => 'Menunggu Pickup',
+                      'orderStatus' => 'Selesai Pengerjaan (Konfirmasi Penerima)',
+                      'photoTaylor1'  => $name,
+                  ]);
+              });
 
-                    'address' => $request->address,
-                    'deliveries_id' => $request->deliveries_id,
-                    'payment_method_id' => $request->payment_method_id,
-                    'shipping_method_id' => $request->shipping_method_id,
-                ]);
-
-
-                $cart = $request->user()->cart()->get();
-                foreach ($cart as $item) {
-                    $order->items()->create([
-                        'price' => $item->price * $item->pivot->quantity,
-                        'quantity' => $item->pivot->quantity,
-                        'service_id' => $item->id,
-                        'pickup' => $item->pickup,
-                        'photoClient1' => $request->photoClient1,
-                        'photoClient2' => $request->photoClient2,
-                        'photoClient3' => $request->photoClient3,
-                        'photoClient4' => $request->photoClient4,
-                        'photoClient5' => $request->photoClient5,
-                    ]);
-                    // $item->quantity = $item->quantity - $item->pivot->quantity;
-                    // $item->save();
-                }
-                $request->user()->cart()->detach();
-                $order->payments()->create([
-                    'paymentAmount' => $request->amount,
-                    'user_id' => $request->user()->id,
-                ]);
+              return apiResponse(202, 'success', 'status Order berhasil dirubah');
+          } catch(Exception $e) {
+              return apiResponse(400, 'error', 'error', $e);
+          }
+      }
 
 
 
 
-            });
 
-            return apiResponse(201, 'success', 'Checkout berhasil ditambahkan');
-        } catch(Exception $e) {
-            return apiResponse(400, 'error', 'error', $e);
-        }
 
-    }
+
 
 }
