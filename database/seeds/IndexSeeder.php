@@ -58,7 +58,7 @@ class IndexSeeder extends Seeder
             'created_at'    => date('Y-m-d H:i:s')
         ]);
 
-        $id = $faker->numberBetween(3273010001,3273010008);
+        $id = '3273010003';
 
         $alamat = DB::table('provinces')
         ->join('regencies', 'provinces.id', '=', 'regencies.province_id')
