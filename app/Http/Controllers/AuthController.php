@@ -76,10 +76,10 @@ class AuthController extends Controller
         $message = [
             'email.required'    => 'Mohon isikan email anda',
             'email.email'       => 'Mohon isikan email valid',
-            'email.exist'       => 'Email belum terdaftar',
+            'email.exists'       => 'Email belum terdaftar',
             'password.required' => 'Mohon isikan password anda',
             'password.min'      => 'Password wajib mengandung minimal 8 karakter',
-            'password.exist'    => 'Password salah',
+            'password.exists'    => 'Password salah',
         ];
 
         $validator = Validator::make($request->all(), $rules, $message);
