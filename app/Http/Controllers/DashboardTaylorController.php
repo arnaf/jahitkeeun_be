@@ -18,22 +18,37 @@ class DashboardTaylorController extends Controller
     public function getOrder($id) {
 
         $address = DB::table('orders as a')
-            ->join('order_details as b', 'a.addresslabel_id', '=', 'b.id')
-            ->join('services as c', 'a.addresslabel_id', '=', 'b.id')
-            ->join('taylors as d', 'a.addresslabel_id', '=', 'b.id')
-            ->join('users as e', 'a.addresslabel_id', '=', 'b.id')
-            ->join('users as f', 'a.addresslabel_id', '=', 'b.id')
-            ->join('addresses as g', 'a.addresslabel_id', '=', 'b.id')
-            ->join('address_labels as h', 'a.addresslabel_id', '=', 'b.id')
-            ->join('provinces as i', 'c.id', '=', 'a.province_id')
-            ->join('regencies as j', 'd.id', '=', 'a.regency_id')
-            ->join('districts as k', 'e.id', '=', 'a.district_id')
-            ->join('villages as l', 'f.id', '=', 'a.village_id')
+            ->join('order_details as b', 'a.id', '=', 'b.order_id')
+            ->join('services as c', 'b.service_id', '=', 'c.id')
+            ->join('taylors as d', 'c.taylor_id', '=', 'd.id')
+            ->join('users as e', 'd.user_id', '=', 'e.id')
+            ->join('users as f', 'f.id', '=', 'a.user_id')
+            ->join('addresses as g', 'g.user_id', '=', 'f.id')
+            ->join('address_labels as h', 'g.addresslabel_id', '=', 'h.id')
+            ->join('provinces as i', 'i.id', '=', 'g.province_id')
+            ->join('regencies as j', 'j.id', '=', 'g.regency_id')
+            ->join('districts as k', 'k.id', '=', 'g.district_id')
+            ->join('villages as l', 'l.id', '=', 'g.village_id')
             ->select([
-                'a.user_id as userId','a.id as alamatId','b.name as jenisAlamat',
-                DB::raw("CONCAT(a.fullAddress,' ','Kel/Ds.',' ', f.name, ' Kec. ', e.name,' Kab/Kota. ', d.name,' Prov. ', c.name,' ', a.posCode) as alamat")
-            ])->where('a.user_id', $id)->
+                'b.id','a.invoice',
+	            'a.created_at as tgl_order',
+	            'f.name as namapembeli',
+                DB::raw("CONCAT(g.fullAddress,' ','Kel/Ds.',' ', l.name, ' Kec. ', k.name,' Kab/Kota. ', j.name,' Prov. ', i.name,' ', g.posCode) as alamat"),
+                'c.NAME AS jasa',
+                'b.quantity',
+                'b.price',
+                'a.orderStatus',
+                'a.paymentStatus',
+                'b.pickup',
+                'e.NAME AS namapenjahit',
+                'b.photoClient1',
+                'b.photoTaylor1'
+            ])->where('c.taylor_id', $id)->
+            where('g.addresslabel_id', 1)->
             get();
+
+
+
 
 
 
