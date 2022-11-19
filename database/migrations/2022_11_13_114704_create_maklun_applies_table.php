@@ -18,6 +18,7 @@ class CreateMaklunAppliesTable extends Migration
 
             $table->string('status');
             $table->decimal('bid', 14, 2);
+            $table->text('desc')->nullable();
 
 
             $table->foreignId('taylor_id')->constrained('taylors')->onUpdate('cascade')->onDelete('restrict');
