@@ -13,22 +13,30 @@ use Exception;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
-class SectionItemController extends Controller
+class DashboardTaylorController extends Controller
 {
-    public function getAlamat($id) {
+    public function getOrder($id) {
 
-
-        $address = DB::table('addresses as a')
-            ->join('address_labels as b', 'a.addresslabel_id', '=', 'b.id')
-            ->join('provinces as c', 'c.id', '=', 'a.province_id')
-            ->join('regencies as d', 'd.id', '=', 'a.regency_id')
-            ->join('districts as e', 'e.id', '=', 'a.district_id')
-            ->join('villages as f', 'f.id', '=', 'a.village_id')
+        $address = DB::table('orders as a')
+            ->join('order_details as b', 'a.addresslabel_id', '=', 'b.id')
+            ->join('services as c', 'a.addresslabel_id', '=', 'b.id')
+            ->join('taylors as d', 'a.addresslabel_id', '=', 'b.id')
+            ->join('users as e', 'a.addresslabel_id', '=', 'b.id')
+            ->join('users as f', 'a.addresslabel_id', '=', 'b.id')
+            ->join('addresses as g', 'a.addresslabel_id', '=', 'b.id')
+            ->join('address_labels as h', 'a.addresslabel_id', '=', 'b.id')
+            ->join('provinces as i', 'c.id', '=', 'a.province_id')
+            ->join('regencies as j', 'd.id', '=', 'a.regency_id')
+            ->join('districts as k', 'e.id', '=', 'a.district_id')
+            ->join('villages as l', 'f.id', '=', 'a.village_id')
             ->select([
                 'a.user_id as userId','a.id as alamatId','b.name as jenisAlamat',
                 DB::raw("CONCAT(a.fullAddress,' ','Kel/Ds.',' ', f.name, ' Kec. ', e.name,' Kab/Kota. ', d.name,' Prov. ', c.name,' ', a.posCode) as alamat")
             ])->where('a.user_id', $id)->
             get();
+
+
+
 
         if($address) {
             return apiResponse(200, 'success', 'list data Alamat', $address);
