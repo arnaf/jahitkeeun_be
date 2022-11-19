@@ -70,16 +70,15 @@ class AuthController extends Controller
     public function login(Request $request) {
         $rules = [
             'email'     => 'required|email|exists:users,email',
-            'password'  => 'required|exists:users,password',
+            'password'  => 'required|min:8',
         ];
 
         $message = [
             'email.required'    => 'Mohon isikan email anda',
             'email.email'       => 'Mohon isikan email valid',
-            'email.exists'       => 'Email belum terdaftar',
+            'email.exists'      => 'Email belum terdaftar!',
             'password.required' => 'Mohon isikan password anda',
             'password.min'      => 'Password wajib mengandung minimal 8 karakter',
-            'password.exists'    => 'Password salah',
         ];
 
         $validator = Validator::make($request->all(), $rules, $message);
@@ -94,7 +93,7 @@ class AuthController extends Controller
         ];
 
         if(!Auth::attempt($data)) {
-            return apiResponse(400, 'error', 'Akun belum terdaftar, silakan daftar terlebih dahulu!');
+            return apiResponse(400, 'error', 'Email atau password salah!');
         }
 
         $token = Auth::user()->createToken('API Token')->accessToken;

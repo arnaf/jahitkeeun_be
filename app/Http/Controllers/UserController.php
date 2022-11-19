@@ -181,9 +181,9 @@ class UserController extends Controller
                     'updated_at' => date('Y-m-d H:i:s')
                 ]);
 
-                if($request->role == '2'){
+                if($request->role == 'taylor'){
                     $user->syncRoles('taylor');
-                } elseif($request->role == '3') {
+                } elseif($request->role == 'taylor') {
                     $user->syncRoles('convection');
                 }
 
