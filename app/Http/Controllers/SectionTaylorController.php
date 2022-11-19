@@ -32,6 +32,21 @@ class SectionTaylorController extends Controller
 
     }
 
+    public function getTaylorByTaylorId($id) {
+        $taylor = DB::table('users')
+                ->join('taylors', 'users.id', '=', 'taylors.user_id')
+                ->join('addresses', 'users.id', '=', 'addresses.user_id')
+                ->join('districts', 'addresses.district_id', '=', 'districts.id')
+                ->where('taylors.id', $id)
+                ->select(['taylors.id as taylor_id', 'users.name as taylor_name', 'taylors.photo as taylor_photo', 'taylors.rating', 'taylors.completedTrans as completed_transaction', 'taylors.phone as taylor_phone', 'taylors.dateBirth as date_birth', 'taylors.placeBirth as place_birth', 'districts.name as districtName',])
+                ->paginate();
+
+        if($taylor) {
+            return apiResponse(200, 'success', $taylor);
+        }
+
+        return Response::json(apiResponse(404, 'not found', 'Taylor tidak ditemukan'), 404);
+    }
 
 
     public function getTaylorByRating($i) {
