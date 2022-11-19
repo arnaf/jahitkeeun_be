@@ -29,6 +29,7 @@ class CreateOrderDetailsTable extends Migration
             $table->text('photoTaylor3')->nullable();
             $table->text('photoTaylor4')->nullable();
             $table->text('photoTaylor5')->nullable();
+            $table->text('orderStatus')->nullable();
 
             $table->foreignId('service_id')->constrained('services')->onUpdate('cascade')->onDelete('restrict');
             $table->foreignId('order_id')->constrained('orders')->onUpdate('cascade')->onDelete('restrict');

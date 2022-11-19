@@ -8,6 +8,7 @@ require_once('includes/auth.php');
 require_once('includes/taylorsection.php');
 
 require_once('includes/searchbar.php');
+require_once('includes/datamaster.php');
 
 
 Route::group(
@@ -25,7 +26,7 @@ Route::group(
 
         require_once('includes/profile.php');
 
-        require_once('includes/datamaster.php');
+
 
         require_once('includes/kategori.php');;
     }
