@@ -2566,6 +2566,7 @@ return array(
     'League\\Uri\\UriTemplate\\Template' => $vendorDir . '/league/uri/src/UriTemplate/Template.php',
     'League\\Uri\\UriTemplate\\VarSpecifier' => $vendorDir . '/league/uri/src/UriTemplate/VarSpecifier.php',
     'League\\Uri\\UriTemplate\\VariableBag' => $vendorDir . '/league/uri/src/UriTemplate/VariableBag.php',
+    'MaklunSeeder' => $baseDir . '/database/seeds/MaklunSeeder.php',
     'Mockery' => $vendorDir . '/mockery/mockery/library/Mockery.php',
     'Mockery\\Adapter\\Phpunit\\MockeryPHPUnitIntegration' => $vendorDir . '/mockery/mockery/library/Mockery/Adapter/Phpunit/MockeryPHPUnitIntegration.php',
     'Mockery\\Adapter\\Phpunit\\MockeryPHPUnitIntegrationAssertPostConditions' => $vendorDir . '/mockery/mockery/library/Mockery/Adapter/Phpunit/MockeryPHPUnitIntegrationAssertPostConditions.php',

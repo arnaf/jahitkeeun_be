@@ -3120,6 +3120,7 @@ class ComposerStaticInitc1687687a827ee8a08dd8c67cd18ef75
         'League\\Uri\\UriTemplate\\Template' => __DIR__ . '/..' . '/league/uri/src/UriTemplate/Template.php',
         'League\\Uri\\UriTemplate\\VarSpecifier' => __DIR__ . '/..' . '/league/uri/src/UriTemplate/VarSpecifier.php',
         'League\\Uri\\UriTemplate\\VariableBag' => __DIR__ . '/..' . '/league/uri/src/UriTemplate/VariableBag.php',
+        'MaklunSeeder' => __DIR__ . '/../..' . '/database/seeds/MaklunSeeder.php',
         'Mockery' => __DIR__ . '/..' . '/mockery/mockery/library/Mockery.php',
         'Mockery\\Adapter\\Phpunit\\MockeryPHPUnitIntegration' => __DIR__ . '/..' . '/mockery/mockery/library/Mockery/Adapter/Phpunit/MockeryPHPUnitIntegration.php',
         'Mockery\\Adapter\\Phpunit\\MockeryPHPUnitIntegrationAssertPostConditions' => __DIR__ . '/..' . '/mockery/mockery/library/Mockery/Adapter/Phpunit/MockeryPHPUnitIntegrationAssertPostConditions.php',

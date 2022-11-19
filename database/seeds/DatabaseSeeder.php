@@ -26,6 +26,7 @@ class DatabaseSeeder extends Seeder
             UjungberungSeeder::class,
             KirconSeeder::class,
             OrderSeeder::class,
+            MaklunSeeder::class,
         ]);
     }
 }
