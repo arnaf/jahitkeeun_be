@@ -113,7 +113,7 @@ class IndexSeeder extends Seeder
             ]);
 
 
-            $id = $faker->numberBetween(3273010001,3273010008);
+            $id = $faker->numberBetween('3273010001','3273010008');
 
         $alamat = DB::table('provinces')
         ->join('regencies', 'provinces.id', '=', 'regencies.province_id')
@@ -166,7 +166,7 @@ class IndexSeeder extends Seeder
                 'status' => '1',
                 'created_at'    => date('Y-m-d H:i:s')
             ]);
-            $id = $faker->numberBetween(3273010001,3273010008);
+            $id = $faker->numberBetween('3273010001','3273010008');
 
             $alamat = DB::table('provinces')
             ->join('regencies', 'provinces.id', '=', 'regencies.province_id')
@@ -217,7 +217,7 @@ class IndexSeeder extends Seeder
                 'created_at'    => date('Y-m-d H:i:s')
             ]);
 
-            $id = $faker->numberBetween(3273010001,3273010008);
+            $id = $faker->numberBetween('3273010001','3273010008');
 
             $alamat = DB::table('provinces')
             ->join('regencies', 'provinces.id', '=', 'regencies.province_id')
