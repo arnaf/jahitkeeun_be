@@ -47,8 +47,8 @@ class KirconSeeder extends Seeder
             ]);
 
 
-            $number= $faker->numberBetween(3273150001,3273150006);
-            $id = strlen($number);
+            $id=$faker->randomElement((['3273150001','3273150002','3273150003','3273150004',
+            '3273150005','3273150006']));
 
         $alamat = DB::table('provinces')
         ->join('regencies', 'provinces.id', '=', 'regencies.province_id')
@@ -101,8 +101,8 @@ class KirconSeeder extends Seeder
                 'status' => '1',
                 'created_at'    => date('Y-m-d H:i:s')
             ]);
-            $number= $faker->numberBetween(3273150001,3273150006);
-            $id = strlen($number);
+            $id=$faker->randomElement((['3273150001','3273150002','3273150003','3273150004',
+            '3273150005','3273150006']));
 
             $alamat = DB::table('provinces')
             ->join('regencies', 'provinces.id', '=', 'regencies.province_id')
@@ -153,8 +153,9 @@ class KirconSeeder extends Seeder
                 'created_at'    => date('Y-m-d H:i:s')
             ]);
 
-            $number= $faker->numberBetween(3273150001,3273150006);
-            $id = strlen($number);
+
+            $id=$faker->randomElement((['3273150001','3273150002','3273150003','3273150004',
+            '3273150005','3273150006']));
 
             $alamat = DB::table('provinces')
             ->join('regencies', 'provinces.id', '=', 'regencies.province_id')

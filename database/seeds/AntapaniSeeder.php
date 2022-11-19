@@ -47,8 +47,7 @@ class AntapaniSeeder extends Seeder
             ]);
 
 
-            $number = $faker->numberBetween(3273141001,3273141004);
-            $id = strlen($number);
+            $id=$faker->randomElement((['3273141001','3273141002','3273141003','3273141004']));
 
         $alamat = DB::table('provinces')
         ->join('regencies', 'provinces.id', '=', 'regencies.province_id')
@@ -101,8 +100,7 @@ class AntapaniSeeder extends Seeder
                 'status' => '1',
                 'created_at'    => date('Y-m-d H:i:s')
             ]);
-            $number = $faker->numberBetween(3273141001,3273141004);
-            $id = strlen($number);
+            $id=$faker->randomElement((['3273141001','3273141002','3273141003','3273141004']));
 
             $alamat = DB::table('provinces')
             ->join('regencies', 'provinces.id', '=', 'regencies.province_id')
@@ -153,8 +151,9 @@ class AntapaniSeeder extends Seeder
                 'created_at'    => date('Y-m-d H:i:s')
             ]);
 
-            $number = $faker->numberBetween(3273141001,3273141004);
-            $id = strlen($number);
+
+
+            $id=$faker->randomElement((['3273141001','3273141002','3273141003','3273141004']));
 
             $alamat = DB::table('provinces')
             ->join('regencies', 'provinces.id', '=', 'regencies.province_id')
