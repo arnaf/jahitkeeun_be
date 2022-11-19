@@ -7,3 +7,6 @@ Route::get('/user/{id}', 'UserController@show');
 Route::post('/user', 'UserController@store');
 Route::post('/user/{id}', 'UserController@update');
 Route::delete('/user/{id}', 'UserController@destroy');
+
+
+Route::post('/user/update/{id}', 'UserController@profileUpdateByID');
