@@ -13,8 +13,9 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Spatie\Permission\Traits\HasRoles;
 use Illuminate\Support\Facades\Artisan;
+use Faker\Factory as Faker;
 
-class IndexSeeder extends Seeder
+class SukajadiSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -26,78 +27,11 @@ class IndexSeeder extends Seeder
         $faker = \Faker\Factory::create();
 
 
-
-        $addressesLabel1 = AddressLabel::insert([
-            'name' => 'Utama'
-        ]);
-
-        $addressesLabel2 = AddressLabel::insert([
-            'name' => 'Pengiriman'
-        ]);
-
-        $addressesLabel3 = AddressLabel::insert([
-            'name' => 'Penjemputan'
-        ]);
-
-
-        $superadmin1 = User::create([
-            'name' => 'admin',
-            'email' => 'admin@gmail.com',
-            'password' => bcrypt('password')
-        ]);
-
-        $superadmin1->assignRole('admin');
-
-        $id = Admin::insertGetId([
-            'user_id' => $superadmin1->id,
-            'photo' => 'avatar.png',
-            'phone' => '0811115555',
-            'dateBirth' => date('1996-01-01 H:i:s'),
-            'placeBirth' => 'Bandung',
-            'status' => '1',
-            'created_at'    => date('Y-m-d H:i:s')
-        ]);
-
-        $id = $faker->numberBetween(3273010001,3273010008);
-
-        $alamat = DB::table('provinces')
-        ->join('regencies', 'provinces.id', '=', 'regencies.province_id')
-        ->join('districts', 'regencies.id', '=', 'districts.regency_id')
-        ->join('villages', 'districts.id', '=', 'villages.district_id')
-        ->where('villages.id' ,'=', $id)
-            ->select([
-                'provinces.id as provinsi', 'regencies.id as regencies',
-                'districts.id as districts','villages.id as village'
-            ])
-            // ->select([
-            //     'provinces.name as provinsi', 'regencies.name as regencies',
-            //     'districts.name as districts','villages.name as village'
-            // ])
-            ->first();
-
-
-
-        $id = Address::insertGetId([
-            'user_id' => $superadmin1->id,
-            'fullAddress' => 'Jl Kenangan',
-            'posCode' => '40000',
-            'province_id' => $alamat->provinsi,
-            'regency_id' => $alamat->regencies,
-            'district_id' => $alamat->districts,
-            'village_id' => $alamat->village,
-            'lat' => '',
-            'long' => '',
-            'addresslabel_id' => 1,
-            'created_at'    => date('Y-m-d H:i:s')
-        ]);
-
-
-
-        for($i = 0; $i < 10; $i++) {
+        for($i = 0; $i < 5; $i++) {
 
             $superadmin2 = User::create([
-                'name' => 'Client'.' '.$faker->name,
-                'email'=> 'client'.''.$faker->unique()->numberBetween(11,20).''.'@gmail.com',
+                'name' => $faker->name,
+                'email'=> 'clientsukajadi'.''.$faker->unique()->numberBetween(1,5).''.'@gmail.com',
                 'password' => bcrypt('password'),
                 'created_at' => date('Y-m-d H:i:s')
             ]);
@@ -105,7 +39,7 @@ class IndexSeeder extends Seeder
             $id = Client::insertGetId([
                 'user_id' => $superadmin2->id,
                 'photo' => 'avatar.png',
-                'phone' => $faker->unique()->numberBetween(6281111200100,6281111200110),
+                'phone' => $faker->unique()->numberBetween(6282211200300,6282211200305),
                 'dateBirth' => date('1997-01-01 H:i:s'),
                 'placeBirth' => 'Bandung',
                 'status' => '1',
@@ -113,7 +47,7 @@ class IndexSeeder extends Seeder
             ]);
 
 
-            $id = $faker->numberBetween(3273010001,3273010008);
+            $id = $faker->numberBetween(3273240001,3273240005);
 
         $alamat = DB::table('provinces')
         ->join('regencies', 'provinces.id', '=', 'regencies.province_id')
@@ -133,7 +67,7 @@ class IndexSeeder extends Seeder
 
         $id = Address::insertGetId([
             'user_id' => $superadmin2->id,
-            'fullAddress' => 'Jl Kenangan',
+            'fullAddress' => 'Jl Cilenyi',
             'posCode' => '40000',
             'province_id' => $alamat->provinsi,
             'regency_id' => $alamat->regencies,
@@ -148,10 +82,10 @@ class IndexSeeder extends Seeder
 
         }
 
-        for($i = 0; $i < 20; $i++) {
+        for($i = 0; $i < 5; $i++) {
             $superadmin3 = User::create([
                 'name' => 'Taylor'.' '.$faker->name,
-                'email'=> 'taylor'.''.$faker->unique()->numberBetween(41,60).''.'@gmail.com',
+                'email'=> 'taylorsukajadi'.''.$faker->unique()->numberBetween(6,10).''.'@gmail.com',
                 'password' => bcrypt('password'),
                 'created_at' => date('Y-m-d H:i:s')
             ]);
@@ -159,14 +93,14 @@ class IndexSeeder extends Seeder
             $id = Taylor::insertGetId([
                 'user_id' => $superadmin3->id,
                 'photo' => 'avatar.png',
-                'phone' => $faker->unique()->numberBetween(6281111200111,6281111200130),
+                'phone' => $faker->unique()->numberBetween(6282211300111,6282211300115),
                 'dateBirth' => date('1997-01-01 H:i:s'),
                 'placeBirth' => 'Bandung',
                 'rating' => rand(0, 5),
                 'status' => '1',
                 'created_at'    => date('Y-m-d H:i:s')
             ]);
-            $id = $faker->numberBetween(3273010001,3273010008);
+            $id = $faker->numberBetween(3273240001,3273240005);
 
             $alamat = DB::table('provinces')
             ->join('regencies', 'provinces.id', '=', 'regencies.province_id')
@@ -186,7 +120,7 @@ class IndexSeeder extends Seeder
 
             $id = Address::insertGetId([
                 'user_id' => $superadmin3->id,
-                'fullAddress' => 'Jl Kenangan',
+                'fullAddress' => 'Jl Soekarno Hatta',
                 'posCode' => '40000',
                 'province_id' => $alamat->provinsi,
                 'regency_id' => $alamat->regencies,
@@ -199,10 +133,10 @@ class IndexSeeder extends Seeder
             ]);
 
         }
-        for($i = 0; $i < 10; $i++) {
+        for($i = 0; $i < 5; $i++) {
             $superadmin4 = User::create([
-                'name' => 'Convection'.' '.$faker->name,
-                'email'=> 'convection'.''.$faker->unique()->numberBetween(71,80).''.'@gmail.com',
+                'name' => $faker->name,
+                'email'=> 'convectionsukajadi'.''.$faker->unique()->numberBetween(11,15).''.'@gmail.com',
                 'password' => bcrypt('password'),
                 'created_at' => date('Y-m-d H:i:s')
             ]);
@@ -210,14 +144,14 @@ class IndexSeeder extends Seeder
             $id = Convection::insertGetId([
                 'user_id' => $superadmin4->id,
                 'photo' => 'avatar.png',
-                'phone' => $faker->unique()->numberBetween(6281111200131,6281111200141),
+                'phone' => $faker->unique()->numberBetween(6282211400131,6282211400141),
                 'dateBirth' => date('1997-01-01 H:i:s'),
                 'placeBirth' => 'Bandung',
                 'status' => '1',
                 'created_at'    => date('Y-m-d H:i:s')
             ]);
 
-            $id = $faker->numberBetween(3273010001,3273010008);
+            $id = $faker->numberBetween(3273240001,3273240005);
 
             $alamat = DB::table('provinces')
             ->join('regencies', 'provinces.id', '=', 'regencies.province_id')
@@ -228,16 +162,12 @@ class IndexSeeder extends Seeder
                     'provinces.id as provinsi', 'regencies.id as regencies',
                     'districts.id as districts','villages.id as village'
                 ])
-                // ->select([
-                //     'provinces.name as provinsi', 'regencies.name as regencies',
-                //     'districts.name as districts','villages.name as village'
-                // ])
                 ->first();
 
 
             $id = Address::insertGetId([
                 'user_id' => $superadmin4->id,
-                'fullAddress' => 'Jl Kenangan',
+                'fullAddress' => 'Pagarsih',
                 'posCode' => '40000',
                 'province_id' => $alamat->provinsi,
                 'regency_id' => $alamat->regencies,

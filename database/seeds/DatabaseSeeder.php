@@ -18,7 +18,14 @@ class DatabaseSeeder extends Seeder
             IndoRegionVillageSeeder::class,
             RoleSeeder::class,
             IndexSeeder::class,
+            Index1Seeder::class,
             KategoriSeeder::class,
+            AlamatSeeder::class,
+            AntapaniSeeder::class,
+            SukajadiSeeder::class,
+            UjungberungSeeder::class,
+            KirconSeeder::class,
+            OrderSeeder::class,
         ]);
     }
 }
