@@ -39,7 +39,8 @@ Route::post('/datamaster/service/update/{id}', 'MasterServiceController@update')
 Route::delete('/datamaster/service/delete/{id}', 'MasterServiceController@delete');
 
 Route::get('/datamaster/portofolio', 'MasterPortofolioController@index');
-Route::get('/datamaster/portofolio/{id}', 'MasterPortofolioController@show');
+Route::get('/datamaster/portofolio/{id}', 'MasterPortofolioController@showPortoByPorto');
+Route::get('/datamaster/taylorportofolio/{id}', 'MasterPortofolioController@showPortoByTaylor');
 Route::post('/datamaster/portofolio/create', 'MasterPortofolioController@create');
 Route::post('/datamaster/portofolio/update/{id}', 'MasterPortofolioController@update');
 Route::delete('/datamaster/portofolio/delete/{id}', 'MasterPortofolioController@delete');

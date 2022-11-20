@@ -25,13 +25,29 @@ class MasterPortofolioController extends Controller
 
     }
 
-    public function show($id) {
+    public function showPortoByPorto($id) {
 
         $portofolios = DB::table('portofolios')
                         ->join('taylors', 'portofolios.taylor_id', '=', 'taylors.id')
                         ->join('users', 'taylors.user_id', '=', 'users.id')
                         ->select(['portofolios.id as id', 'taylors.id as taylor_id', 'users.name as taylor_name', 'portofolios.desc as portofolio_description', 'portofolios.photo1 as portofolio_photo1', 'portofolios.photo2 as portofolio_photo2', 'portofolios.photo3 as portofolio_photo3', 'portofolios.photo4 as portofolio_photo4', 'portofolios.photo5 as portofolio_photo5', ])
                         ->where('portofolios.id', $id)
+                        ->paginate();
+
+        if($portofolios) {
+            return apiResponse(200, 'success', $portofolios);
+        }
+
+        return Response::json(apiResponse(404, 'not found', 'Portofolio tidak ditemukan'), 404);
+    }
+
+    public function showPortoByTaylor($id) {
+
+        $portofolios = DB::table('portofolios')
+                        ->join('taylors', 'portofolios.taylor_id', '=', 'taylors.id')
+                        ->join('users', 'taylors.user_id', '=', 'users.id')
+                        ->select(['portofolios.id as id', 'taylors.id as taylor_id', 'users.name as taylor_name', 'portofolios.desc as portofolio_description', 'portofolios.photo1 as portofolio_photo1', 'portofolios.photo2 as portofolio_photo2', 'portofolios.photo3 as portofolio_photo3', 'portofolios.photo4 as portofolio_photo4', 'portofolios.photo5 as portofolio_photo5', ])
+                        ->where('taylors.id', $id)
                         ->paginate();
 
         if($portofolios) {
@@ -49,10 +65,7 @@ class MasterPortofolioController extends Controller
         $rules = [
             'desc'        => 'required',
             'photo1'      => 'required',
-            'photo2'      => 'required',
-            'photo3'      => 'required',
-            'photo4'      => 'required',
-            'photo5'      => 'required',
+
             'taylor_id'   => 'required',
 
         ];
@@ -60,10 +73,7 @@ class MasterPortofolioController extends Controller
         $message = [
             'desc.required'         => 'Mohon isikan deskripsi portofolio',
             'photo1.required'       => 'Mohon isikan photo 1',
-            'photo2.required'       => 'Mohon isikan photo 2',
-            'photo3.required'       => 'Mohon isikan photo 3',
-            'photo4.required'       => 'Mohon isikan photo 4',
-            'photo5.required'       => 'Mohon isikan photo 5',
+
             'taylor_id.required'    => 'Mohon isikan data penjahit',
 
         ];
@@ -76,7 +86,7 @@ class MasterPortofolioController extends Controller
 
         try {
 
-            if($request->has('photo1')){
+            if($request->hasFile('photo1')){
 
 
                 $extension = $request->file('photo1')->getClientOriginalExtension();
@@ -90,7 +100,7 @@ class MasterPortofolioController extends Controller
             }
 
 
-            if($request->has('photo2')){
+            if($request->hasFile('photo2')){
 
                 $extension = $request->file('photo2')->getClientOriginalExtension();
 
@@ -103,7 +113,7 @@ class MasterPortofolioController extends Controller
             }
 
 
-            if($request->has('photo3')){
+            if($request->hasFile('photo3')){
 
 
                 $extension = $request->file('photo3')->getClientOriginalExtension();
@@ -117,7 +127,7 @@ class MasterPortofolioController extends Controller
             }
 
 
-            if($request->has('photo4')){
+            if($request->hasFile('photo4')){
 
 
                 $extension = $request->file('photo4')->getClientOriginalExtension();
@@ -131,7 +141,7 @@ class MasterPortofolioController extends Controller
             }
 
 
-            if($request->has('photo5')){
+            if($request->hasFile('photo5')){
 
 
                 $extension = $request->file('photo5')->getClientOriginalExtension();
@@ -160,10 +170,10 @@ class MasterPortofolioController extends Controller
                 $portofolio = Portofolio::create([
                     'desc'           => $request->desc,
                     'photo1'         => $portoPhoto1,
-                    'photo2'         => $portoPhoto2,
-                    'photo3'         => $portoPhoto3,
-                    'photo4'         => $portoPhoto4,
-                    'photo5'         => $portoPhoto5,
+                    'photo2'         => $portoPhoto2 ? "photo2" : null,
+                    'photo3'         => $portoPhoto3 ? "photo3" : null,
+                    'photo4'         => $portoPhoto4 ? "photo4" : null,
+                    'photo5'         => $portoPhoto5 ? "photo5" : null,
                     'taylor_id'      => $request->taylor_id,
                 ]);
 
@@ -184,10 +194,7 @@ class MasterPortofolioController extends Controller
         $rules = [
             'desc'        => 'required',
             'photo1'      => 'required',
-            'photo2'      => 'required',
-            'photo3'      => 'required',
-            'photo4'      => 'required',
-            'photo5'      => 'required',
+
             'taylor_id'   => 'required',
 
         ];
@@ -195,10 +202,7 @@ class MasterPortofolioController extends Controller
         $message = [
             'desc.required'         => 'Mohon isikan deskripsi portofolio',
             'photo1.required'       => 'Mohon isikan photo 1',
-            'photo2.required'       => 'Mohon isikan photo 2',
-            'photo3.required'       => 'Mohon isikan photo 3',
-            'photo4.required'       => 'Mohon isikan photo 4',
-            'photo5.required'       => 'Mohon isikan photo 5',
+
             'taylor_id.required'    => 'Mohon isikan datapenjahit',
 
         ];

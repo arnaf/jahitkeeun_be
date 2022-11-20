@@ -24,11 +24,30 @@ class MasterMaklunController extends Controller
 
     }
 
-    public function show($id) {
+    public function showByMaklun($id) {
         $makluns = DB::table('makluns')
                     ->join('users', 'makluns.maklun_maker_id', '=', 'users.id')
-                    ->select(['makluns.id as id', 'users.id as maklun_maker_id', 'users.name as maklun_maker_name', 'makluns.title as maklun_title', 'makluns.price as maklun_price', 'makluns.dueTime as maklun_due_time', 'makluns.status as maklun_status'])
+                    ->join('addresses', 'users.id', '=', 'addresses.id')
+                    ->join('districts', 'addresses.district_id', '=', 'districts.id')
+                    ->select(['makluns.id as id', 'users.id as maklun_maker_id', 'users.name as maklun_maker_name', 'districts.name as maklun_maker_loc', 'makluns.title as maklun_title', 'makluns.price as maklun_price', 'makluns.dueTime as maklun_due_time', 'makluns.status as maklun_status'])
                     ->where('makluns.id', $id)
+                    ->paginate();
+
+        if($makluns) {
+            return apiResponse(200, 'success', $makluns);
+        }
+
+        return Response::json(apiResponse(404, 'not found', 'Maklun tidak ditemukan'), 404);
+    }
+
+
+    public function showByUser($id) {
+        $makluns = DB::table('makluns')
+                    ->join('users', 'makluns.maklun_maker_id', '=', 'users.id')
+                    ->join('addresses', 'users.id', '=', 'addresses.id')
+                    ->join('districts', 'addresses.district_id', '=', 'districts.id')
+                    ->select(['makluns.id as id', 'users.id as maklun_maker_id', 'users.name as maklun_maker_name', 'districts.name as maklun_maker_loc', 'makluns.title as maklun_title', 'makluns.price as maklun_price', 'makluns.dueTime as maklun_due_time', 'makluns.status as maklun_status'])
+                    ->where('users.id', $id)
                     ->paginate();
 
         if($makluns) {

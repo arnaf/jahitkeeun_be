@@ -10,3 +10,4 @@ Route::delete('/user/{id}', 'UserController@destroy');
 
 
 Route::post('/user/update/{id}', 'UserController@profileUpdateByID');
+Route::post('/user/updatepw/{id}', 'UserController@passwordUpdateByID');

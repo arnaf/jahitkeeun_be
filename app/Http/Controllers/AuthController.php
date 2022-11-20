@@ -47,13 +47,14 @@ class AuthController extends Controller
                 $user = User::create([
                     'name'          => $request->name,
                     'email'         => $request->email,
+                    'status'        => '1',
                     'password'      => Hash::make($request->password),
                     // 'created_at'    => date('Y-m-d H:i:s')
                 ]);
 
                 Client::create([
                     'user_id'       => $user->id,
-                    'status'        => 'Aktif',
+                    'status'        => '1',
                     // 'created_at'    => date('Y-m-d H:i:s')
 
                 ]);
@@ -90,11 +91,15 @@ class AuthController extends Controller
         $data = [
             'email'     => $request->email,
             'password'  => $request->password,
+            'status'    => '1'
+
         ];
 
+    
         if(!Auth::attempt($data)) {
             return apiResponse(400, 'error', 'Email atau password salah!');
         }
+
 
         $token = Auth::user()->createToken('API Token')->accessToken;
         $user = \App\User::find(1);
@@ -123,7 +128,7 @@ class AuthController extends Controller
             'nama'          => Auth::user()->name,
             'email'         => Auth::user()->email,
             'role'          => $user->roles = \App\User::find(Auth::user()->id)->getRoleNames()[0],
-            'image'        => $image,
+            'image'         => $image,
             'client'        => Auth::user()->client,
             'admin'         => Auth::user()->admin,
             'taylor'        => Auth::user()->taylor,

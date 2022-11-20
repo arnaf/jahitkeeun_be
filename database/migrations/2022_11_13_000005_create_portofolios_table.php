@@ -17,10 +17,10 @@ class CreatePortofoliosTable extends Migration
             $table->id();
             $table->text('desc');
             $table->text('photo1');
-            $table->text('photo2');
-            $table->text('photo3');
-            $table->text('photo4');
-            $table->text('photo5');
+            $table->text('photo2')->nullable();
+            $table->text('photo3')->nullable();
+            $table->text('photo4')->nullable();
+            $table->text('photo5')->nullable();
             $table->foreignId('taylor_id')->constrained('taylors')->onUpdate('cascade')->onDelete('cascade');
             $table->timestamps();
         });
