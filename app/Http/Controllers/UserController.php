@@ -115,8 +115,8 @@ class UserController extends Controller
 
 
         $rules = [
-            'name'          => 'required',
-            'email'         => 'required|email|unique:users',
+            // 'name'          => 'required',
+            // 'email'         => 'required|email|unique:users',
 
             'phone'         => 'required',
             'dateBirth'     => 'required',
@@ -125,10 +125,10 @@ class UserController extends Controller
         ];
 
         $message = [
-            'name.required'     => 'Mohon isikan nama anda',
-            'email.required'    => 'Mohon isikan email anda',
-            'email.email'       => 'Mohon isikan email valid',
-            'email.unique'      => 'Email sudah terdaftar',
+            // 'name.required'     => 'Mohon isikan nama anda',
+            // 'email.required'    => 'Mohon isikan email anda',
+            // 'email.email'       => 'Mohon isikan email valid',
+            // 'email.unique'      => 'Email sudah terdaftar',
 
             'phone.required'    => 'Mohon isikan nomor hp anda',
             'dateBirth.required'  => 'Mohon isikan tanggal lahir anda',
