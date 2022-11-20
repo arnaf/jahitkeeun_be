@@ -103,21 +103,28 @@ class AuthController extends Controller
 
         $token = Auth::user()->createToken('API Token')->accessToken;
         $user = \App\User::find(1);
+
         if($user->roles = \App\User::find(Auth::user()->id)->getRoleNames()[0] == 'admin') {
                 $detail = Auth::user()->admin->photo;
         }
         elseif($user->roles = \App\User::find(Auth::user()->id)->getRoleNames()[0] == 'client'){
-                $detail = Auth::user()->client->photo;
+                $detail = Auth::user();
         }
         elseif($user->roles = \App\User::find(Auth::user()->id)->getRoleNames()[0] == 'taylor'){
             $detail = Auth::user()->taylor->photo;
+            //dd($detail);
         }
         elseif($user->roles = \App\User::find(Auth::user()->id)->getRoleNames()[0] == 'convection'){
             $detail = Auth::user()->convection->photo;
         }
 
+        dd($detail);
+
+
 
         $image = asset('photo-user/'.$detail);
+
+
 
 
 

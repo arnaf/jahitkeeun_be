@@ -69,6 +69,11 @@ class User extends Authenticatable
         return $this->hasOne(Admin::class);
     }
 
+    public function taylor()
+    {
+        return $this->hasOne(Taylor::class);
+    }
+
     public function address()
     {
         return $this->hasMany(Address::class);
