@@ -118,7 +118,7 @@ class AuthController extends Controller
             $detail = Auth::user()->convection->photo;
         }
 
-        dd($detail);
+        
 
 
 
