@@ -66,6 +66,7 @@ class OrderSeeder extends Seeder
                 'service_id'  => 1,
                 'order_id'  => $i,
                 'pickup' => now(),
+                'desc'      => 'Ini deskripsi',
                 'photoClient1'  => 'photoclient1.png',
                 'photoClient2'  => 'photoclient2.png',
                 'photoClient3'  => 'photoclient3.png',
@@ -88,6 +89,7 @@ class OrderSeeder extends Seeder
                 'service_id'  => 21,
                 'order_id'  => $i,
                 'pickup' => now(),
+                'desc'      => 'Ini deskripsi',
                 'photoClient1'  => 'photoclient1.png',
                 'photoClient2'  => 'photoclient2.png',
                 'photoClient3'  => 'photoclient3.png',
@@ -138,6 +140,7 @@ class OrderSeeder extends Seeder
                 'service_id'  => 3,
                 'order_id'  => $i,
                 'pickup' => now(),
+                'desc'      => 'Ini deskripsi',
                 'photoClient1'  => 'photoclient1.png',
                 'photoClient2'  => 'photoclient2.png',
                 'photoClient3'  => 'photoclient3.png',
@@ -160,6 +163,7 @@ class OrderSeeder extends Seeder
                 'service_id'  => 23,
                 'order_id'  => $i,
                 'pickup' => now(),
+                'desc'      => 'Ini deskripsi',
                 'photoClient1'  => 'photoclient1.png',
                 'photoClient2'  => 'photoclient2.png',
                 'photoClient3'  => 'photoclient3.png',
@@ -178,7 +182,7 @@ class OrderSeeder extends Seeder
 
 
         // Taylor Id 3
-        
+
         for($i = 26; $i <= 42; $i++) {
             $order = Order::insert([
                 'invoice' => 'INVOICE'.'-'.$i,
@@ -213,6 +217,7 @@ class OrderSeeder extends Seeder
                 'service_id'  => $service,
                 'order_id'  => $i,
                 'pickup' => now(),
+                'desc'      => 'Ini deskripsi',
                 'photoClient1'  => 'photoclient1.png',
                 'photoClient2'  => 'photoclient2.png',
                 'photoClient3'  => 'photoclient3.png',
@@ -237,6 +242,7 @@ class OrderSeeder extends Seeder
                 'service_id'  => $service,
                 'order_id'  => $i,
                 'pickup' => now(),
+                'desc'      => 'Ini deskripsi',
                 'photoClient1'  => 'photoclient1.png',
                 'photoClient2'  => 'photoclient2.png',
                 'photoClient3'  => 'photoclient3.png',

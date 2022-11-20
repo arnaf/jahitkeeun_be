@@ -3,7 +3,7 @@
 use Illuminate\Support\Facades\Route;
 
 Route::get('/datamaster/client', 'MasterClientController@index');
-Route::get('/datamaster/client/{id}', 'MasterClientController@show');
+Route::get('/datamaster/client/userID/{id}', 'MasterClientController@show');
 Route::post('/datamaster/client/create', 'MasterClientController@create');
 Route::post('/datamaster/client/update/{id}', 'MasterClientController@update');
 Route::delete('/datamaster/client/delete/{id}', 'MasterClientController@delete');

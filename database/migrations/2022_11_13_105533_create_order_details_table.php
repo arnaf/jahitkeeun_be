@@ -19,6 +19,7 @@ class CreateOrderDetailsTable extends Migration
             $table->decimal('price', 14, 2);
             $table->integer('quantity');
             $table->date('pickup');
+            $table->text('desc')->nullable();
             $table->text('photoClient1')->nullable();
             $table->text('photoClient2')->nullable();
             $table->text('photoClient3')->nullable();

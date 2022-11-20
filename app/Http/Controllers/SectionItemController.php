@@ -27,8 +27,8 @@ class SectionItemController extends Controller
             ->select([
                 'a.user_id as userId','a.id as alamatId','b.name as jenisAlamat',
                 DB::raw("CONCAT(a.fullAddress,' ','Kel/Ds.',' ', f.name, ' Kec. ', e.name,' Kab/Kota. ', d.name,' Prov. ', c.name,' ', a.posCode) as alamat")
-            ])->where('a.user_id', $id)->
-            get();
+            ])->where('a.user_id', $id)
+            ->get();
 
         if($address) {
             return apiResponse(200, 'success', 'list data Alamat', $address);
@@ -48,7 +48,7 @@ class SectionItemController extends Controller
 
 
 
-        if($items) {
+        if($items->total() >0) {
             return apiResponse(200, 'success', 'list data Item', $items);
         }
         return Response::json(apiResponse(404, 'not found', 'Item tidak ditemukan'), 404);
@@ -56,10 +56,10 @@ class SectionItemController extends Controller
 
 
 
-    public function getItemById($id) {
+    public function getTaylorsByItemId($id) {
 
 
-        $taylors = DB::table('users')
+        $Items = DB::table('users')
             ->join('taylors', 'users.id', '=', 'taylors.user_id')
             ->join('addresses', 'users.id', '=', 'addresses.user_id')
             ->join('regencies', 'regencies.id', '=', 'addresses.regency_id')
@@ -77,8 +77,8 @@ class SectionItemController extends Controller
             ->paginate();
 
 
-        if($taylors) {
-            return apiResponse(200, 'success', 'list data Taylor By Item Id', $taylors);
+        if($Items->total() > 0) {
+            return apiResponse(200, 'success', 'list data Taylor By Item Id', $Items);
         }
         return Response::json(apiResponse(404, 'not found', 'Item tidak ditemukan'), 404);
     }
@@ -96,12 +96,12 @@ class SectionItemController extends Controller
             ->select([
                 'service_categories.id as itemId', 'service_categories.name as itemName', 'service_categories.photo as itemPhoto'
             ])
-            ->orderBy('users.name')
+            ->orderBy('service_categories.id')
             ->groupBy('service_categories.id','service_categories.name','service_categories.photo' )
             ->paginate();
 
 
-        if($items) {
+        if($items->total() > 0) {
             return apiResponse(200, 'success', 'list data Item By Taylor Id', $items);
         }
         return Response::json(apiResponse(404, 'not found', 'Item tidak ditemukan'), 404);
@@ -119,16 +119,16 @@ class SectionItemController extends Controller
             ->where('service_categories_id', $itemtid)
             ->where('taylor_id', $taylorid)
             ->select([
-                'services.id as serviceId', 'services.name as serviceName', 'services.price',
-                'taylor_id as taylorId','users.name as taylorName'
+                'services.id as serviceId', 'services.name as serviceName', 'services.price as servicePrice',
+                'taylors.id as taylorId','users.name as taylorName'
             ])
-            ->orderBy('users.name')
-            ->groupBy('services.id','services.name','services.price','taylor_id',
+            ->orderBy('services.id')
+            ->groupBy('services.id','services.name','services.price','taylors.id',
             'users.name' )
             ->paginate();
 
 
-        if($services) {
+        if($services->total() > 0) {
             return apiResponse(200, 'success', 'list data Service By Item Id', $services);
         }
         return Response::json(apiResponse(404, 'not found', 'Item tidak ditemukan'), 404);
@@ -176,6 +176,7 @@ class SectionItemController extends Controller
                     'user_id'  => $request->user_id,
                     'service_id'  => $request->service_id,
                     'quantity'  => $request->quantity,
+                    'desc'      => $request->desc,
                     'pickup'  => $request->pickup,
                     'photoClient1'  => $name,
                 ]);
@@ -195,7 +196,7 @@ class SectionItemController extends Controller
         $cart1 = DB::table('carts as a')
         ->join('users as b', 'b.id', '=', 'a.user_id')
 
-        ->join('services as c', 'a.id', '=', 'c.id')
+        ->join('services as c', 'a.service_id', '=', 'c.id')
         ->join('service_categories as d', 'c.service_categories_id', '=', 'd.id')
         ->join('taylors as e', 'c.taylor_id', '=', 'e.id')
         ->join('users as f', 'e.user_id', '=', 'f.id')
@@ -209,14 +210,14 @@ class SectionItemController extends Controller
             'f.name as namataylor',
             'c.id as serviceId',
             'c.name as serviceName',
-            'a.quantity as quantity', 'c.price',
+            'a.quantity as quantity', 'c.price', 'a.desc as description'
 
         ])
         ->orderBy('a.id')
 
         ->paginate();
 
-        if($cart1) {
+        if($cart1->total() > 0) {
             return apiResponse(200, 'success', 'list data Carts By User Id', $cart1);
         }
 
@@ -340,6 +341,7 @@ class SectionItemController extends Controller
                         'quantity' => $item->pivot->quantity,
                         'service_id' => $item->id,
                         'pickup' => $item->pickup,
+                        'desc'   => $item->desc,
                         'photoClient1' => $request->photoClient1,
                         'photoClient2' => $request->photoClient2,
                         'photoClient3' => $request->photoClient3,

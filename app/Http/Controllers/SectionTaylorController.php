@@ -16,16 +16,12 @@ class SectionTaylorController extends Controller
             ->join('addresses', 'users.id', '=', 'addresses.user_id')
             ->join('districts', 'addresses.district_id', '=', 'districts.id')
             ->select([
-                  'taylors.id as taylorId', 'users.name as taylorName', 'districts.name as districtName', 'taylors.rating as taylorRating', 'taylors.completedTrans as taylorComtrans', 'taylors.photo as taylorPhoto'
-            ])
-            ->get();
+                  'taylors.id as taylorId', 'users.name as taylorName', 'districts.name as districtName', 'taylors.rating as taylorRating', 'taylors.completedTrans as taylorComtrans', 'taylors.photo as taylorPhoto'])
+            ->paginate();
 
-
-
-        if(count($taylors) > 0) {
+        if($taylors->total() > 0) {
             return apiResponse(200, 'success', 'list data taylor', $taylors);
         } else {
-
             return Response::json(apiResponse(404, 'not found', 'Taylor tidak ditemukan'), 404);
 
         }
@@ -41,7 +37,7 @@ class SectionTaylorController extends Controller
                 ->select(['taylors.id as taylor_id', 'users.name as taylor_name', 'taylors.photo as taylor_photo', 'taylors.rating', 'taylors.completedTrans as completed_transaction', 'taylors.phone as taylor_phone', 'taylors.dateBirth as date_birth', 'taylors.placeBirth as place_birth', 'districts.name as districtName',])
                 ->paginate();
 
-        if($taylor) {
+        if($taylor->total() > 0) {
             return apiResponse(200, 'success', $taylor);
         }
 
@@ -79,7 +75,10 @@ class SectionTaylorController extends Controller
                 ->orderBy('taylors.rating', 'asc')
                 ->paginate();
 
-                return apiResponse(200, 'success', 'list data taylor', $user);
+                if($user->total() > 0){
+
+                    return apiResponse(200, 'success', 'list data taylor', $user);
+                }
             } else {
 
                 return Response::json(apiResponse(404, 'not found', 'Taylor tidak ditemukan'), 404);
@@ -120,7 +119,10 @@ class SectionTaylorController extends Controller
                 ->orderBy('services.price', 'asc')
                 ->paginate();
 
-                return apiResponse(200, 'success', 'list data taylor berdasarkan harga jasa', $user);
+                if($user->total() >0){
+
+                    return apiResponse(200, 'success', 'list data taylor berdasarkan harga jasa', $user);
+                }
             } else {
 
                 return Response::json(apiResponse(404, 'not found', 'Data tidak ditemukan'), 404);

@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/sectionitemalamat/{id}', 'SectionItemController@getAlamat');
 Route::get('/sectionitem', 'SectionItemController@getAllItem');
-Route::get('/sectionitem/{id}', 'SectionItemController@getItemById');
+Route::get('/sectionitem/{id}', 'SectionItemController@getTaylorsByItemId');
 Route::get('/sectionitem/taylorId/{id}', 'SectionItemController@getItemByTaylorId');
 Route::get('/sectionitem/taylorId/{taylorid}/itemId/{itemid}', 'SectionItemController@getServiceByItemId');
 Route::post('/sectionitem', 'SectionItemController@store');

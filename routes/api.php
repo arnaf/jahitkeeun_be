@@ -5,7 +5,6 @@ require_once('includes/auth.php');
 
 
 
-require_once('includes/taylorsection.php');
 
 require_once('includes/searchbar.php');
 require_once('includes/datamaster.php');
@@ -18,6 +17,7 @@ Route::group(
 
 
 
+        require_once('includes/taylorsection.php');
         require_once('includes/item.php');
         require_once('includes/sectionitem.php');
         require_once('includes/dashboardtaylor.php');

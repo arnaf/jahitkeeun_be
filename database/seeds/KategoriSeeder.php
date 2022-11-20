@@ -405,6 +405,7 @@ class KategoriSeeder extends Seeder
     for($i = 2; $i <= 11; $i++) {
         $cart = Cart::insert([
             'quantity' => 1,
+            'desc'      => 'Ini deskripsi',
             'service_id' => 2,
             'user_id' => $i,
             'pickup' => now(),
@@ -414,6 +415,7 @@ class KategoriSeeder extends Seeder
     for($i = 2; $i <= 11; $i++) {
         $cart = Cart::insert([
             'quantity' => 1,
+            'desc'      => 'Ini deskripsi',
             'service_id' => 22,
             'user_id' => $i,
             'pickup' => now(),
@@ -423,6 +425,7 @@ class KategoriSeeder extends Seeder
     for($i = 32; $i <= 41; $i++) {
         $cart = Cart::insert([
             'quantity' => 15,
+            'desc'      => 'Ini deskripsi',
             'service_id' => 2,
             'user_id' => $i,
             'pickup' => now(),
@@ -432,6 +435,7 @@ class KategoriSeeder extends Seeder
     for($i = 32; $i <= 41; $i++) {
         $cart = Cart::insert([
             'quantity' => 5,
+            'desc'      => 'Ini deskripsi',
             'service_id' => 22,
             'user_id' => $i,
             'pickup' => now(),
@@ -531,6 +535,7 @@ class KategoriSeeder extends Seeder
                 'price'  => 145000,
                 'service_id'  => 2,
                 'order_id'  => $i,
+                'desc'      => 'Ini deskripsi',
                 'pickup' => now(),
                 'photoClient1'  => 'photoclient1.png',
                 'photoClient2'  => 'photoclient2.png',
@@ -553,6 +558,7 @@ class KategoriSeeder extends Seeder
                 'price'  => 135000,
                 'service_id'  => 22,
                 'order_id'  => $i,
+                'desc'      => 'Ini deskripsi',
                 'pickup' => now(),
                 'photoClient1'  => 'photoclient1.png',
                 'photoClient2'  => 'photoclient2.png',
@@ -576,6 +582,7 @@ class KategoriSeeder extends Seeder
                 'price'  => 145000,
                 'service_id'  => 2,
                 'order_id'  => $i,
+                'desc'      => 'Ini deskripsi',
                 'pickup' => now(),
                 'photoClient1'  => 'photoclient1.png',
                 'photoClient2'  => 'photoclient2.png',
@@ -598,6 +605,7 @@ class KategoriSeeder extends Seeder
                 'price'  => 135000,
                 'service_id'  => 22,
                 'order_id'  => $i,
+                'desc'      => 'Ini deskripsi',
                 'pickup' => now(),
                 'photoClient1'  => 'photoclient1.png',
                 'photoClient2'  => 'photoclient2.png',

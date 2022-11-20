@@ -17,6 +17,7 @@ class CreateCartsTable extends Migration
             $table->id();
             $table->integer('quantity');
             $table->date('pickup');
+            $table->text('desc')->nullable();
             $table->string('photoClient1')->nullable();
 
             $table->foreignId('service_id')->constrained('services')->onUpdate('cascade')->onDelete('cascade');
