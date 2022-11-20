@@ -108,7 +108,7 @@ class AuthController extends Controller
                 $detail = Auth::user()->admin->photo;
         }
         elseif($user->roles = \App\User::find(Auth::user()->id)->getRoleNames()[0] == 'client'){
-                $detail = Auth::user();
+                $detail = Auth::user()->client->photo;
         }
         elseif($user->roles = \App\User::find(Auth::user()->id)->getRoleNames()[0] == 'taylor'){
             $detail = Auth::user()->taylor->photo;
