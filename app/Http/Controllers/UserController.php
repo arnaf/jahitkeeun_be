@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use random;
 use App\User;
 use App\Admin;
 use Exception;
@@ -9,6 +10,7 @@ use App\Client;
 use App\Taylor;
 use App\Convection;
 use App\UserDetail;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Spatie\Permission\Models\Role;
@@ -104,7 +106,7 @@ class UserController extends Controller
     }
 
 
-    public function profileUpdateByID(Request $request, $id) {
+    public function profileUpdateByIDLAMA(Request $request, $id) {
 
         $authRole = Auth::user()->getRoleNames()[0];
 
@@ -245,7 +247,260 @@ class UserController extends Controller
 
 
 
+    public function profileUpdateByID(Request $request, $id) {
 
+
+        $rules = [
+            'name'          => 'required',
+            'email'         => 'required|email|unique:users',
+
+            'phone'         => 'required',
+            'dateBirth'     => 'required',
+            'placeBirth'    => 'required',
+
+        ];
+
+        $message = [
+            'name.required'     => 'Mohon isikan nama anda',
+            'email.required'    => 'Mohon isikan email anda',
+            'email.email'       => 'Mohon isikan email valid',
+            'email.unique'      => 'Email sudah terdaftar',
+
+            'phone.required'    => 'Mohon isikan nomor hp anda',
+            'dateBirth.required'  => 'Mohon isikan tanggal lahir anda',
+            'placeBirth.required'  => 'Mohon isikan tempat lahir anda',
+
+        ];
+
+        $validator = Validator::make($request->all(), $rules, $message);
+
+        if($validator->fails()) {
+            return apiResponse(400, 'error', 'Data tidak lengkap ', $validator->errors());
+        }
+
+        $role = $request->role;
+
+        if($role == '1') {
+            if($request->has('photo')){
+
+                // $userDetail = Client::where('user_id','=',$id)->first();
+                // $oldImage = $userDetail->photo;
+
+                // if($oldImage){
+                //     $pleaseRemove = base_path('public/photos/client/').$oldImage;
+
+                //     if(file_exists($pleaseRemove)) {
+                //         unlink($pleaseRemove);
+                //     }
+                // }
+
+
+                $extension = $request->file('photo')->getClientOriginalExtension();
+
+                $clientPhoto = date('YmdHis').'.'.$extension;
+
+                $path = base_path('public/photos/client/');
+
+                $request->file('photo')->move($path, $clientPhoto);
+            }
+        }else if($role == '2') {
+            if($request->has('photo')){
+
+
+
+
+                $extension = $request->file('photo')->getClientOriginalExtension();
+
+                $taylorPhoto = date('YmdHis').'.'.$extension;
+
+                $path = base_path('public/photos/taylor/');
+
+                $request->file('photo')->move($path, $taylorPhoto);
+            }
+        } elseif($role == '3') {
+            if($request->has('photo')){
+
+                // $userDetail = Convection::where('user_id','=',$id)->first();
+                // $oldImage = $userDetail->photo;
+
+                // if($oldImage){
+                //     $pleaseRemove = base_path('public/photos/convection/').$oldImage;
+
+                //     if(file_exists($pleaseRemove)) {
+                //         unlink($pleaseRemove);
+                //     }
+                // }
+
+
+                $extension = $request->file('photo')->getClientOriginalExtension();
+
+                $convectionPhoto = date('YmdHis').'.'.$extension;
+
+                $path = base_path('public/photos/convection/');
+
+                $request->file('photo')->move($path, $convectionPhoto);
+            }
+        }  elseif($role == '4') {
+            if($request->has('photo')){
+
+                // $userDetail = Admin::where('user_id','=',$id)->first();
+                // $oldImage = $userDetail->photo;
+
+                // if($oldImage){
+                //     $pleaseRemove = base_path('public/photos/admin/').$oldImage;
+
+                //     if(file_exists($pleaseRemove)) {
+                //         unlink($pleaseRemove);
+                //     }
+                // }
+
+
+                $extension = $request->file('photo')->getClientOriginalExtension();
+
+                $adminPhoto = date('YmdHis').'.'.$extension;
+
+                $path = base_path('public/photos/admin/');
+
+                $request->file('photo')->move($path, $adminPhoto);
+            }
+        }
+
+        try {
+
+            $role = $request->role;
+            $oldUser = User::where('id', $id)->first();
+            $oldRole = $oldUser->getRoleNames()[0];
+
+
+            if($oldRole == 'client') {
+                $userDetail = Taylor::where('user_id','=',$id)->first();
+                $oldImage = $userDetail->photo;
+
+                if($oldImage){
+                    $pleaseRemove = base_path('public/photos/taylor/').$oldImage;
+
+                    if(file_exists($pleaseRemove)) {
+                        unlink($pleaseRemove);
+                    }
+                }
+                Client::where('user_id', $id)->delete();
+            } elseif($oldRole == 'taylor') {
+                Taylor::where('user_id', $id)->delete();
+            } elseif($oldRole == 'convection') {
+                Convection::where('user_id', $id)->delete();
+            } elseif($oldRole == 'admin') {
+                Admin::where('user_id', $id)->delete();
+            }
+
+            if($role == '2'){
+
+                    DB::transaction(function () use($request, $id, $taylorPhoto) {
+
+                        $user = User::where('id', $id)->first();
+
+                        $user->update([
+                            'name'          => $request->name,
+                            'email'         => $request->email,
+                        ]);
+
+                        Taylor::insert([
+                            'user_id'       => $user->id,
+                            'photo'         => $taylorPhoto,
+                            'phone'         => $request->phone,
+                            'dateBirth'     => $request->dateBirth,
+                            'placeBirth'    => $request->placeBirth,
+                            'status'        => '1',
+                            'rating'        => 0,
+                            'completedTrans'=> 0,
+                            'created_at'    => date('Y-m-d H:i:s')
+                        ]);
+                        $user->assignRole('taylor');
+                    });
+            } elseif($role == '3'){
+
+
+                    DB::transaction(function () use($request, $id, $convectionPhoto) {
+
+                        $user = User::where('id', $id)->first();
+
+                        $user->update([
+                            'name'          => $request->name,
+                            'email'         => $request->email,
+                        ]);
+
+                        Convection::create([
+                            'user_id'       => $user->id,
+                            'photo'         => $convectionPhoto,
+                            'phone'         => $request->phone,
+                            'dateBirth'     => $request->dateBirth,
+                            'placeBirth'    => $request->placeBirth,
+                            'status'        => '1',
+                        ]);
+                        $user->assignRole('convection');
+
+                    });
+            } elseif($role == '4'){
+
+
+                    DB::transaction(function () use($request, $id, $adminPhoto) {
+
+                        $user = User::where('id', $id)->first();
+
+                        $user->update([
+                            'name'          => $request->name,
+                            'email'         => $request->email,
+                        ]);
+
+                        Admin::create([
+                            'user_id'       => $user->id,
+                            'photo'         => $adminPhoto,
+                            'phone'         => $request->phone,
+                            'dateBirth'     => $request->dateBirth,
+                            'placeBirth'    => $request->placeBirth,
+                            'status'        => '1',
+                        ]);
+                        $user->assignRole('admin');
+
+                    });
+            }   elseif($role == '1'){
+
+                DB::transaction(function () use($request, $id, $clientPhoto) {
+
+                    $user = User::where('id', $id)->first();
+
+                    $user->update([
+                        'name'          => $request->name,
+                        'email'         => $request->email,
+                    ]);
+
+                    Client::create([
+                        'user_id'       => $user->id,
+                        'photo'         => $clientPhoto,
+                        'phone'         => $request->phone,
+                        'dateBirth'     => $request->dateBirth,
+                        'placeBirth'    => $request->placeBirth,
+                        'status'        => '1',
+                    ]);
+                    $user->assignRole('client');
+
+                });
+            }
+
+
+
+
+
+
+
+
+
+
+
+            return apiResponse(202, 'success', 'data pengguna berhasil diperbaharui');
+        } catch(Exception $e) {
+            return apiResponse(400, 'error', 'error', $e);
+        }
+    }
 
 
 

@@ -43,7 +43,8 @@ class IndexSeeder extends Seeder
         $superadmin1 = User::create([
             'name' => 'admin',
             'email' => 'admin@gmail.com',
-            'password' => bcrypt('password')
+            'password' => bcrypt('password'),
+            'status' => '1'
         ]);
 
         $superadmin1->assignRole('admin');
@@ -105,6 +106,7 @@ class IndexSeeder extends Seeder
                 'name' => 'client'.''.$faker->unique()->numberBetween(1,10),
                 'email'=> 'client'.''.$faker->unique()->numberBetween(11,20).''.'@gmail.com',
                 'password' => bcrypt('password'),
+                'status' => '1',
                 'created_at' => date('Y-m-d H:i:s')
             ]);
             $superadmin2->assignRole('client');
@@ -159,6 +161,7 @@ class IndexSeeder extends Seeder
                 'name' => 'taylor'.''.$faker->unique()->numberBetween(21,40),
                 'email'=> 'taylor'.''.$faker->unique()->numberBetween(41,60).''.'@gmail.com',
                 'password' => bcrypt('password'),
+                'status' => '1',
                 'created_at' => date('Y-m-d H:i:s')
             ]);
             $superadmin3->assignRole('taylor');
@@ -210,6 +213,7 @@ class IndexSeeder extends Seeder
                 'name' => 'convection'.''.$faker->unique()->numberBetween(61,70),
                 'email'=> 'convection'.''.$faker->unique()->numberBetween(71,80).''.'@gmail.com',
                 'password' => bcrypt('password'),
+                'status' => '1',
                 'created_at' => date('Y-m-d H:i:s')
             ]);
             $superadmin4->assignRole('convection');
