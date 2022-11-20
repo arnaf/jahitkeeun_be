@@ -118,11 +118,11 @@ class AuthController extends Controller
             $detail = Auth::user()->convection->photo;
         }
 
-        
 
 
 
-        $image = asset('photo-user/'.$detail);
+        $image = '/home/mvlrzxvo/subdomain/api.tepat.co.id/photo-user/'.$detail;
+
 
 
 
