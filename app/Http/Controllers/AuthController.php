@@ -95,7 +95,7 @@ class AuthController extends Controller
 
         ];
 
-    
+
         if(!Auth::attempt($data)) {
             return apiResponse(400, 'error', 'Email atau password salah!');
         }
@@ -115,6 +115,7 @@ class AuthController extends Controller
         elseif($user->roles = \App\User::find(Auth::user()->id)->getRoleNames()[0] == 'convection'){
             $detail = Auth::user()->convection->photo;
         }
+
 
         $image = asset('photo-user/'.$detail);
 
