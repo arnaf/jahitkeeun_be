@@ -32,6 +32,7 @@ class Index1Seeder extends Seeder
                 'name' => 'Client Kab'.' '.$faker->name,
                 'email'=> 'clientkab'.''.$faker->unique()->numberBetween(11,20).''.'@gmail.com',
                 'password' => bcrypt('password'),
+                'status' => '1',
                 'created_at' => date('Y-m-d H:i:s')
             ]);
             $superadmin2->assignRole('client');
@@ -89,6 +90,7 @@ class Index1Seeder extends Seeder
                 'name' => 'Taylor Kab'.' '.$faker->name,
                 'email'=> 'taylorkab'.''.$faker->unique()->numberBetween(41,60).''.'@gmail.com',
                 'password' => bcrypt('password'),
+                'status' => '1',
                 'created_at' => date('Y-m-d H:i:s')
             ]);
             $superadmin3->assignRole('taylor');
@@ -142,6 +144,7 @@ class Index1Seeder extends Seeder
                 'name' => 'Convection Kab'.' '.$faker->name,
                 'email'=> 'convectionkab'.''.$faker->unique()->numberBetween(71,80).''.'@gmail.com',
                 'password' => bcrypt('password'),
+                'status' => '1',
                 'created_at' => date('Y-m-d H:i:s')
             ]);
             $superadmin4->assignRole('convection');

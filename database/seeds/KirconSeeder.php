@@ -33,6 +33,7 @@ class KirconSeeder extends Seeder
                 'name' => $faker->name,
                 'email'=> 'clientkircon'.''.$faker->unique()->numberBetween(1,5).''.'@gmail.com',
                 'password' => bcrypt('password'),
+                'status' => '1',
                 'created_at' => date('Y-m-d H:i:s')
             ]);
             $superadmin2->assignRole('client');
@@ -88,6 +89,7 @@ class KirconSeeder extends Seeder
                 'name' => 'Taylor'.' '.$faker->name,
                 'email'=> 'taylorkircon'.''.$faker->unique()->numberBetween(6,10).''.'@gmail.com',
                 'password' => bcrypt('password'),
+                'status' => '1',
                 'created_at' => date('Y-m-d H:i:s')
             ]);
             $superadmin3->assignRole('taylor');
@@ -140,6 +142,7 @@ class KirconSeeder extends Seeder
                 'name' => $faker->name,
                 'email'=> 'convectionkircon'.''.$faker->unique()->numberBetween(11,15).''.'@gmail.com',
                 'password' => bcrypt('password'),
+                'status' => '1',
                 'created_at' => date('Y-m-d H:i:s')
             ]);
             $superadmin4->assignRole('convection');

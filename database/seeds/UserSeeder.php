@@ -20,6 +20,7 @@ class UserSeeder extends Seeder
         $superadmin1 = User::create([
             'name' => 'arnaf',
             'email' => 'arvi@gmail.com',
+            'status' => '1',
             'password' => bcrypt('client123')
         ]);
 
