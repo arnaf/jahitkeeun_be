@@ -23,9 +23,9 @@ class SearchBarController extends Controller
             ->join('regencies', 'regencies.id', '=', 'addresses.regency_id')
             ->join('services', 'taylors.id', '=', 'services.taylor_id')
             ->join('service_categories', 'services.service_categories_id', '=', 'service_categories.id')
-             ->where('services.name', 'like', '%'.$request->keyword.'%' )
-             ->orwhere('users.name', 'like', '%'.$request->keyword.'%' )
-             ->orwhere('service_categories.name', 'like', '%'.$request->keyword.'%' )
+
+             ->where('users.name', 'like', '%'.$request->keyword.'%' )
+
             ->select([
                 'services.id as serviceId', 'services.name as serviceName', 'services.price',
                 'taylor_id as taylorId','users.name as taylorName'
