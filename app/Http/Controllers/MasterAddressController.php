@@ -14,7 +14,7 @@ class MasterAddressController extends Controller
     public function index()
     {
 
-            $data = DB::table('users')
+            $datas = DB::table('users')
                 ->join('addresses', 'users.id', '=', 'addresses.user_id')
                 ->join('address_labels', 'addresses.addresslabel_id', '=', 'address_labels.id')
                 ->join('provinces', 'addresses.province_id', '=', 'provinces.id')
@@ -25,12 +25,15 @@ class MasterAddressController extends Controller
                 ->orderBy('users.id', 'asc')
                 ->paginate(20);
 
-
-        return apiResponse(200, 'success', 'List klien', $data);
+        if($datas->total() > 0) {
+            return apiResponse(200, 'success', 'List klien', $datas);
+        } else {
+            return Response::json(apiResponse(404, 'not found', 'Alamat tidak ditemukan'), 404);
+        }
 
     }
 
-    public function show($id) {
+    public function showByUserId($id) {
         $data = DB::table('users')
                 ->join('addresses', 'users.id', '=', 'addresses.user_id')
                 ->join('address_labels', 'addresses.addresslabel_id', '=', 'address_labels.id')
@@ -43,8 +46,33 @@ class MasterAddressController extends Controller
                 ->orderBy('users.id', 'asc')
                 ->paginate(20);
 
-        if($data) {
+        if($data->total() >0) {
             return apiResponse(200, 'success', $data);
+        } else {
+            return Response::json(apiResponse(404, 'not found', 'Data lamat tidak ditemukan'), 404);
+        }
+
+        return Response::json(apiResponse(404, 'not found', 'User tidak ditemukan'), 404);
+    }
+
+
+    public function showByAddressId($id) {
+        $data = DB::table('users')
+                ->join('addresses', 'users.id', '=', 'addresses.user_id')
+                ->join('address_labels', 'addresses.addresslabel_id', '=', 'address_labels.id')
+                ->join('provinces', 'addresses.province_id', '=', 'provinces.id')
+                ->join('regencies', 'addresses.regency_id', '=', 'regencies.id')
+                ->join('districts', 'addresses.district_id', '=', 'districts.id')
+                ->join('villages', 'addresses.village_id', '=', 'villages.id')
+                ->select(['users.id as user_id', 'addresses.id as address_id', 'address_labels.name as address_category', 'users.name as user_name', 'addresses.fullAddress as full_address', 'addresses.posCode as pos_code', 'provinces.name as province', 'regencies.name as regency', 'districts.name as district', 'villages.name as village'])
+                ->where('addresses.id', $id)
+                ->orderBy('users.id', 'asc')
+                ->paginate(20);
+
+        if($data->total() >0) {
+            return apiResponse(200, 'success', $data);
+        } else {
+            return Response::json(apiResponse(404, 'not found', 'Data lamat tidak ditemukan'), 404);
         }
 
         return Response::json(apiResponse(404, 'not found', 'User tidak ditemukan'), 404);
@@ -114,7 +142,7 @@ class MasterAddressController extends Controller
         }
     }
 
-    public function update(Request $request, $id) {
+    public function updateByAddressId(Request $request, $id) {
 
 
 
@@ -179,7 +207,7 @@ class MasterAddressController extends Controller
         }
     }
 
-    public function delete($id) {
+    public function deleteByAddressId($id) {
 
         try {
             DB::transaction(function () use ($id) {

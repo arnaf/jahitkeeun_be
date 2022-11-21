@@ -308,7 +308,7 @@ class UserController extends Controller
                             'completedTrans'=> 0,
                             'created_at'    => date('Y-m-d H:i:s')
                         ]);
-                        $user->assignRole('taylor');
+                        $user->syncRoles('taylor');
                     });
             } elseif($role == '3'){
 
@@ -330,7 +330,7 @@ class UserController extends Controller
                             'placeBirth'    => $request->placeBirth,
                             'status'        => '1',
                         ]);
-                        $user->assignRole('convection');
+                        $user->syncRoles('convection');
 
                     });
             } elseif($role == '4'){
@@ -353,7 +353,7 @@ class UserController extends Controller
                             'placeBirth'    => $request->placeBirth,
                             'status'        => '1',
                         ]);
-                        $user->assignRole('admin');
+                        $user->syncRoles('admin');
 
                     });
             }   elseif($role == '1'){
@@ -375,7 +375,7 @@ class UserController extends Controller
                         'placeBirth'    => $request->placeBirth,
                         'status'        => '1',
                     ]);
-                    $user->assignRole('client');
+                    $user->syncRoles('client');
 
                 });
             }

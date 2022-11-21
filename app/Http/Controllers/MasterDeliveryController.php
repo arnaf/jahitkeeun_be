@@ -19,7 +19,11 @@ class MasterDeliveryController extends Controller
                 ->paginate();
 
 
-        return apiResponse(200, 'success', 'List delivery', $deliveries);
+                if($deliveries->total() > 0) {
+                    return apiResponse(200, 'success', 'List delivery', $deliveries);
+                } else {
+                    return Response::json(apiResponse(404, 'not found', 'Data delivery tidak ditemukan'), 404);
+                }
 
     }
 
@@ -29,11 +33,12 @@ class MasterDeliveryController extends Controller
                     ->where('id', $id)
                     ->paginate();
 
-        if($delivery) {
-            return apiResponse(200, 'success', $delivery);
-        }
-
-        return Response::json(apiResponse(404, 'not found', 'Delivery tidak ditemukan'), 404);
+                    if($delivery = DB::table('deliveries')
+                    ->total() > 0) {
+                        return apiResponse(200, 'success', 'List delivery', $delivery);
+                    } else {
+                        return Response::json(apiResponse(404, 'not found', 'Data delivery tidak ditemukan'), 404);
+                    }
     }
 
 

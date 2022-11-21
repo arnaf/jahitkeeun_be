@@ -19,26 +19,46 @@ class MasterClientController extends Controller
 
         $clients = DB::table('users')
                 ->join('clients', 'users.id', '=', 'clients.user_id')
-                ->select(['users.id as id', 'clients.id as client_id', 'users.name as client_name', 'clients.photo as client_photo', 'clients.phone as client_phone', 'clients.dateBirth as date_birth', 'clients.placeBirth as place_birth',])
+                ->select(['users.id as user_id', 'clients.id as client_id', 'users.name as client_name', 'clients.photo as client_photo', 'clients.phone as client_phone', 'clients.dateBirth as date_birth', 'clients.placeBirth as place_birth',])
                 ->paginate();
 
-
-        return apiResponse(200, 'success', 'List klien', $clients);
+        if($clients->total() > 0) {
+            return apiResponse(200, 'success', 'List klien', $clients);
+        } else {
+            return Response::json(apiResponse(404, 'not found', 'Data client tidak ditemukan'), 404);
+        }
 
     }
 
-    public function show($id) {
+    public function showByUserId($id) {
         $client = DB::table('users')
                 ->join('clients', 'users.id', '=', 'clients.user_id')
                 ->where('users.id', $id)
-                ->select(['users.id as id', 'clients.id as client_id', 'users.name as client_name', 'clients.photo as client_photo', 'clients.phone as client_phone', 'clients.dateBirth as date_birth', 'clients.placeBirth as place_birth',])
+                ->select(['users.id as user_id', 'clients.id as client_id', 'users.name as client_name', 'clients.photo as client_photo', 'clients.phone as client_phone', 'clients.dateBirth as date_birth', 'clients.placeBirth as place_birth',])
                 ->paginate();
 
-        if($client) {
+        if($client->total() > 0) {
             return apiResponse(200, 'success', $client);
+        } else {
+            return Response::json(apiResponse(404, 'not found', 'Data client tidak ditemukan'), 404);
         }
 
-        return Response::json(apiResponse(404, 'not found', 'User tidak ditemukan'), 404);
+    }
+
+
+    public function showByClientId($id) {
+        $client = DB::table('users')
+                ->join('clients', 'users.id', '=', 'clients.user_id')
+                ->where('clients.id', $id)
+                ->select(['users.id as user_id', 'clients.id as client_id', 'users.name as client_name', 'clients.photo as client_photo', 'clients.phone as client_phone', 'clients.dateBirth as date_birth', 'clients.placeBirth as place_birth',])
+                ->paginate();
+
+        if($client->total() > 0) {
+            return apiResponse(200, 'success', $client);
+        } else {
+            return Response::json(apiResponse(404, 'not found', 'Data client tidak ditemukan'), 404);
+        }
+
     }
 
 
@@ -97,6 +117,7 @@ class MasterClientController extends Controller
                     'name'          => $request->name,
                     'email'         => $request->email,
                     'password'      => Hash::make($request->password),
+                    'status'        => '1',
                 ]);
 
                 Client::create([
@@ -117,7 +138,7 @@ class MasterClientController extends Controller
         }
     }
 
-    public function update(Request $request, $id) {
+    public function updateByUserId(Request $request, $id) {
 
 
 
@@ -199,7 +220,7 @@ class MasterClientController extends Controller
         }
     }
 
-    public function destroy($id) {
+    public function deleteByUserId($id) {
         $userDetail = Client::where('user_id','=',$id)->first();
         $oldImage = $userDetail->photo;
 
@@ -212,8 +233,8 @@ class MasterClientController extends Controller
         }
         try {
             DB::transaction(function () use ($id) {
-                Client::where('user_id', $id)->delete();
                 User::where('id', $id)->delete();
+                Client::where('user_id', $id)->delete();
             });
 
             return apiResponse(202, 'success', 'user berhasil dihapus :(');

@@ -215,7 +215,7 @@ class SectionItemController extends Controller
             'a.photoClient1 as photoRef','a.pickup'
 
         ])
-        ->orderBy('a.id')
+        ->orderBy('a.id', 'desc')
 
         ->paginate();
 
@@ -410,4 +410,92 @@ class SectionItemController extends Controller
 
     }
 
-}
+    public function checkoutBySelectedCart(Request $request)
+    {
+
+
+
+            $rules = [
+                'user_id'                       => 'required',
+                'amount'                        => 'required',
+                'address'                       => 'required',
+                'deliveries_id'                 => 'required',
+                'payment_method_id'             => 'required',
+                'shipping_method_id'            => 'required',
+                'service_id'                    => 'required',
+
+            ];
+
+            $message = [
+                'user_id.required'                  => 'Mohon isikan user id',
+                'amount.required'                   => 'Mohon isikan amount',
+                'addreess.required'                 => 'Mohon isikan alamat',
+                'deliveries_id.required'            => 'Mohon isikan delivery',
+                'payment_method_id.required'        => 'Mohon isikan metode pembayaran',
+                'shipping_method_id.required'       => 'Mohon isikan metode pengiriman',
+                'service_id.required'               => 'Mohon isikan jasa',
+
+            ];
+
+            $validator = Validator::make($request->all(), $rules, $message);
+
+            if($validator->fails()) {
+                return apiResponse(400, 'error', 'Data tidak lengkap ', $validator->errors());
+            }
+
+            try{
+                DB::transaction(function () use ($request) {
+
+
+                    $order = Order::create([
+                        'user_id' => $request->user()->id,
+                        'totalPayment' => $request->amount,
+                        'paymentStatus' => 'BELUM BAYAR',
+                        'orderStatus' => 'Menunggu Pickup',
+
+                        'address' => $request->address,
+                        'deliveries_id' => $request->deliveries_id,
+                        'payment_method_id' => $request->payment_method_id,
+                        'shipping_method_id' => $request->shipping_method_id,
+                    ]);
+
+
+                    $cart = $request->user()->cart()
+                            ->where('services.id', $request->service_id)->get();
+                    foreach ($cart as $item) {
+                        $order->items()->create([
+                            'price' => $item->price * $item->pivot->quantity,
+                            'quantity' => $item->pivot->quantity,
+                            'service_id' => $item->id,
+                            'pickup' => $item->pickup,
+                            'desc'   => $item->desc,
+                            'photoClient1' => $request->photoClient1,
+                            'photoClient2' => $request->photoClient2,
+                            'photoClient3' => $request->photoClient3,
+                            'photoClient4' => $request->photoClient4,
+                            'photoClient5' => $request->photoClient5,
+                        ]);
+                    }
+                    $request->user()->cart()->detach();
+                    $order->payments()->create([
+                        'paymentAmount' => $request->amount,
+                        'user_id' => $request->user()->id,
+                    ]);
+
+
+
+
+                });
+
+                return apiResponse(201, 'success', 'Checkout berhasil ditambahkan');
+            } catch(Exception $e) {
+                return apiResponse(400, 'error', 'error', $e);
+            }
+
+
+
+        }
+
+    }
+
+

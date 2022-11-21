@@ -23,11 +23,15 @@ class MasterServiceController extends Controller
                 ->paginate();
 
 
-        return apiResponse(200, 'success', 'List jasa', $services);
+                if($services->total() > 0) {
+                    return apiResponse(200, 'success', 'List jasa', $services);
+                } else {
+                    return Response::json(apiResponse(404, 'not found', 'Data jasa tidak ditemukan'), 404);
+                }
 
     }
 
-    public function show($id) {
+    public function showServicesByServiceId($id) {
         $services = DB::table('services')
                     ->join('service_categories', 'services.service_categories_id', '=', 'service_categories.id')
                     ->join('taylors', 'services.taylor_id', '=', 'taylors.id')
@@ -36,11 +40,31 @@ class MasterServiceController extends Controller
                     ->where('services.id', $id)
                     ->paginate();
 
-        if($services) {
+        if($services->total() > 0) {
             return apiResponse(200, 'success', $services);
+        } else {
+            return Response::json(apiResponse(404, 'not found', 'Jasa tidak ditemukan'), 404);
+
         }
 
-        return Response::json(apiResponse(404, 'not found', 'Jasa tidak ditemukan'), 404);
+    }
+
+    public function showServicesByTaylorId($id) {
+        $services = DB::table('services')
+                    ->join('service_categories', 'services.service_categories_id', '=', 'service_categories.id')
+                    ->join('taylors', 'services.taylor_id', '=', 'taylors.id')
+                    ->join('users', 'taylors.user_id', '=', 'users.id')
+                    ->select(['services.name as service_name', 'services.price as service_price', 'users.name as taylor_name', 'service_categories.name as service_category_name',])
+                    ->where('services.taylor_id', $id)
+                    ->paginate();
+
+        if($services->total() > 0) {
+            return apiResponse(200, 'success', $services);
+        } else {
+            return Response::json(apiResponse(404, 'not found', 'Jasa tidak ditemukan'), 404);
+
+        }
+
     }
 
 

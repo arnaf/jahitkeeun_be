@@ -13,6 +13,7 @@ Route::delete('/sectionitem/userId/{userid}/service/{serviceid}', 'SectionItemCo
 Route::post('/sectionitem/userId/{userid}/service/{serviceid}', 'SectionItemController@update');
 Route::delete('/sectionitem/userId/{id}', 'SectionItemController@destroy');
 Route::post('/sectionitem/checkout', 'SectionItemController@checkout');
+Route::post('/sectionitem/selectedcheckout', 'SectionItemController@checkoutBySelectedCart');
 
 
 

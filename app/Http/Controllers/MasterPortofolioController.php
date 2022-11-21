@@ -21,8 +21,11 @@ class MasterPortofolioController extends Controller
                         ->paginate();
 
 
-        return apiResponse(200, 'success', 'List portofolio', $portofolios);
-
+                        if($portofolios->total() > 0) {
+                            return apiResponse(200, 'success', 'List portofolio', $portofolios);
+                        } else {
+                            return Response::json(apiResponse(404, 'not found', 'Data portofolio tidak ditemukan'), 404);
+                        }
     }
 
     public function showPortoByPorto($id) {
@@ -30,15 +33,17 @@ class MasterPortofolioController extends Controller
         $portofolios = DB::table('portofolios')
                         ->join('taylors', 'portofolios.taylor_id', '=', 'taylors.id')
                         ->join('users', 'taylors.user_id', '=', 'users.id')
-                        ->select(['portofolios.id as id', 'taylors.id as taylor_id', 'users.name as taylor_name', 'portofolios.desc as portofolio_description', 'portofolios.photo1 as portofolio_photo1', 'portofolios.photo2 as portofolio_photo2', 'portofolios.photo3 as portofolio_photo3', 'portofolios.photo4 as portofolio_photo4', 'portofolios.photo5 as portofolio_photo5', ])
+                        ->select(['portofolios.id as portofolio_id', 'taylors.id as taylor_id', 'users.name as taylor_name', 'portofolios.desc as portofolio_description', 'portofolios.photo1 as portofolio_photo1', 'portofolios.photo2 as portofolio_photo2', 'portofolios.photo3 as portofolio_photo3', 'portofolios.photo4 as portofolio_photo4', 'portofolios.photo5 as portofolio_photo5', ])
                         ->where('portofolios.id', $id)
                         ->paginate();
 
-        if($portofolios) {
+        if($portofolios->total() > 0) {
             return apiResponse(200, 'success', $portofolios);
+        } else {
+
+            return Response::json(apiResponse(404, 'not found', 'Portofolio tidak ditemukan'), 404);
         }
 
-        return Response::json(apiResponse(404, 'not found', 'Portofolio tidak ditemukan'), 404);
     }
 
     public function showPortoByTaylor($id) {
@@ -46,15 +51,17 @@ class MasterPortofolioController extends Controller
         $portofolios = DB::table('portofolios')
                         ->join('taylors', 'portofolios.taylor_id', '=', 'taylors.id')
                         ->join('users', 'taylors.user_id', '=', 'users.id')
-                        ->select(['portofolios.id as id', 'taylors.id as taylor_id', 'users.name as taylor_name', 'portofolios.desc as portofolio_description', 'portofolios.photo1 as portofolio_photo1', 'portofolios.photo2 as portofolio_photo2', 'portofolios.photo3 as portofolio_photo3', 'portofolios.photo4 as portofolio_photo4', 'portofolios.photo5 as portofolio_photo5', ])
+                        ->select(['portofolios.id as portofolio_id', 'taylors.id as taylor_id', 'users.name as taylor_name', 'portofolios.desc as portofolio_description', 'portofolios.photo1 as portofolio_photo1', 'portofolios.photo2 as portofolio_photo2', 'portofolios.photo3 as portofolio_photo3', 'portofolios.photo4 as portofolio_photo4', 'portofolios.photo5 as portofolio_photo5', ])
                         ->where('taylors.id', $id)
                         ->paginate();
 
-        if($portofolios) {
+        if($portofolios->total() > 0) {
             return apiResponse(200, 'success', $portofolios);
+        } else {
+
+            return Response::json(apiResponse(404, 'not found', 'Portofolio tidak ditemukan'), 404);
         }
 
-        return Response::json(apiResponse(404, 'not found', 'Portofolio tidak ditemukan'), 404);
     }
 
 
@@ -100,7 +107,7 @@ class MasterPortofolioController extends Controller
             }
 
 
-            if($request->hasFile('photo2')){
+            if(!$request->hasFile('photo2') == NULL){
 
                 $extension = $request->file('photo2')->getClientOriginalExtension();
 
@@ -110,11 +117,12 @@ class MasterPortofolioController extends Controller
 
                 $request->file('photo2')->move($path, $portoPhoto2);
 
+            } else {
+                $portoPhoto2 = NULL;
             }
 
 
-            if($request->hasFile('photo3')){
-
+            if(!$request->hasFile('photo3') == NULL){
 
                 $extension = $request->file('photo3')->getClientOriginalExtension();
 
@@ -124,10 +132,12 @@ class MasterPortofolioController extends Controller
 
                 $request->file('photo3')->move($path, $portoPhoto3);
 
+            } else {
+                $portoPhoto3 = NULL;
             }
 
 
-            if($request->hasFile('photo4')){
+            if(!$request->hasFile('photo4') == NULL){
 
 
                 $extension = $request->file('photo4')->getClientOriginalExtension();
@@ -138,10 +148,12 @@ class MasterPortofolioController extends Controller
 
                 $request->file('photo4')->move($path, $portoPhoto4);
 
+            } else {
+                $portoPhoto4 = NULL;
             }
 
 
-            if($request->hasFile('photo5')){
+            if(!$request->hasFile('photo5') == NULL){
 
 
                 $extension = $request->file('photo5')->getClientOriginalExtension();
@@ -152,6 +164,8 @@ class MasterPortofolioController extends Controller
 
                 $request->file('photo5')->move($path, $portoPhoto5);
 
+            } else {
+                $portoPhoto5 = NULL;
             }
 
 
@@ -165,15 +179,14 @@ class MasterPortofolioController extends Controller
             //     }
 
 
-
             DB::transaction(function () use ($request, $portoPhoto1, $portoPhoto2, $portoPhoto3, $portoPhoto4, $portoPhoto5) {
                 $portofolio = Portofolio::create([
                     'desc'           => $request->desc,
                     'photo1'         => $portoPhoto1,
-                    'photo2'         => $portoPhoto2 ? "photo2" : null,
-                    'photo3'         => $portoPhoto3 ? "photo3" : null,
-                    'photo4'         => $portoPhoto4 ? "photo4" : null,
-                    'photo5'         => $portoPhoto5 ? "photo5" : null,
+                    'photo2'         => $portoPhoto2,
+                    'photo3'         => $portoPhoto3,
+                    'photo4'         => $portoPhoto4,
+                    'photo5'         => $portoPhoto5,
                     'taylor_id'      => $request->taylor_id,
                 ]);
 
@@ -240,7 +253,7 @@ class MasterPortofolioController extends Controller
 
             }
 
-            if($request->has('photo2')){
+            if(!$request->hasFile('photo2') == NULL){
                 $portofolio = Portofolio::where('id','=',$id)->first();
                 $oldImage = $portofolio->photo2;
 
@@ -261,9 +274,12 @@ class MasterPortofolioController extends Controller
 
                 $request->file('photo2')->move($path, $portoPhoto2);
 
+            } else {
+                $portoPhoto2 = NULL;
             }
 
-            if($request->has('photo3')){
+
+            if(!$request->hasFile('photo3') == NULL){
                 $portofolio = Portofolio::where('id','=',$id)->first();
                 $oldImage = $portofolio->photo3;
 
@@ -276,6 +292,7 @@ class MasterPortofolioController extends Controller
                 }
 
 
+
                 $extension = $request->file('photo3')->getClientOriginalExtension();
 
                 $portoPhoto3 = '3'.date('YmdHis').'.'.$extension;
@@ -284,9 +301,13 @@ class MasterPortofolioController extends Controller
 
                 $request->file('photo3')->move($path, $portoPhoto3);
 
+            } else {
+                $portoPhoto3 = NULL;
             }
 
-            if($request->has('photo4')){
+
+
+            if(!$request->hasFile('photo4') == NULL){
                 $portofolio = Portofolio::where('id','=',$id)->first();
                 $oldImage = $portofolio->photo4;
 
@@ -307,9 +328,11 @@ class MasterPortofolioController extends Controller
 
                 $request->file('photo4')->move($path, $portoPhoto4);
 
+            } else {
+                $portoPhoto4 = NULL;
             }
 
-            if($request->has('photo5')){
+            if(!$request->hasFile('photo5') == NULL){
                 $portofolio = Portofolio::where('id','=',$id)->first();
                 $oldImage = $portofolio->photo5;
 
@@ -330,6 +353,8 @@ class MasterPortofolioController extends Controller
 
                 $request->file('photo5')->move($path, $portoPhoto5);
 
+            } else {
+                $portoPhoto5 = NULL;
             }
 
 
@@ -353,7 +378,7 @@ class MasterPortofolioController extends Controller
         }
     }
 
-    public function delete($id) {
+    public function deleteByPortoId($id) {
         $portofolio = Portofolio::where('id','=',$id)->first();
         $oldImage1 = $portofolio->photo1;
         $oldImage2 = $portofolio->photo2;
@@ -368,28 +393,28 @@ class MasterPortofolioController extends Controller
                 unlink($pleaseRemove);
             }
         }
-        if($oldImage2){
+        if(!$oldImage2 == NULL){
             $pleaseRemove = base_path('public/photos/portofolio/').$oldImage2;
 
             if(file_exists($pleaseRemove)) {
                 unlink($pleaseRemove);
             }
         }
-        if($oldImage3){
+        if(!$oldImage3 == NULL){
             $pleaseRemove = base_path('public/photos/portofolio/').$oldImage3;
 
             if(file_exists($pleaseRemove)) {
                 unlink($pleaseRemove);
             }
         }
-        if($oldImage4){
+        if(!$oldImage4 == NULL){
             $pleaseRemove = base_path('public/photos/portofolio/').$oldImage4;
 
             if(file_exists($pleaseRemove)) {
                 unlink($pleaseRemove);
             }
         }
-        if($oldImage5){
+        if(!$oldImage5 == NULL){
             $pleaseRemove = base_path('public/photos/portofolio/').$oldImage5;
 
             if(file_exists($pleaseRemove)) {

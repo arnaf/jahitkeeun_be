@@ -22,14 +22,31 @@ class MasterTaylorController extends Controller
                 ->paginate();
 
 
-        return apiResponse(200, 'success', 'List penjahit', $taylors);
-
+                if($taylors->total() > 0) {
+                    return apiResponse(200, 'success', 'List penjahit', $taylors);
+                } else {
+                    return Response::json(apiResponse(404, 'not found', 'Data penjahit tidak ditemukan'), 404);
+                }
     }
 
-    public function show($id) {
+    public function showByUserId($id) {
         $taylor = DB::table('users')
                 ->join('taylors', 'users.id', '=', 'taylors.user_id')
                 ->where('users.id', $id)
+                ->select(['users.id as id', 'taylors.id as taylor_id', 'users.name as taylor_name', 'taylors.photo as taylor_photo', 'taylors.phone as taylor_phone', 'taylors.dateBirth as date_birth', 'taylors.placeBirth as place_birth',])
+                ->paginate();
+
+        if($taylor) {
+            return apiResponse(200, 'success', $taylor);
+        }
+
+        return Response::json(apiResponse(404, 'not found', 'User tidak ditemukan'), 404);
+    }
+
+    public function showByTaylorId($id) {
+        $taylor = DB::table('users')
+                ->join('taylors', 'users.id', '=', 'taylors.user_id')
+                ->where('taylors.id', $id)
                 ->select(['users.id as id', 'taylors.id as taylor_id', 'users.name as taylor_name', 'taylors.photo as taylor_photo', 'taylors.phone as taylor_phone', 'taylors.dateBirth as date_birth', 'taylors.placeBirth as place_birth',])
                 ->paginate();
 
@@ -96,6 +113,7 @@ class MasterTaylorController extends Controller
                     'name'          => $request->name,
                     'email'         => $request->email,
                     'password'      => Hash::make($request->password),
+                    'status'        => '1'
                 ]);
 
                 Taylor::insert([
@@ -119,7 +137,7 @@ class MasterTaylorController extends Controller
         }
     }
 
-    public function update(Request $request, $id) {
+    public function updateByUserId(Request $request, $id) {
 
 
 
@@ -202,7 +220,7 @@ class MasterTaylorController extends Controller
         }
     }
 
-    public function delete($id) {
+    public function deleteByUserId($id) {
         $userDetail = Taylor::where('user_id','=',$id)->first();
         $oldImage = $userDetail->photo;
 

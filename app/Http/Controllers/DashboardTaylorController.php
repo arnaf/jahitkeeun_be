@@ -19,7 +19,7 @@ class DashboardTaylorController extends Controller
 {
     public function getOrder($id) {
 
-        $address = DB::table('orders as a')
+        $orders = DB::table('orders as a')
             ->join('order_details as b', 'a.id', '=', 'b.order_id')
             ->join('services as c', 'b.service_id', '=', 'c.id')
             ->join('taylors as d', 'c.taylor_id', '=', 'd.id')
@@ -49,10 +49,11 @@ class DashboardTaylorController extends Controller
             where('g.addresslabel_id', 1)->
             get();
 
-        if($address) {
+        if($orders->total() >0 ) {
             return apiResponse(200, 'success', 'list data Order Masuk', $address);
+        } else{
+            return Response::json(apiResponse(404, 'not found', 'Order Masuk tidak ditemukan'), 404);
         }
-        return Response::json(apiResponse(404, 'not found', 'Order Masuk tidak ditemukan'), 404);
     }
 
 
