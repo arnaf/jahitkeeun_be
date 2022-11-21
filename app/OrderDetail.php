@@ -7,9 +7,10 @@ use Illuminate\Database\Eloquent\Model;
 class OrderDetail extends Model
 {
     protected $fillable = [
-        'quantity','price', 'service_id', 'order_id',
+        'quantity','price', 'service_id', 'order_id','pickup','desc',
         'photoClient1','photoClient2','photoClient3','photoClient4','photoClient5',
         'photoTaylor1','photoTaylor2','photoTaylor3','photoTaylor4','photoTaylor5',
+        'orderStatus',
     ];
 
     protected $hidden = [

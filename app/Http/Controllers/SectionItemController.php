@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Service;
 use App\Order;
+use App\OrderDetail;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -293,7 +294,7 @@ class SectionItemController extends Controller
     {
 
         $rules = [
-            'user_id'                       => 'required',
+
             'amount'                        => 'required',
             'address'                       => 'required',
             'deliveries_id'                 => 'required',
@@ -303,7 +304,7 @@ class SectionItemController extends Controller
         ];
 
         $message = [
-            'user_id.required'                  => 'Mohon isikan user id',
+
             'amount.required'                   => 'Mohon isikan amount',
             'addreess.required'                 => 'Mohon isikan alamat',
             'deliveries_id.required'            => 'Mohon isikan alamat',
@@ -322,37 +323,76 @@ class SectionItemController extends Controller
             DB::transaction(function () use ($request) {
 
 
+
+
+
+                $cart = $request->user()->cart()->get();
+                //dd($cart);
+
+
                 $order = Order::create([
                     'user_id' => $request->user()->id,
                     'totalPayment' => $request->amount,
                     'paymentStatus' => 'BELUM BAYAR',
                     'orderStatus' => 'Menunggu Pickup',
-
+                    'estimationDate' => $request->estimationdate,
                     'address' => $request->address,
                     'deliveries_id' => $request->deliveries_id,
                     'payment_method_id' => $request->payment_method_id,
                     'shipping_method_id' => $request->shipping_method_id,
                 ]);
 
-
-                $cart = $request->user()->cart()->get();
                 foreach ($cart as $item) {
+
                     $order->items()->create([
                         'price' => $item->price * $item->pivot->quantity,
                         'quantity' => $item->pivot->quantity,
+                        'pickup' => $item->pivot->pickup,
+                        'desc' => $item->pivot->desc,
+                        'photoClient1' => $item->pivot->photoClient1,
                         'service_id' => $item->id,
-                        'pickup' => $item->pickup,
-                        'desc'   => $item->desc,
-                        'photoClient1' => $request->photoClient1,
-                        'photoClient2' => $request->photoClient2,
-                        'photoClient3' => $request->photoClient3,
-                        'photoClient4' => $request->photoClient4,
-                        'photoClient5' => $request->photoClient5,
+                        'orderStatus' => 'Menunggu Pembayaran',
+                        // 'pickup'   => $item->pivot->pickup,
+                        // 'desc'   => $item->pivot->desc,
+                        // 'photoClient1' => $item->pivot->photoClient1,
+                        // 'photoClient2' => '',
+                        // 'photoClient3' => '',
+                        // 'photoClient4' => '',
+                        // 'photoClient5' => '',
+                        // 'photoTaylor1' => '',
+                        // 'photoTaylor2' => '',
+                        // 'photoTaylor3' => '',
+                        // 'photoTaylor4' => '',
+                        // 'photoTaylor5' => '',
+                        // 'orderStatus' => '',
+
+
                     ]);
-                    // $item->quantity = $item->quantity - $item->pivot->quantity;
-                    // $item->save();
+
+
                 }
                 $request->user()->cart()->detach();
+
+                // $cart1 = OrderDetail::insert([
+                //     'quantity'  => 1,
+                //     'price'  => 135000,
+                //     'service_id'  => 22,
+                //     'order_id'  => 10,
+                //     'desc'      => 'Ini deskripsi',
+                //     'pickup' => now(),
+                //     'photoClient1'  => 'photoclient1.png',
+                //     'photoClient2'  => 'photoclient2.png',
+                //     'photoClient3'  => 'photoclient3.png',
+                //     'photoClient4'  => 'photoclient4.png',
+                //     'photoClient5'  => 'photoclient5.png',
+                //     'photoTaylor1'  => 'phototaylor1.png',
+                //     'photoTaylor2'  => 'phototaylor1.png',
+                //     'photoTaylor3'  => 'phototaylor1.png',
+                //     'photoTaylor4'  => 'phototaylor1.png',
+                //     'photoTaylor5'  => 'phototaylor1.png',
+                //     'orderStatus'=> 'Proses Order Customer',
+
+                // ]);
                 $order->payments()->create([
                     'paymentAmount' => $request->amount,
                     'user_id' => $request->user()->id,

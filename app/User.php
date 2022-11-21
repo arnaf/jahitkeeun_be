@@ -81,7 +81,7 @@ class User extends Authenticatable
 
     public function cart()
     {
-        return $this->belongsToMany(Service::class, 'carts')->withPivot('quantity');
+        return $this->belongsToMany(Service::class, 'carts')->withPivot('quantity','pickup','desc','photoClient1');
 
     }
 
