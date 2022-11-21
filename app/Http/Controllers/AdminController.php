@@ -9,7 +9,7 @@ class AdminController extends Controller
 {
     /**
      * Display a listing of the resource.
-     *
+     *asik
      * @return \Illuminate\Http\Response
      */
     public function index()
