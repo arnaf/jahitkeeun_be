@@ -14,8 +14,9 @@ class Maklun extends Model
 
     ];
 
-    public function users()
+
+    public function maklunApply()
     {
-        return $this->hasOne(User::class);
+        return $this->hasMany(MaklunApplies::class);
     }
 }

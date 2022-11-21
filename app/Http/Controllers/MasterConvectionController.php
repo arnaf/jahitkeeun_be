@@ -18,26 +18,45 @@ class MasterConvectionController extends Controller
 
         $convections = DB::table('users')
                 ->join('convections', 'users.id', '=', 'convections.user_id')
-                ->select(['users.id as id', 'convections.id as convection_id', 'users.name as convection_name', 'convections.photo as convection_photo', 'convections.phone as convection_phone', 'convections.dateBirth as date_birth', 'convections.placeBirth as place_birth',])
+                ->select(['users.id as user_id', 'convections.id as convection_id', 'users.name as convection_name', 'convections.photo as convection_photo', 'convections.phone as convection_phone', 'convections.dateBirth as date_birth', 'convections.placeBirth as place_birth',])
                 ->paginate();
 
 
-        return apiResponse(200, 'success', 'List konveksi', $convections);
+                if($convections->total() > 0) {
+                    return apiResponse(200, 'success', 'List konveksi', $convections);
+                } else {
+                    return Response::json(apiResponse(404, 'not found', 'Data konveksi tidak ditemukan'), 404);
+                }
 
     }
 
-    public function show($id) {
+    public function showByUserId($id) {
         $convection = DB::table('users')
                 ->join('convections', 'users.id', '=', 'convections.user_id')
                 ->where('users.id', $id)
-                ->select(['users.id as id', 'convections.id as convection_id', 'users.name as convection_name', 'convections.photo as convection_photo', 'convections.phone as convection_phone', 'convections.dateBirth as date_birth', 'convections.placeBirth as place_birth',])
+                ->select(['users.id as user_id', 'convections.id as convection_id', 'users.name as convection_name', 'convections.photo as convection_photo', 'convections.phone as convection_phone', 'convections.dateBirth as date_birth', 'convections.placeBirth as place_birth',])
                 ->paginate();
 
-        if($convection) {
+        if($convection->total() > 0) {
             return apiResponse(200, 'success', $convection);
         }
 
-        return Response::json(apiResponse(404, 'not found', 'User tidak ditemukan'), 404);
+        return Response::json(apiResponse(404, 'not found', 'Data konveksi tidak dapat ditemukan'), 404);
+    }
+
+
+    public function showByConvectionId($id) {
+        $convection = DB::table('users')
+                ->join('convections', 'users.id', '=', 'convections.user_id')
+                ->where('convections.id', $id)
+                ->select(['users.id as user_id', 'convections.id as convection_id', 'users.name as convection_name', 'convections.photo as convection_photo', 'convections.phone as convection_phone', 'convections.dateBirth as date_birth', 'convections.placeBirth as place_birth',])
+                ->paginate();
+
+        if($convection->total() > 0) {
+            return apiResponse(200, 'success', $convection);
+        }
+
+        return Response::json(apiResponse(404, 'not found', 'Data konveksi tidak dapat ditemukan'), 404);
     }
 
     public function create(Request $request) {
@@ -95,6 +114,7 @@ class MasterConvectionController extends Controller
                     'name'          => $request->name,
                     'email'         => $request->email,
                     'password'      => Hash::make($request->password),
+                    'status'        => '1'
                 ]);
 
                 Convection::create([
@@ -115,7 +135,7 @@ class MasterConvectionController extends Controller
         }
     }
 
-    public function update(Request $request, $id) {
+    public function updateByUserId(Request $request, $id) {
 
 
 
@@ -197,7 +217,7 @@ class MasterConvectionController extends Controller
         }
     }
 
-    public function delete($id) {
+    public function deleteByUserId($id) {
         $userDetail = Convection::where('user_id','=',$id)->first();
         $oldImage = $userDetail->photo;
 

@@ -20,16 +20,20 @@ class MasterMaklunController extends Controller
                     ->paginate();
 
 
-        return apiResponse(200, 'success', 'List maklun', $makluns);
+                    if($makluns->total() > 0) {
+                        return apiResponse(200, 'success', 'List jasa', $makluns);
+                    } else {
+                        return Response::json(apiResponse(404, 'not found', 'Data jasa tidak ditemukan'), 404);
+                    }
 
     }
 
-    public function showByMaklun($id) {
+    public function showByMaklunID($id) {
         $makluns = DB::table('makluns')
                     ->join('users', 'makluns.maklun_maker_id', '=', 'users.id')
                     ->join('addresses', 'users.id', '=', 'addresses.id')
                     ->join('districts', 'addresses.district_id', '=', 'districts.id')
-                    ->select(['makluns.id as id', 'users.id as maklun_maker_id', 'users.name as maklun_maker_name', 'districts.name as maklun_maker_loc', 'makluns.title as maklun_title', 'makluns.price as maklun_price', 'makluns.dueTime as maklun_due_time', 'makluns.status as maklun_status'])
+                    ->select(['makluns.id as maklun_id', 'users.id as maklun_maker_id', 'users.name as maklun_maker_name', 'districts.name as maklun_maker_loc', 'makluns.title as maklun_title', 'makluns.price as maklun_price', 'makluns.dueTime as maklun_due_time', 'makluns.status as maklun_status'])
                     ->where('makluns.id', $id)
                     ->paginate();
 
@@ -40,13 +44,12 @@ class MasterMaklunController extends Controller
         return Response::json(apiResponse(404, 'not found', 'Maklun tidak ditemukan'), 404);
     }
 
-
-    public function showByUser($id) {
+    public function showByUserID($id) {
         $makluns = DB::table('makluns')
                     ->join('users', 'makluns.maklun_maker_id', '=', 'users.id')
                     ->join('addresses', 'users.id', '=', 'addresses.id')
                     ->join('districts', 'addresses.district_id', '=', 'districts.id')
-                    ->select(['makluns.id as id', 'users.id as maklun_maker_id', 'users.name as maklun_maker_name', 'districts.name as maklun_maker_loc', 'makluns.title as maklun_title', 'makluns.price as maklun_price', 'makluns.dueTime as maklun_due_time', 'makluns.status as maklun_status'])
+                    ->select(['makluns.id as maklun_id', 'users.id as maklun_maker_id', 'users.name as maklun_maker_name', 'districts.name as maklun_maker_loc', 'makluns.title as maklun_title', 'makluns.price as maklun_price', 'makluns.dueTime as maklun_due_time', 'makluns.status as maklun_status'])
                     ->where('users.id', $id)
                     ->paginate();
 
@@ -56,6 +59,9 @@ class MasterMaklunController extends Controller
 
         return Response::json(apiResponse(404, 'not found', 'Maklun tidak ditemukan'), 404);
     }
+
+
+
 
 
     public function create(Request $request) {

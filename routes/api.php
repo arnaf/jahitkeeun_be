@@ -23,8 +23,10 @@ Route::group(
         require_once('includes/dashboardtaylor.php');
 
         require_once('includes/user.php');
+        require_once('includes/maklunapply.php');
 
         require_once('includes/profile.php');
+        require_once('includes/wilayahbandung.php');
 
 
 

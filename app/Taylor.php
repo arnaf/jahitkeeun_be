@@ -14,4 +14,9 @@ class Taylor extends Model
 
     ];
 
+    public function maklunApply()
+    {
+        return $this->hasMany(MaklunApplies::class);
+    }
+
 }
