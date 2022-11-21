@@ -2,4 +2,4 @@
 
 use Illuminate\Support\Facades\Route;
 
-Route::get('/search/{keyword}', 'SearchBarController@searchBar');
+Route::post('/search', 'SearchBarController@searchBar');
