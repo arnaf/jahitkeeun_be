@@ -38,7 +38,7 @@ class OrderSeeder extends Seeder
                 'invoice' => 'INVOICE'.'-'.$i,
                 'totalPayment' => 280000,
                 'paymentStatus' => 'BELUM BAYAR',
-                'orderStatus'=> 'Menunggu Pickup',
+                'orderStatus'=> 'Menunggu Pembayaran',
                 'address' => 'Bandung',
                 'estimationDate' => date('Y-m-d H:i:s'),
                 'deliveries_id' => 1,
@@ -77,7 +77,7 @@ class OrderSeeder extends Seeder
                 'photoTaylor3'  => 'phototaylor1.png',
                 'photoTaylor4'  => 'phototaylor1.png',
                 'photoTaylor5'  => 'phototaylor1.png',
-                'orderStatus'=> 'Proses Order Customer',
+                'orderStatus'=> 'Menunggu Pembayaran',
 
             ]);
         }
@@ -100,7 +100,7 @@ class OrderSeeder extends Seeder
                 'photoTaylor3'  => 'phototaylor1.png',
                 'photoTaylor4'  => 'phototaylor1.png',
                 'photoTaylor5'  => 'phototaylor1.png',
-                'orderStatus'=> 'Proses Order Customer',
+                'orderStatus'=> 'Menunggu Pembayaran',
 
             ]);
         }
@@ -112,7 +112,7 @@ class OrderSeeder extends Seeder
                 'invoice' => 'INVOICE'.'-'.$i,
                 'totalPayment' => 280000,
                 'paymentStatus' => 'BELUM BAYAR',
-                'orderStatus'=> 'Menunggu Pickup',
+                'orderStatus'=> 'Menunggu Pembayaran',
                 'address' => 'Bandung',
                 'estimationDate' => date('Y-m-d H:i:s'),
                 'deliveries_id' => 1,
@@ -151,7 +151,7 @@ class OrderSeeder extends Seeder
                 'photoTaylor3'  => 'phototaylor1.png',
                 'photoTaylor4'  => 'phototaylor1.png',
                 'photoTaylor5'  => 'phototaylor1.png',
-                'orderStatus'=> 'Proses Order Customer',
+                'orderStatus'=> 'Menunggu Pembayaran',
 
             ]);
         }
@@ -174,7 +174,7 @@ class OrderSeeder extends Seeder
                 'photoTaylor3'  => 'phototaylor1.png',
                 'photoTaylor4'  => 'phototaylor1.png',
                 'photoTaylor5'  => 'phototaylor1.png',
-                'orderStatus'=> 'Proses Order Customer',
+                'orderStatus'=> 'Menunggu Pembayaran',
 
             ]);
         }
@@ -188,7 +188,7 @@ class OrderSeeder extends Seeder
                 'invoice' => 'INVOICE'.'-'.$i,
                 'totalPayment' => 280000,
                 'paymentStatus' => 'BELUM BAYAR',
-                'orderStatus'=> 'Menunggu Pickup',
+                'orderStatus'=> 'Menunggu Pembayaran',
                 'address' => 'Bandung',
                 'estimationDate' => date('Y-m-d H:i:s'),
                 'deliveries_id' => 1,
@@ -228,7 +228,7 @@ class OrderSeeder extends Seeder
                 'photoTaylor3'  => 'phototaylor1.png',
                 'photoTaylor4'  => 'phototaylor1.png',
                 'photoTaylor5'  => 'phototaylor1.png',
-                'orderStatus'=> 'Proses Order Customer',
+                'orderStatus'=> 'Menunggu Pembayaran',
 
             ]);
             $service++;
@@ -253,11 +253,176 @@ class OrderSeeder extends Seeder
                 'photoTaylor3'  => 'phototaylor1.png',
                 'photoTaylor4'  => 'phototaylor1.png',
                 'photoTaylor5'  => 'phototaylor1.png',
-                'orderStatus'=> 'Proses Order Customer',
+                'orderStatus'=> 'Menunggu Pembayaran',
 
             ]);
             $service++;
         }
+
+
+        // Taylor Id 3
+
+        for($i = 43; $i <= 60; $i++) {
+            $order = Order::insert([
+                'invoice' => 'INVOICE'.'-'.$i,
+                'totalPayment' => 280000,
+                'paymentStatus' => 'LUNAS',
+                'orderStatus'=> 'Pesanan Dalam Pengiriman',
+                'address' => 'Bandung',
+                'estimationDate' => date('Y-m-d H:i:s'),
+                'deliveries_id' => 1,
+                'payment_method_id' => 1,
+                'shipping_method_id' => 1,
+                'user_id' => $faker->numberBetween(2,11),
+                'created_at' => date('Y-m-d H:i:s'),
+
+            ]);
+
+        }
+
+        for($i = 42; $i <= 59; $i++) {
+            $order = Payment::insert([
+                'paymentAmount' => 280000,
+                'order_id' => $i,
+                'created_at' => date('Y-m-d H:i:s'),
+            ]);
+        }
+
+        $service=5;
+        for($i = 42; $i <= 59; $i++) {
+            $cart = OrderDetail::insert([
+                'quantity'  => 1,
+                'price'  => 145000,
+                'service_id'  => $service,
+                'order_id'  => $i,
+                'pickup' => now(),
+                'desc'      => 'Ini deskripsi',
+                'photoClient1'  => 'photoclient1.png',
+                'photoClient2'  => 'photoclient2.png',
+                'photoClient3'  => 'photoclient3.png',
+                'photoClient4'  => 'photoclient4.png',
+                'photoClient5'  => 'photoclient5.png',
+                'photoTaylor1'  => 'phototaylor1.png',
+                'photoTaylor2'  => 'phototaylor1.png',
+                'photoTaylor3'  => 'phototaylor1.png',
+                'photoTaylor4'  => 'phototaylor1.png',
+                'photoTaylor5'  => 'phototaylor1.png',
+                'orderStatus'=> 'Pesanan Dalam Pengiriman',
+
+            ]);
+            $service++;
+        }
+
+        $service=25;
+        for($i = 42; $i <= 59; $i++) {
+            $cart = OrderDetail::insert([
+                'quantity'  => 1,
+                'price'  => 135000,
+                'service_id'  => $service,
+                'order_id'  => $i,
+                'pickup' => now(),
+                'desc'      => 'Ini deskripsi',
+                'photoClient1'  => 'photoclient1.png',
+                'photoClient2'  => 'photoclient2.png',
+                'photoClient3'  => 'photoclient3.png',
+                'photoClient4'  => 'photoclient4.png',
+                'photoClient5'  => 'photoclient5.png',
+                'photoTaylor1'  => 'phototaylor1.png',
+                'photoTaylor2'  => 'phototaylor1.png',
+                'photoTaylor3'  => 'phototaylor1.png',
+                'photoTaylor4'  => 'phototaylor1.png',
+                'photoTaylor5'  => 'phototaylor1.png',
+                'orderStatus'=> 'Pesanan Dalam Pengiriman',
+
+            ]);
+            $service++;
+        }
+
+        // Taylor Id 3
+
+        for($i = 61; $i <= 70; $i++) {
+            $order = Order::insert([
+                'invoice' => 'INVOICE'.'-'.$i,
+                'totalPayment' => 280000,
+                'paymentStatus' => 'LUNAS',
+                'orderStatus'=> 'Proses Jahit',
+                'address' => 'Bandung',
+                'estimationDate' => date('Y-m-d H:i:s'),
+                'deliveries_id' => 1,
+                'payment_method_id' => 1,
+                'shipping_method_id' => 1,
+                'user_id' => $faker->numberBetween(2,11),
+                'created_at' => date('Y-m-d H:i:s'),
+
+            ]);
+
+        }
+
+        for($i = 60; $i <= 69; $i++) {
+            $order = Payment::insert([
+                'paymentAmount' => 280000,
+                'order_id' => $i,
+                'created_at' => date('Y-m-d H:i:s'),
+            ]);
+        }
+
+        $service=6;
+        for($i = 60; $i <= 69; $i++) {
+            $cart = OrderDetail::insert([
+                'quantity'  => 1,
+                'price'  => 145000,
+                'service_id'  => $service,
+                'order_id'  => $i,
+                'pickup' => now(),
+                'desc'      => 'Ini deskripsi',
+                'photoClient1'  => 'photoclient1.png',
+                'photoClient2'  => 'photoclient2.png',
+                'photoClient3'  => 'photoclient3.png',
+                'photoClient4'  => 'photoclient4.png',
+                'photoClient5'  => 'photoclient5.png',
+                'photoTaylor1'  => 'phototaylor1.png',
+                'photoTaylor2'  => 'phototaylor1.png',
+                'photoTaylor3'  => 'phototaylor1.png',
+                'photoTaylor4'  => 'phototaylor1.png',
+                'photoTaylor5'  => 'phototaylor1.png',
+                'orderStatus'=> 'Proses Jahit',
+
+            ]);
+            $service++;
+        }
+
+        $service=26;
+        for($i = 60; $i <= 69; $i++) {
+            $cart = OrderDetail::insert([
+                'quantity'  => 1,
+                'price'  => 135000,
+                'service_id'  => $service,
+                'order_id'  => $i,
+                'pickup' => now(),
+                'desc'      => 'Ini deskripsi',
+                'photoClient1'  => 'photoclient1.png',
+                'photoClient2'  => 'photoclient2.png',
+                'photoClient3'  => 'photoclient3.png',
+                'photoClient4'  => 'photoclient4.png',
+                'photoClient5'  => 'photoclient5.png',
+                'photoTaylor1'  => 'phototaylor1.png',
+                'photoTaylor2'  => 'phototaylor1.png',
+                'photoTaylor3'  => 'phototaylor1.png',
+                'photoTaylor4'  => 'phototaylor1.png',
+                'photoTaylor5'  => 'phototaylor1.png',
+                'orderStatus'=>     'Dalam Pengantaran',
+
+            ]);
+            $service++;
+        }
+
+
+
+
+
+
+
+
 
 
 

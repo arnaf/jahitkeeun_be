@@ -480,7 +480,7 @@ class KategoriSeeder extends Seeder
             $order = Order::insert([
                 'invoice' => 'INVOICE'.'-'.$i,
                 'totalPayment' => 280000,
-                'paymentStatus' => 'BELUM BAYAR',
+                'paymentStatus' => 'LUNAS',
                 'orderStatus'=> 'Menunggu Pickup',
                 'address' => 'Bandung',
                 'estimationDate' => date('Y-m-d H:i:s'),
@@ -500,7 +500,7 @@ class KategoriSeeder extends Seeder
                 'invoice' => 'INVOICE'.'-'.$i,
                 'totalPayment' => 280000,
                 'paymentStatus' => 'LUNAS',
-                'orderStatus'=> 'Konfirmasi Hasil Service',
+                'orderStatus'=> 'Pembayaran Terkonfirmasi',
                 'address' => 'Bandung',
                 'estimationDate' => date('Y-m-d H:i:s'),
                 'deliveries_id' => 1,
@@ -515,7 +515,7 @@ class KategoriSeeder extends Seeder
 
         for($i = 1; $i <= 10; $i++) {
             $order = Payment::insert([
-                'paymentAmount' => 0,
+                'paymentAmount' => 280000,
                 'order_id' => $i,
                 'created_at' => date('Y-m-d H:i:s'),
             ]);
@@ -547,7 +547,7 @@ class KategoriSeeder extends Seeder
                 'photoTaylor3'  => 'phototaylor1.png',
                 'photoTaylor4'  => 'phototaylor1.png',
                 'photoTaylor5'  => 'phototaylor1.png',
-                'orderStatus'=> 'Proses Order Customer',
+                'orderStatus'=> 'Menunggu Pickup',
 
             ]);
         }
@@ -570,7 +570,7 @@ class KategoriSeeder extends Seeder
                 'photoTaylor3'  => 'phototaylor1.png',
                 'photoTaylor4'  => 'phototaylor1.png',
                 'photoTaylor5'  => 'phototaylor1.png',
-                'orderStatus'=> 'Proses Order Customer',
+                'orderStatus'=> 'Tambahan Biaya',
 
             ]);
         }
@@ -594,7 +594,7 @@ class KategoriSeeder extends Seeder
                 'photoTaylor3'  => 'phototaylor1.png',
                 'photoTaylor4'  => 'phototaylor1.png',
                 'photoTaylor5'  => 'phototaylor1.png',
-                'orderStatus'=> 'Proses Order Customer',
+                'orderStatus'=> 'Pesanan Selesai',
 
             ]);
         }
@@ -617,7 +617,7 @@ class KategoriSeeder extends Seeder
                 'photoTaylor3'  => 'phototaylor1.png',
                 'photoTaylor4'  => 'phototaylor1.png',
                 'photoTaylor5'  => 'phototaylor1.png',
-                'orderStatus'=> 'Proses Order Customer',
+                'orderStatus'=> 'Pesanan Diterima',
 
             ]);
         }
