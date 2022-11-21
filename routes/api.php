@@ -21,6 +21,7 @@ Route::group(
         require_once('includes/item.php');
         require_once('includes/sectionitem.php');
         require_once('includes/dashboardtaylor.php');
+        require_once('includes/dashboardclient.php');
 
         require_once('includes/user.php');
         require_once('includes/maklunapply.php');
