@@ -163,7 +163,7 @@ class SectionItemController extends Controller
             $extension = $request->file('photoClient1')->getClientOriginalExtension();
             //$name = date('YmdHis').'.'.$extension;
             $name = date('YmdHis').''.$request->service_id.''.$request->user_id.'.'.$extension;
-            $path = base_path('public/photo-cart/');
+            $path = '/home/mvlrzxvo/subdomain/api.tepat.co.id/photo-cart/';
             $request->file('photoClient1')->move($path, $name);
 
         }
@@ -210,7 +210,8 @@ class SectionItemController extends Controller
             'f.name as namataylor',
             'c.id as serviceId',
             'c.name as serviceName',
-            'a.quantity as quantity', 'c.price', 'a.desc as description'
+            'a.quantity as quantity', 'c.price', 'a.desc as description',
+            'a.photoClient1 as photoRef','a.pickup'
 
         ])
         ->orderBy('a.id')
