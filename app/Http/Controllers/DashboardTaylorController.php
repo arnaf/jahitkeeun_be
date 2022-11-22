@@ -45,12 +45,12 @@ class DashboardTaylorController extends Controller
                 'e.NAME AS namapenjahit',
                 'b.photoClient1',
                 'b.photoTaylor1'
-            ])->where('c.taylor_id', $id)->
-            where('g.addresslabel_id', 1)->
-            get();
+            ])->where('c.taylor_id', $id)
+            ->where('g.addresslabel_id', 1)
+            ->paginate();
 
         if($orders->total() >0 ) {
-            return apiResponse(200, 'success', 'list data Order Masuk', $address);
+            return apiResponse(200, 'success', 'list data Order Masuk', $orders);
         } else{
             return Response::json(apiResponse(404, 'not found', 'Order Masuk tidak ditemukan'), 404);
         }
