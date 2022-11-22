@@ -115,9 +115,6 @@ class UserController extends Controller
 
 
         $rules = [
-            // 'name'          => 'required',
-            // 'email'         => 'required|email|unique:users',
-
             'phone'         => 'required',
             'dateBirth'     => 'required',
             'placeBirth'    => 'required',
@@ -125,10 +122,6 @@ class UserController extends Controller
         ];
 
         $message = [
-            // 'name.required'     => 'Mohon isikan nama anda',
-            // 'email.required'    => 'Mohon isikan email anda',
-            // 'email.email'       => 'Mohon isikan email valid',
-            // 'email.unique'      => 'Email sudah terdaftar',
 
             'phone.required'    => 'Mohon isikan nomor hp anda',
             'dateBirth.required'  => 'Mohon isikan tanggal lahir anda',
@@ -142,21 +135,22 @@ class UserController extends Controller
             return apiResponse(400, 'error', 'Data tidak lengkap ', $validator->errors());
         }
 
-        $role = $request->role;
+        $oldUser = User::where('id', $id)->first();
+        $role = $oldUser->getRoleNames()[0];
 
-        if($role == '1') {
+        if($role == 'client') {
             if($request->has('photo')){
 
-                // $userDetail = Client::where('user_id','=',$id)->first();
-                // $oldImage = $userDetail->photo;
+                $userDetail = Client::where('user_id','=',$id)->first();
+                $oldImage = $userDetail->photo;
 
-                // if($oldImage){
-                //     $pleaseRemove = base_path('public/photos/client/').$oldImage;
+                if($oldImage){
+                    $pleaseRemove = '/home/mvlrzxvo/subdomain/api.tepat.co.id/photo-user/'.$oldImage;
 
-                //     if(file_exists($pleaseRemove)) {
-                //         unlink($pleaseRemove);
-                //     }
-                // }
+                    if(file_exists($pleaseRemove)) {
+                        unlink($pleaseRemove);
+                    }
+                }
 
 
                 $extension = $request->file('photo')->getClientOriginalExtension();
@@ -167,8 +161,19 @@ class UserController extends Controller
 
                 $request->file('photo')->move($path, $clientPhoto);
             }
-        }else if($role == '2') {
+        }else if($role == 'taylor') {
             if($request->has('photo')){
+
+                $userDetail = Taylor::where('user_id','=',$id)->first();
+                $oldImage = $userDetail->photo;
+
+                if($oldImage){
+                    $pleaseRemove = '/home/mvlrzxvo/subdomain/api.tepat.co.id/photo-user/'.$oldImage;
+
+                    if(file_exists($pleaseRemove)) {
+                        unlink($pleaseRemove);
+                    }
+                }
 
 
 
@@ -181,19 +186,19 @@ class UserController extends Controller
 
                 $request->file('photo')->move($path, $taylorPhoto);
             }
-        } elseif($role == '3') {
+        } elseif($role == 'convection') {
             if($request->has('photo')){
 
-                // $userDetail = Convection::where('user_id','=',$id)->first();
-                // $oldImage = $userDetail->photo;
+                $userDetail = Convection::where('user_id','=',$id)->first();
+                $oldImage = $userDetail->photo;
 
-                // if($oldImage){
-                //     $pleaseRemove = base_path('public/photos/convection/').$oldImage;
+                if($oldImage){
+                    $pleaseRemove = '/home/mvlrzxvo/subdomain/api.tepat.co.id/photo-user/'.$oldImage;
 
-                //     if(file_exists($pleaseRemove)) {
-                //         unlink($pleaseRemove);
-                //     }
-                // }
+                    if(file_exists($pleaseRemove)) {
+                        unlink($pleaseRemove);
+                    }
+                }
 
 
                 $extension = $request->file('photo')->getClientOriginalExtension();
@@ -204,19 +209,19 @@ class UserController extends Controller
 
                 $request->file('photo')->move($path, $convectionPhoto);
             }
-        }  elseif($role == '4') {
+        }  elseif($role == 'admin') {
             if($request->has('photo')){
 
-                // $userDetail = Admin::where('user_id','=',$id)->first();
-                // $oldImage = $userDetail->photo;
+                $userDetail = Admin::where('user_id','=',$id)->first();
+                $oldImage = $userDetail->photo;
 
-                // if($oldImage){
-                //     $pleaseRemove = base_path('public/photos/admin/').$oldImage;
+                if($oldImage){
+                    $pleaseRemove = '/home/mvlrzxvo/subdomain/api.tepat.co.id/photo-user/'.$oldImage;
 
-                //     if(file_exists($pleaseRemove)) {
-                //         unlink($pleaseRemove);
-                //     }
-                // }
+                    if(file_exists($pleaseRemove)) {
+                        unlink($pleaseRemove);
+                    }
+                }
 
 
                 $extension = $request->file('photo')->getClientOriginalExtension();
@@ -231,162 +236,77 @@ class UserController extends Controller
 
         try {
 
-            $role = $request->role;
-            $oldUser = User::where('id', $id)->first();
-            $oldRole = $oldUser->getRoleNames()[0];
 
 
-            if($oldRole == 'client') {
-                $userDetail = Client::where('user_id','=',$id)->first();
-                $oldImage = $userDetail->photo;
-
-                if($oldImage){
-                    $pleaseRemove = '/home/mvlrzxvo/subdomain/api.tepat.co.id/photo-user/'.$oldImage;
-
-                    if(file_exists($pleaseRemove)) {
-                        unlink($pleaseRemove);
-                    }
-                }
-                Client::where('user_id', $id)->delete();
-            } elseif($oldRole == 'taylor') {
-                $userDetail = Taylor::where('user_id','=',$id)->first();
-                $oldImage = $userDetail->photo;
-
-                if($oldImage){
-                    $pleaseRemove = '/home/mvlrzxvo/subdomain/api.tepat.co.id/photo-user/'.$oldImage;
-
-                    if(file_exists($pleaseRemove)) {
-                        unlink($pleaseRemove);
-                    }
-                }
-                Taylor::where('user_id', $id)->delete();
-            } elseif($oldRole == 'convection') {
-                $userDetail = Convection::where('user_id','=',$id)->first();
-                $oldImage = $userDetail->photo;
-
-                if($oldImage){
-                    $pleaseRemove = '/home/mvlrzxvo/subdomain/api.tepat.co.id/photo-user/'.$oldImage;
-
-                    if(file_exists($pleaseRemove)) {
-                        unlink($pleaseRemove);
-                    }
-                }
-                Convection::where('user_id', $id)->delete();
-            } elseif($oldRole == 'admin') {
-                $userDetail = Admin::where('user_id','=',$id)->first();
-                $oldImage = $userDetail->photo;
-
-                if($oldImage){
-                    $pleaseRemove = '/home/mvlrzxvo/subdomain/api.tepat.co.id/photo-user/'.$oldImage;
-
-                    if(file_exists($pleaseRemove)) {
-                        unlink($pleaseRemove);
-                    }
-                }
-                Admin::where('user_id', $id)->delete();
-            }
-
-            if($role == '2'){
+            if($role == 'taylor'){
 
                     DB::transaction(function () use($request, $id, $taylorPhoto) {
 
-                        $user = User::where('id', $id)->first();
+                        $user = Taylor::where('user_id', $id)->first();
 
                         $user->update([
-                            'name'          => $request->name,
                             'email'         => $request->email,
-                        ]);
-
-                        Taylor::insert([
-                            'user_id'       => $user->id,
+                            'name'          => $request->name,
                             'photo'         => $taylorPhoto,
                             'phone'         => $request->phone,
                             'dateBirth'     => $request->dateBirth,
                             'placeBirth'    => $request->placeBirth,
-                            'status'        => '1',
-                            'rating'        => 0,
-                            'completedTrans'=> 0,
-                            'created_at'    => date('Y-m-d H:i:s')
                         ]);
-                        $user->syncRoles('taylor');
+
                     });
-            } elseif($role == '3'){
+            } elseif($role == 'convection'){
 
 
                     DB::transaction(function () use($request, $id, $convectionPhoto) {
 
-                        $user = User::where('id', $id)->first();
+                        $user = Taylor::where('user_id', $id)->first();
 
                         $user->update([
-                            'name'          => $request->name,
                             'email'         => $request->email,
-                        ]);
-
-                        Convection::create([
-                            'user_id'       => $user->id,
+                            'name'          => $request->name,
                             'photo'         => $convectionPhoto,
                             'phone'         => $request->phone,
                             'dateBirth'     => $request->dateBirth,
                             'placeBirth'    => $request->placeBirth,
-                            'status'        => '1',
                         ]);
-                        $user->syncRoles('convection');
 
                     });
-            } elseif($role == '4'){
+            } elseif($role == 'admin'){
 
 
                     DB::transaction(function () use($request, $id, $adminPhoto) {
 
-                        $user = User::where('id', $id)->first();
+                        $user = Admin::where('user_id', $id)->first();
 
                         $user->update([
-                            'name'          => $request->name,
                             'email'         => $request->email,
-                        ]);
-
-                        Admin::create([
-                            'user_id'       => $user->id,
+                            'name'          => $request->name,
                             'photo'         => $adminPhoto,
                             'phone'         => $request->phone,
                             'dateBirth'     => $request->dateBirth,
                             'placeBirth'    => $request->placeBirth,
-                            'status'        => '1',
                         ]);
-                        $user->syncRoles('admin');
+
 
                     });
-            }   elseif($role == '1'){
+            }   elseif($role == 'client'){
 
                 DB::transaction(function () use($request, $id, $clientPhoto) {
 
-                    $user = User::where('id', $id)->first();
+                    $user = Client::where('user_id', $id)->first();
 
-                    $user->update([
-                        'name'          => $request->name,
-                        'email'         => $request->email,
-                    ]);
+                        $user->update([
+                            'email'         => $request->email,
+                            'name'          => $request->name,
+                            'photo'         => $clientPhoto,
+                            'phone'         => $request->phone,
+                            'dateBirth'     => $request->dateBirth,
+                            'placeBirth'    => $request->placeBirth,
+                        ]);
 
-                    Client::create([
-                        'user_id'       => $user->id,
-                        'photo'         => $clientPhoto,
-                        'phone'         => $request->phone,
-                        'dateBirth'     => $request->dateBirth,
-                        'placeBirth'    => $request->placeBirth,
-                        'status'        => '1',
-                    ]);
-                    $user->syncRoles('client');
 
                 });
             }
-
-
-
-
-
-
-
-
 
 
 
@@ -397,7 +317,79 @@ class UserController extends Controller
     }
 
 
+    public function roleUpdateByID(Request $request, $id) {
 
+
+        $rules = [
+            'role'  => 'required',
+
+        ];
+
+        $message = [
+            'role.required'    => 'Mohon isikan pilihan role',
+
+        ];
+
+        $validator = Validator::make($request->all(), $rules, $message);
+
+        if($validator->fails()) {
+            return apiResponse(400, 'error', 'Pilihan role belum diisi!', $validator->errors());
+        }
+
+        $role = $request->role;
+
+        try {
+
+            $role = $request->role;
+
+
+
+            if($role == '2'){
+
+                DB::transaction(function () use($id) {
+
+                    $user = User::where('id', $id)->first();
+
+                    $user->syncRoles('taylor');
+
+                });
+            } elseif($role == '3'){
+
+
+                DB::transaction(function () use($id) {
+
+                    $user = User::where('id', $id)->first();
+
+                    $user->syncRoles('convection');
+
+                });
+            } elseif($role == '4'){
+
+                DB::transaction(function () use($id) {
+
+                    $user = User::where('id', $id)->first();
+
+                    $user->syncRoles('admin');
+
+                });
+            }   elseif($role == '1'){
+
+                DB::transaction(function () use($id) {
+
+                    $user = User::where('id', $id)->first();
+
+                    $user->syncRoles('client');
+
+                });
+            }
+
+
+
+            return apiResponse(202, 'success', 'data pengguna berhasil diperbaharui');
+        } catch(Exception $e) {
+            return apiResponse(400, 'error', 'error', $e);
+        }
+    }
 
 
 
