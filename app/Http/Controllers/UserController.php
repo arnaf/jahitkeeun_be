@@ -21,89 +21,89 @@ use Illuminate\Support\Facades\Validator;
 
 class UserController extends Controller
 {
-    public function index() {
+    // public function index() {
 
-        $user = DB::table('users')->get();
+    //     $user = DB::table('users')->get();
 
 
-        return apiResponse(200, 'success', 'List user', $user);
-    }
+    //     return apiResponse(200, 'success', 'List user', $user);
+    // }
 
-    public function destroy($id) {
-        try {
-            DB::transaction(function () use ($id) {
-              //User::where('id', $id)->delete();
-                UserDetail::where('user_id', $id)->delete();
-                User::where('id', $id)->delete();
-            });
+    // public function destroy($id) {
+    //     try {
+    //         DB::transaction(function () use ($id) {
+    //           //User::where('id', $id)->delete();
+    //             UserDetail::where('user_id', $id)->delete();
+    //             User::where('id', $id)->delete();
+    //         });
 
-            return apiResponse(202, 'success', 'user berhasil dihapus :(');
-        } catch(Exception $e) {
-            return apiResponse(400, 'error', 'error', $e);
-        }
-    }
+    //         return apiResponse(202, 'success', 'user berhasil dihapus :(');
+    //     } catch(Exception $e) {
+    //         return apiResponse(400, 'error', 'error', $e);
+    //     }
+    // }
 
-    public function show($id) {
-        $user = User::where('id', $id)->first();
+    // public function show($id) {
+    //     $user = User::where('id', $id)->first();
 
-        if($user) {
-            return apiResponse(200, 'success', 'data '.$user->name, $user->email);
-        }
+    //     if($user) {
+    //         return apiResponse(200, 'success', 'data '.$user->name, $user->email);
+    //     }
 
-        return Response::json(apiResponse(404, 'not found', 'User tidak ditemukan :('), 404);
-    }
+    //     return Response::json(apiResponse(404, 'not found', 'User tidak ditemukan :('), 404);
+    // }
 
-    public function store(Request $request) {
-        $rules = [
-            'name'      => 'required',
-            'email'     => 'required|email|unique:users',
-            'password'  => 'required|min:8',
-            'address'   => 'required',
-            'phone'     => 'required',
-            'hobby'     => 'required',
-        ];
+    // public function store(Request $request) {
+    //     $rules = [
+    //         'name'      => 'required',
+    //         'email'     => 'required|email|unique:users',
+    //         'password'  => 'required|min:8',
+    //         'address'   => 'required',
+    //         'phone'     => 'required',
+    //         'hobby'     => 'required',
+    //     ];
 
-        $message = [
-            'name.required'     => 'Mohon isikan nama anda',
-            'email.required'    => 'Mohon isikan email anda',
-            'email.email'       => 'Mohon isikan email valid',
-            'email.unique'      => 'Email sudah terdaftar',
-            'password.required' => 'Mohon isikan password anda',
-            'password.min'      => 'Password wajib mengandung minimal 8 karakter',
-            'address.required'  => 'Mohon isikan alamat anda',
-            'phone.required'    => 'Mohon isikan nomor hp anda',
-            'hobby.required'    => 'Mohon isikan hobi anda',
-        ];
+    //     $message = [
+    //         'name.required'     => 'Mohon isikan nama anda',
+    //         'email.required'    => 'Mohon isikan email anda',
+    //         'email.email'       => 'Mohon isikan email valid',
+    //         'email.unique'      => 'Email sudah terdaftar',
+    //         'password.required' => 'Mohon isikan password anda',
+    //         'password.min'      => 'Password wajib mengandung minimal 8 karakter',
+    //         'address.required'  => 'Mohon isikan alamat anda',
+    //         'phone.required'    => 'Mohon isikan nomor hp anda',
+    //         'hobby.required'    => 'Mohon isikan hobi anda',
+    //     ];
 
-        $validator = Validator::make($request->all(), $rules, $message);
+    //     $validator = Validator::make($request->all(), $rules, $message);
 
-        if($validator->fails()) {
-            return apiResponse(400, 'error', 'Data tidak lengkap ', $validator->errors());
-        }
+    //     if($validator->fails()) {
+    //         return apiResponse(400, 'error', 'Data tidak lengkap ', $validator->errors());
+    //     }
 
-        try {
-            DB::transaction(function () use ($request) {
-                $id = User::insertGetId([
-                    'name'  => $request->name,
-                    'email' => $request->email,
-                    'password' => Hash::make($request->password),
-                    'created_at' => date('Y-m-d H:i:s')
-                ]);
+    //     try {
+    //         DB::transaction(function () use ($request) {
+    //             $id = User::insertGetId([
+    //                 'name'  => $request->name,
+    //                 'email' => $request->email,
+    //                 'password' => Hash::make($request->password),
+    //                 'created_at' => date('Y-m-d H:i:s')
+    //             ]);
 
-                UserDetail::insert([
-                    'user_id'       => $id,
-                    'address'       => $request->address,
-                    'phone'         => $request->phone,
-                    'hobby'         => $request->hobby,
-                    'created_at'    => date('Y-m-d H:i:s')
-                ]);
-            });
+    //             UserDetail::insert([
+    //                 'user_id'       => $id,
+    //                 'address'       => $request->address,
+    //                 'phone'         => $request->phone,
+    //                 'hobby'         => $request->hobby,
+    //                 'created_at'    => date('Y-m-d H:i:s')
+    //             ]);
+    //         });
 
-            return apiResponse(201, 'success', 'user berhasil daftar');
-        } catch(Exception $e) {
-            return apiResponse(400, 'error', 'error', $e);
-        }
-    }
+    //         return apiResponse(201, 'success', 'user berhasil daftar');
+    //     } catch(Exception $e) {
+    //         return apiResponse(400, 'error', 'error', $e);
+    //     }
+    // }
 
 
 
@@ -114,32 +114,35 @@ class UserController extends Controller
     public function profileUpdateByID(Request $request, $id) {
 
 
-        $rules = [
-            'phone'         => 'required',
-            'dateBirth'     => 'required',
-            'placeBirth'    => 'required',
+        // $rules = [
 
-        ];
 
-        $message = [
+        // ];
 
-            'phone.required'    => 'Mohon isikan nomor hp anda',
-            'dateBirth.required'  => 'Mohon isikan tanggal lahir anda',
-            'placeBirth.required'  => 'Mohon isikan tempat lahir anda',
+        // $message = [
 
-        ];
 
-        $validator = Validator::make($request->all(), $rules, $message);
 
-        if($validator->fails()) {
-            return apiResponse(400, 'error', 'Data tidak lengkap ', $validator->errors());
-        }
+        // ];
+
+        // $validator = Validator::make($request->all(), $rules, $message);
+
+        // if($validator->fails()) {
+        //     return apiResponse(400, 'error', 'Data tidak lengkap ', $validator->errors());
+        // }
 
         $oldUser = User::where('id', $id)->first();
         $role = $oldUser->getRoleNames()[0];
 
+        $clientPhoto = null;
+        $taylorPhoto = null;
+        $convectionPhoto = null;
+        $adminPhoto = null;
+
+
         if($role == 'client') {
-            if($request->has('photo')){
+
+            if($request->hasFile('photo')){
 
                 $userDetail = Client::where('user_id','=',$id)->first();
                 $oldImage = $userDetail->photo;
@@ -155,14 +158,14 @@ class UserController extends Controller
 
                 $extension = $request->file('photo')->getClientOriginalExtension();
 
-                $clientPhoto = date('YmdHis').'.'.$extension;
+                $clientPhoto = '1'.date('YmdHis').'.'.$extension;
 
                 $path = '/home/mvlrzxvo/subdomain/api.tepat.co.id/photo-user/';
 
                 $request->file('photo')->move($path, $clientPhoto);
             }
         }else if($role == 'taylor') {
-            if($request->has('photo')){
+            if($request->hasFile('photo')){
 
                 $userDetail = Taylor::where('user_id','=',$id)->first();
                 $oldImage = $userDetail->photo;
@@ -187,7 +190,7 @@ class UserController extends Controller
                 $request->file('photo')->move($path, $taylorPhoto);
             }
         } elseif($role == 'convection') {
-            if($request->has('photo')){
+            if($request->hasFile('photo')){
 
                 $userDetail = Convection::where('user_id','=',$id)->first();
                 $oldImage = $userDetail->photo;
@@ -210,7 +213,7 @@ class UserController extends Controller
                 $request->file('photo')->move($path, $convectionPhoto);
             }
         }  elseif($role == 'admin') {
-            if($request->has('photo')){
+            if($request->hasFile('photo')){
 
                 $userDetail = Admin::where('user_id','=',$id)->first();
                 $oldImage = $userDetail->photo;
@@ -242,11 +245,16 @@ class UserController extends Controller
 
                     DB::transaction(function () use($request, $id, $taylorPhoto) {
 
-                        $user = Taylor::where('user_id', $id)->first();
+                        $taylor = Taylor::where('user_id', $id)->first();
+                        $user = User::where('id', $id)->first();
 
                         $user->update([
                             'email'         => $request->email,
                             'name'          => $request->name,
+                        ]);
+
+                        $taylor->update([
+
                             'photo'         => $taylorPhoto,
                             'phone'         => $request->phone,
                             'dateBirth'     => $request->dateBirth,
@@ -259,9 +267,15 @@ class UserController extends Controller
 
                     DB::transaction(function () use($request, $id, $convectionPhoto) {
 
-                        $user = Taylor::where('user_id', $id)->first();
+                        $convection = Taylor::where('user_id', $id)->first();
+                        $user = User::where('id', $id)->first();
 
                         $user->update([
+                            'email'         => $request->email,
+                            'name'          => $request->name,
+                        ]);
+
+                        $convection->update([
                             'email'         => $request->email,
                             'name'          => $request->name,
                             'photo'         => $convectionPhoto,
@@ -276,9 +290,15 @@ class UserController extends Controller
 
                     DB::transaction(function () use($request, $id, $adminPhoto) {
 
-                        $user = Admin::where('user_id', $id)->first();
+                        $admin = Admin::where('user_id', $id)->first();
+                        $user = User::where('id', $id)->first();
 
                         $user->update([
+                            'email'         => $request->email,
+                            'name'          => $request->name,
+                        ]);
+
+                        $admin->update([
                             'email'         => $request->email,
                             'name'          => $request->name,
                             'photo'         => $adminPhoto,
@@ -289,24 +309,35 @@ class UserController extends Controller
 
 
                     });
-            }   elseif($role == 'client'){
+            } else if($role == 'client'){
 
                 DB::transaction(function () use($request, $id, $clientPhoto) {
 
-                    $user = Client::where('user_id', $id)->first();
 
-                        $user->update([
-                            'email'         => $request->email,
-                            'name'          => $request->name,
-                            'photo'         => $clientPhoto,
-                            'phone'         => $request->phone,
-                            'dateBirth'     => $request->dateBirth,
-                            'placeBirth'    => $request->placeBirth,
+
+                    $client = Client::where('user_id', $id)->first();
+                    $user = User::where('id', $id)->first();
+
+                    $oldUser = User::where('id', $id)->first();
+                    $oldClient = Client::where('user_id', $id)->first();
+
+
+                    $user->update([
+                        'email'         => $request->email ?: $oldUser->email,
+                        'name'          => $request->name ?: $oldUser->name,
+                    ]);
+
+
+                        $client->update([
+                            'photo'         => $clientPhoto ?: $oldClient->photo,
+                            'phone'         => $request->phone ?: $oldClient->phone,
+                            'dateBirth'     => $request->dateBirth ?: $oldClient->dateBirth,
+                            'placeBirth'    => $request->placeBirth ?: $oldClient->placeBirth,
                         ]);
 
 
-                });
-            }
+                    });
+                }
 
 
 
@@ -338,6 +369,61 @@ class UserController extends Controller
 
         $role = $request->role;
 
+        $oldUser = User::where('id', $id)->first();
+        $oldRole = $oldUser->getRoleNames()[0];
+
+        if($oldRole == 'client') {
+
+            $oldUserDatas = Client::where('user_id', '=', $id)->first();
+
+            $oldUserDetail = [
+                'photo' => $oldUserDatas->photo,
+                'phone' => $oldUserDatas->phone,
+                'dateBirth' => $oldUserDatas->dateBirth,
+                'placeBirth' => $oldUserDatas->placeBirth,
+            ];
+
+            DB::transaction(function () use($id) {
+
+                Client::where('user_id', $id)->delete();
+
+            });
+        } elseif($oldRole == 'taylor') {
+            $oldUserDatas = Taylor::where('user_id', '=', $id)->first();
+            $oldUserDetail = [
+                'photo' => $oldUserDatas->photo,
+                'phone' => $oldUserDatas->phone,
+                'dateBirth' => $oldUserDatas->dateBirth,
+                'placeBirth' => $oldUserDatas->placeBirth,
+                'rating'     => $oldUserDatas->rating,
+                'completedTrans'     => $oldUserDatas->completedTrans,
+            ];
+
+            DB::transaction(function () use($id) {
+
+                Taylor::where('user_id', $id)->delete();
+
+            });
+        } elseif($oldRole == 'convection') {
+            $oldUserDatas = Convection::where('user_id', '=', $id)->first();
+            $oldUserDetail = [
+                'photo' => $oldUserDatas->photo,
+                'phone' => $oldUserDatas->phone,
+                'dateBirth' => $oldUserDatas->dateBirth,
+                'placeBirth' => $oldUserDatas->placeBirth,
+            ];
+
+            DB::transaction(function () use($id) {
+
+                Convection::where('user_id', $id)->delete();
+
+            });
+        }
+
+
+
+
+
         try {
 
             $role = $request->role;
@@ -346,9 +432,19 @@ class UserController extends Controller
 
             if($role == '2'){
 
-                DB::transaction(function () use($id) {
+                DB::transaction(function () use($id, $oldUserDetail) {
 
                     $user = User::where('id', $id)->first();
+                    Taylor::create([
+                        'user_id'           => $user->id,
+                        'photo'             => $oldUserDetail['photo'],
+                        'phone'             => $oldUserDetail['phone'],
+                        'dateBirth'         => $oldUserDetail['dateBirth'],
+                        'placeBirth'        => $oldUserDetail['placeBirth'],
+                        'rating'            => 0,
+                        'completedTrans'    => 0,
+                        'status'            => '1',
+                    ]);
 
                     $user->syncRoles('taylor');
 
@@ -356,27 +452,35 @@ class UserController extends Controller
             } elseif($role == '3'){
 
 
-                DB::transaction(function () use($id) {
+                DB::transaction(function () use($id, $oldUserDetail) {
 
                     $user = User::where('id', $id)->first();
+                    Convection::create([
+                        'user_id'           => $user->id,
+                        'photo'             => $oldUserDetail['photo'],
+                        'phone'             => $oldUserDetail['phone'],
+                        'dateBirth'         => $oldUserDetail['dateBirth'],
+                        'placeBirth'        => $oldUserDetail['placeBirth'],
+                        'status'            => '1',
+                    ]);
 
                     $user->syncRoles('convection');
 
                 });
-            } elseif($role == '4'){
-
-                DB::transaction(function () use($id) {
-
-                    $user = User::where('id', $id)->first();
-
-                    $user->syncRoles('admin');
-
-                });
             }   elseif($role == '1'){
 
-                DB::transaction(function () use($id) {
+                DB::transaction(function () use($id, $oldUserDetail) {
 
                     $user = User::where('id', $id)->first();
+
+                    Client::create([
+                        'user_id'       => $user->id,
+                        'photo'         => $oldUserDetail['photo'],
+                        'phone'         => $oldUserDetail['phone'],
+                        'dateBirth'     => $oldUserDetail['dateBirth'],
+                        'placeBirth'    => $oldUserDetail['placeBirth'],
+                        'status'        => '1',
+                    ]);
 
                     $user->syncRoles('client');
 

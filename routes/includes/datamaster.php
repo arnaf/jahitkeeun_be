@@ -57,6 +57,8 @@ Route::post('/datamaster/maklun/create', 'MasterMaklunController@create');
 Route::post('/datamaster/maklun/update/{id}', 'MasterMaklunController@update');
 Route::delete('/datamaster/maklun/delete/{id}', 'MasterMaklunController@delete');
 
+Route::get('/shippingmethod', 'RefShippingMethodController@index');
+
 
 
 
