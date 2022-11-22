@@ -113,7 +113,7 @@ class DashboardTaylorController extends Controller
             $extension = $request->file('photoTaylor1')->getClientOriginalExtension();
             //$name = date('YmdHis').'.'.$extension;
             $name = date('YmdHis').''.Str::uuid().'.'.$extension;
-            $path = base_path('public/photo-orderdetail/');
+            $path = '/home/mvlrzxvo/subdomain/api.tepat.co.id/photo-cart/';
             $request->file('photoTaylor1')->move($path, $name);
 
 
