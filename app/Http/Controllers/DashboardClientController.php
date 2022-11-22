@@ -31,12 +31,14 @@ class DashboardClientController extends Controller
             ->join('regencies as j', 'j.id', '=', 'g.regency_id')
             ->join('districts as k', 'k.id', '=', 'g.district_id')
             ->join('villages as l', 'l.id', '=', 'g.village_id')
+            ->join('service_categories as m', 'c.service_categories_id', '=', 'm.id')
             ->select([
                 'b.id','a.invoice',
 	            'a.created_at as tgl_order',
 	            'f.name as namapembeli',
                 DB::raw("CONCAT(g.fullAddress,' ','Kel/Ds.',' ', l.name, ' Kec. ', k.name,' Kab/Kota. ', j.name,' Prov. ', i.name,' ', g.posCode) as alamat"),
                 'c.NAME AS jasa',
+                'm.name AS namaitem',
                 'b.quantity',
                 'b.price',
                 'b.orderStatus',
@@ -70,12 +72,14 @@ class DashboardClientController extends Controller
             ->join('regencies as j', 'j.id', '=', 'g.regency_id')
             ->join('districts as k', 'k.id', '=', 'g.district_id')
             ->join('villages as l', 'l.id', '=', 'g.village_id')
+            ->join('service_categories as m', 'c.service_categories_id', '=', 'm.id')
             ->select([
                 'b.id','a.invoice',
 	            'a.created_at as tgl_order',
 	            'f.name as namapembeli',
                 DB::raw("CONCAT(g.fullAddress,' ','Kel/Ds.',' ', l.name, ' Kec. ', k.name,' Kab/Kota. ', j.name,' Prov. ', i.name,' ', g.posCode) as alamat"),
                 'c.NAME AS jasa',
+                'm.name AS namaitem',
                 'b.quantity',
                 'b.price',
                 'b.orderStatus',
@@ -110,12 +114,14 @@ class DashboardClientController extends Controller
             ->join('regencies as j', 'j.id', '=', 'g.regency_id')
             ->join('districts as k', 'k.id', '=', 'g.district_id')
             ->join('villages as l', 'l.id', '=', 'g.village_id')
+            ->join('service_categories as m', 'c.service_categories_id', '=', 'm.id')
             ->select([
                 'b.id','a.invoice',
 	            'a.created_at as tgl_order',
 	            'f.name as namapembeli',
                 DB::raw("CONCAT(g.fullAddress,' ','Kel/Ds.',' ', l.name, ' Kec. ', k.name,' Kab/Kota. ', j.name,' Prov. ', i.name,' ', g.posCode) as alamat"),
                 'c.NAME AS jasa',
+                'm.name AS namaitem',
                 'b.quantity',
                 'b.price',
                 'b.orderStatus',
@@ -150,12 +156,14 @@ class DashboardClientController extends Controller
             ->join('regencies as j', 'j.id', '=', 'g.regency_id')
             ->join('districts as k', 'k.id', '=', 'g.district_id')
             ->join('villages as l', 'l.id', '=', 'g.village_id')
+            ->join('service_categories as m', 'c.service_categories_id', '=', 'm.id')
             ->select([
                 'b.id','a.invoice',
 	            'a.created_at as tgl_order',
 	            'f.name as namapembeli',
                 DB::raw("CONCAT(g.fullAddress,' ','Kel/Ds.',' ', l.name, ' Kec. ', k.name,' Kab/Kota. ', j.name,' Prov. ', i.name,' ', g.posCode) as alamat"),
                 'c.NAME AS jasa',
+                'm.name AS namaitem',
                 'b.quantity',
                 'b.price',
                 'b.orderStatus',
@@ -190,12 +198,14 @@ class DashboardClientController extends Controller
             ->join('regencies as j', 'j.id', '=', 'g.regency_id')
             ->join('districts as k', 'k.id', '=', 'g.district_id')
             ->join('villages as l', 'l.id', '=', 'g.village_id')
+            ->join('service_categories as m', 'c.service_categories_id', '=', 'm.id')
             ->select([
                 'b.id','a.invoice',
 	            'a.created_at as tgl_order',
 	            'f.name as namapembeli',
                 DB::raw("CONCAT(g.fullAddress,' ','Kel/Ds.',' ', l.name, ' Kec. ', k.name,' Kab/Kota. ', j.name,' Prov. ', i.name,' ', g.posCode) as alamat"),
                 'c.NAME AS jasa',
+                'm.name AS namaitem',
                 'b.quantity',
                 'b.price',
                 'b.orderStatus',
@@ -230,12 +240,14 @@ class DashboardClientController extends Controller
             ->join('regencies as j', 'j.id', '=', 'g.regency_id')
             ->join('districts as k', 'k.id', '=', 'g.district_id')
             ->join('villages as l', 'l.id', '=', 'g.village_id')
+            ->join('service_categories as m', 'c.service_categories_id', '=', 'm.id')
             ->select([
                 'b.id','a.invoice',
 	            'a.created_at as tgl_order',
 	            'f.name as namapembeli',
                 DB::raw("CONCAT(g.fullAddress,' ','Kel/Ds.',' ', l.name, ' Kec. ', k.name,' Kab/Kota. ', j.name,' Prov. ', i.name,' ', g.posCode) as alamat"),
                 'c.NAME AS jasa',
+                'm.name AS namaitem',
                 'b.quantity',
                 'b.price',
                 'b.orderStatus',
@@ -270,12 +282,14 @@ class DashboardClientController extends Controller
             ->join('regencies as j', 'j.id', '=', 'g.regency_id')
             ->join('districts as k', 'k.id', '=', 'g.district_id')
             ->join('villages as l', 'l.id', '=', 'g.village_id')
+            ->join('service_categories as m', 'c.service_categories_id', '=', 'm.id')
             ->select([
                 'b.id','a.invoice',
 	            'a.created_at as tgl_order',
 	            'f.name as namapembeli',
                 DB::raw("CONCAT(g.fullAddress,' ','Kel/Ds.',' ', l.name, ' Kec. ', k.name,' Kab/Kota. ', j.name,' Prov. ', i.name,' ', g.posCode) as alamat"),
                 'c.NAME AS jasa',
+                'm.name AS namaitem',
                 'b.quantity',
                 'b.price',
                 'b.orderStatus',
@@ -310,12 +324,14 @@ class DashboardClientController extends Controller
             ->join('regencies as j', 'j.id', '=', 'g.regency_id')
             ->join('districts as k', 'k.id', '=', 'g.district_id')
             ->join('villages as l', 'l.id', '=', 'g.village_id')
+            ->join('service_categories as m', 'c.service_categories_id', '=', 'm.id')
             ->select([
                 'b.id','a.invoice',
 	            'a.created_at as tgl_order',
 	            'f.name as namapembeli',
                 DB::raw("CONCAT(g.fullAddress,' ','Kel/Ds.',' ', l.name, ' Kec. ', k.name,' Kab/Kota. ', j.name,' Prov. ', i.name,' ', g.posCode) as alamat"),
                 'c.NAME AS jasa',
+                'm.name AS namaitem',
                 'b.quantity',
                 'b.price',
                 'b.orderStatus',
@@ -350,12 +366,14 @@ class DashboardClientController extends Controller
             ->join('regencies as j', 'j.id', '=', 'g.regency_id')
             ->join('districts as k', 'k.id', '=', 'g.district_id')
             ->join('villages as l', 'l.id', '=', 'g.village_id')
+            ->join('service_categories as m', 'c.service_categories_id', '=', 'm.id')
             ->select([
                 'b.id','a.invoice',
 	            'a.created_at as tgl_order',
 	            'f.name as namapembeli',
                 DB::raw("CONCAT(g.fullAddress,' ','Kel/Ds.',' ', l.name, ' Kec. ', k.name,' Kab/Kota. ', j.name,' Prov. ', i.name,' ', g.posCode) as alamat"),
                 'c.NAME AS jasa',
+                'm.name AS namaitem',
                 'b.quantity',
                 'b.price',
                 'b.orderStatus',
@@ -390,12 +408,14 @@ class DashboardClientController extends Controller
             ->join('regencies as j', 'j.id', '=', 'g.regency_id')
             ->join('districts as k', 'k.id', '=', 'g.district_id')
             ->join('villages as l', 'l.id', '=', 'g.village_id')
+            ->join('service_categories as m', 'c.service_categories_id', '=', 'm.id')
             ->select([
                 'b.id','a.invoice',
 	            'a.created_at as tgl_order',
 	            'f.name as namapembeli',
                 DB::raw("CONCAT(g.fullAddress,' ','Kel/Ds.',' ', l.name, ' Kec. ', k.name,' Kab/Kota. ', j.name,' Prov. ', i.name,' ', g.posCode) as alamat"),
                 'c.NAME AS jasa',
+                'm.name AS namaitem',
                 'b.quantity',
                 'b.price',
                 'b.orderStatus',
