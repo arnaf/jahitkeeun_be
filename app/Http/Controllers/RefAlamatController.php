@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Response;
 
 class RefAlamatController extends Controller
 {
@@ -18,7 +19,11 @@ class RefAlamatController extends Controller
                 ->paginate(100);
 
 
-        return apiResponse(200, 'success', 'List penjahit', $wilayah);
+                if($wilayah->total() > 0) {
+                    return apiResponse(200, 'success', 'List alamat wilayah Bandung', $wilayah);
+                } else {
+                    return Response::json(apiResponse(404, 'not found', 'Data alamat wilayah tidak ditemukan'), 404);
+                }
 
     }
 }
