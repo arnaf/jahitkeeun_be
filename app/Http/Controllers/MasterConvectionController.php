@@ -103,7 +103,7 @@ class MasterConvectionController extends Controller
 
                 $convectionPhoto = date('YmdHis').'.'.$extension;
 
-                $path = base_path('public/photos/convection/');
+                $path = '/home/jahitkee/public_html/api.jahitkeeun.my.id/photo-user/';
 
                 $request->file('photo')->move($path, $convectionPhoto);
 
@@ -175,7 +175,7 @@ class MasterConvectionController extends Controller
                 $oldImage = $userDetail->photo;
 
                 if($oldImage){
-                    $pleaseRemove = base_path('public/photos/convection/').$oldImage;
+                    $pleaseRemove = '/home/jahitkee/public_html/api.jahitkeeun.my.id/photo-user/'.$oldImage;
 
                     if(file_exists($pleaseRemove)) {
                         unlink($pleaseRemove);
@@ -187,7 +187,7 @@ class MasterConvectionController extends Controller
 
             $convectionPhoto = date('YmdHis').'.'.$extension;
 
-            $path = base_path('public/photos/convection/');
+            $path = '/home/jahitkee/public_html/api.jahitkeeun.my.id/photo-user/';
 
             $request->file('photo')->move($path, $convectionPhoto);
 
@@ -222,7 +222,7 @@ class MasterConvectionController extends Controller
         $oldImage = $userDetail->photo;
 
         if($oldImage){
-            $pleaseRemove = base_path('public/photos/convection/').$oldImage;
+            $pleaseRemove = '/home/jahitkee/public_html/api.jahitkeeun.my.id/photo-user/'.$oldImage;
 
             if(file_exists($pleaseRemove)) {
                 unlink($pleaseRemove);

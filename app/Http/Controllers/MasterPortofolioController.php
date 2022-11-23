@@ -100,7 +100,7 @@ class MasterPortofolioController extends Controller
 
                 $portoPhoto1 = '1'.date('YmdHis').'.'.$extension;
 
-                $path = base_path('public/photos/portofolio/');
+                $path = '/home/jahitkee/public_html/api.jahitkeeun.my.id/photo-portofolio/';
 
                 $request->file('photo1')->move($path, $portoPhoto1);
 
@@ -113,7 +113,7 @@ class MasterPortofolioController extends Controller
 
                 $portoPhoto2 = '2'.date('YmdHis').'.'.$extension;
 
-                $path = base_path('public/photos/portofolio/');
+                $path = '/home/jahitkee/public_html/api.jahitkeeun.my.id/photo-portofolio/';
 
                 $request->file('photo2')->move($path, $portoPhoto2);
 
@@ -128,7 +128,7 @@ class MasterPortofolioController extends Controller
 
                 $portoPhoto3 = '3'.date('YmdHis').'.'.$extension;
 
-                $path = base_path('public/photos/portofolio/');
+                $path = '/home/jahitkee/public_html/api.jahitkeeun.my.id/photo-portofolio/';
 
                 $request->file('photo3')->move($path, $portoPhoto3);
 
@@ -144,7 +144,7 @@ class MasterPortofolioController extends Controller
 
                 $portoPhoto4 = '4'.date('YmdHis').'.'.$extension;
 
-                $path = base_path('public/photos/portofolio/');
+                $path = '/home/jahitkee/public_html/api.jahitkeeun.my.id/photo-portofolio/';
 
                 $request->file('photo4')->move($path, $portoPhoto4);
 
@@ -160,7 +160,7 @@ class MasterPortofolioController extends Controller
 
                 $portoPhoto5 = '5'.date('YmdHis').'.'.$extension;
 
-                $path = base_path('public/photos/portofolio/');
+                $path = '/home/jahitkee/public_html/api.jahitkeeun.my.id/photo-portofolio/';
 
                 $request->file('photo5')->move($path, $portoPhoto5);
 
@@ -169,14 +169,6 @@ class MasterPortofolioController extends Controller
             }
 
 
-
-
-            // if($request->has('photo'.$i)){
-            //     $extension = $request->file('photo'.$i)->getClientOriginalExtension();
-            //     $portofolioPhoto[] = date('YmdHis').'.'.$extension;
-            //     $path = base_path('public/photos/portofolio/');
-            //     $request->file('photo'.$i)->move($path, $portofolioPhoto[]);
-            //     }
 
 
             DB::transaction(function () use ($request, $portoPhoto1, $portoPhoto2, $portoPhoto3, $portoPhoto4, $portoPhoto5) {
@@ -235,7 +227,7 @@ class MasterPortofolioController extends Controller
                 $oldImage = $portofolio->photo1;
 
                 if($oldImage){
-                    $pleaseRemove = base_path('public/photos/portofolio/').$oldImage;
+                    $pleaseRemove = '/home/jahitkee/public_html/api.jahitkeeun.my.id/photo-portofolio/'.$oldImage;
 
                     if(file_exists($pleaseRemove)) {
                         unlink($pleaseRemove);
@@ -247,7 +239,7 @@ class MasterPortofolioController extends Controller
 
                 $portoPhoto1 = '1'.date('YmdHis').'.'.$extension;
 
-                $path = base_path('public/photos/portofolio/');
+                $path = '/home/jahitkee/public_html/api.jahitkeeun.my.id/photo-portofolio/';
 
                 $request->file('photo1')->move($path, $portoPhoto1);
 
@@ -258,7 +250,7 @@ class MasterPortofolioController extends Controller
                 $oldImage = $portofolio->photo2;
 
                 if($oldImage){
-                    $pleaseRemove = base_path('public/photos/portofolio/').$oldImage;
+                    $pleaseRemove = '/home/jahitkee/public_html/api.jahitkeeun.my.id/photo-portofolio/'.$oldImage;
 
                     if(file_exists($pleaseRemove)) {
                         unlink($pleaseRemove);
@@ -270,7 +262,7 @@ class MasterPortofolioController extends Controller
 
                 $portoPhoto2 = '2'.date('YmdHis').'.'.$extension;
 
-                $path = base_path('public/photos/portofolio/');
+                $path = '/home/jahitkee/public_html/api.jahitkeeun.my.id/photo-portofolio/';
 
                 $request->file('photo2')->move($path, $portoPhoto2);
 
@@ -284,7 +276,7 @@ class MasterPortofolioController extends Controller
                 $oldImage = $portofolio->photo3;
 
                 if($oldImage){
-                    $pleaseRemove = base_path('public/photos/portofolio/').$oldImage;
+                    $pleaseRemove = '/home/jahitkee/public_html/api.jahitkeeun.my.id/photo-portofolio/'.$oldImage;
 
                     if(file_exists($pleaseRemove)) {
                         unlink($pleaseRemove);
@@ -297,7 +289,7 @@ class MasterPortofolioController extends Controller
 
                 $portoPhoto3 = '3'.date('YmdHis').'.'.$extension;
 
-                $path = base_path('public/photos/portofolio/');
+                $path = '/home/jahitkee/public_html/api.jahitkeeun.my.id/photo-portofolio/';
 
                 $request->file('photo3')->move($path, $portoPhoto3);
 
@@ -312,7 +304,7 @@ class MasterPortofolioController extends Controller
                 $oldImage = $portofolio->photo4;
 
                 if($oldImage){
-                    $pleaseRemove = base_path('public/photos/portofolio/').$oldImage;
+                    $pleaseRemove = '/home/jahitkee/public_html/api.jahitkeeun.my.id/photo-portofolio/'.$oldImage;
 
                     if(file_exists($pleaseRemove)) {
                         unlink($pleaseRemove);
@@ -324,7 +316,7 @@ class MasterPortofolioController extends Controller
 
                 $portoPhoto4 = '4'.date('YmdHis').'.'.$extension;
 
-                $path = base_path('public/photos/portofolio/');
+                $path = '/home/jahitkee/public_html/api.jahitkeeun.my.id/photo-portofolio/';
 
                 $request->file('photo4')->move($path, $portoPhoto4);
 
@@ -337,7 +329,7 @@ class MasterPortofolioController extends Controller
                 $oldImage = $portofolio->photo5;
 
                 if($oldImage){
-                    $pleaseRemove = base_path('public/photos/portofolio/').$oldImage;
+                    $pleaseRemove = '/home/jahitkee/public_html/api.jahitkeeun.my.id/photo-portofolio/'.$oldImage;
 
                     if(file_exists($pleaseRemove)) {
                         unlink($pleaseRemove);
@@ -349,7 +341,7 @@ class MasterPortofolioController extends Controller
 
                 $portoPhoto5 = '5'.date('YmdHis').'.'.$extension;
 
-                $path = base_path('public/photos/portofolio/');
+                $path = '/home/jahitkee/public_html/api.jahitkeeun.my.id/photo-portofolio/';
 
                 $request->file('photo5')->move($path, $portoPhoto5);
 
@@ -387,35 +379,35 @@ class MasterPortofolioController extends Controller
         $oldImage5 = $portofolio->photo5;
 
         if($oldImage1){
-            $pleaseRemove = base_path('public/photos/portofolio/').$oldImage1;
+            $pleaseRemove = '/home/jahitkee/public_html/api.jahitkeeun.my.id/photo-portofolio/'.$oldImage1;
 
             if(file_exists($pleaseRemove)) {
                 unlink($pleaseRemove);
             }
         }
         if(!$oldImage2 == NULL){
-            $pleaseRemove = base_path('public/photos/portofolio/').$oldImage2;
+            $pleaseRemove = '/home/jahitkee/public_html/api.jahitkeeun.my.id/photo-portofolio/'.$oldImage2;
 
             if(file_exists($pleaseRemove)) {
                 unlink($pleaseRemove);
             }
         }
         if(!$oldImage3 == NULL){
-            $pleaseRemove = base_path('public/photos/portofolio/').$oldImage3;
+            $pleaseRemove = '/home/jahitkee/public_html/api.jahitkeeun.my.id/photo-portofolio/'.$oldImage3;
 
             if(file_exists($pleaseRemove)) {
                 unlink($pleaseRemove);
             }
         }
         if(!$oldImage4 == NULL){
-            $pleaseRemove = base_path('public/photos/portofolio/').$oldImage4;
+            $pleaseRemove = '/home/jahitkee/public_html/api.jahitkeeun.my.id/photo-portofolio/'.$oldImage4;
 
             if(file_exists($pleaseRemove)) {
                 unlink($pleaseRemove);
             }
         }
         if(!$oldImage5 == NULL){
-            $pleaseRemove = base_path('public/photos/portofolio/').$oldImage5;
+            $pleaseRemove = '/home/jahitkee/public_html/api.jahitkeeun.my.id/photo-portofolio/'.$oldImage5;
 
             if(file_exists($pleaseRemove)) {
                 unlink($pleaseRemove);

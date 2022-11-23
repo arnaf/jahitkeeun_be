@@ -148,8 +148,7 @@ class UserController extends Controller
                 $oldImage = $userDetail->photo;
 
                 if($oldImage){
-                    $pleaseRemove = '/home/mvlrzxvo/subdomain/api.tepat.co.id/photo-user/'.$oldImage;
-
+                    $pleaseRemove = '/home/jahitkee/public_html/api.jahitkeeun.my.id/photo-user/'.$oldImage;
                     if(file_exists($pleaseRemove)) {
                         unlink($pleaseRemove);
                     }
@@ -160,7 +159,7 @@ class UserController extends Controller
 
                 $clientPhoto = '1'.date('YmdHis').'.'.$extension;
 
-                $path = '/home/mvlrzxvo/subdomain/api.tepat.co.id/photo-user/';
+                $path = '/home/jahitkee/public_html/api.jahitkeeun.my.id/photo-user/';
 
                 $request->file('photo')->move($path, $clientPhoto);
             }
@@ -171,7 +170,7 @@ class UserController extends Controller
                 $oldImage = $userDetail->photo;
 
                 if($oldImage){
-                    $pleaseRemove = '/home/mvlrzxvo/subdomain/api.tepat.co.id/photo-user/'.$oldImage;
+                    $pleaseRemove = '/home/jahitkee/public_html/api.jahitkeeun.my.id/photo-user/'.$oldImage;
 
                     if(file_exists($pleaseRemove)) {
                         unlink($pleaseRemove);
@@ -185,7 +184,7 @@ class UserController extends Controller
 
                 $taylorPhoto = date('YmdHis').'.'.$extension;
 
-                $path = '/home/mvlrzxvo/subdomain/api.tepat.co.id/photo-user/';
+                $path = '/home/jahitkee/public_html/api.jahitkeeun.my.id/photo-user/';
 
                 $request->file('photo')->move($path, $taylorPhoto);
             }
@@ -196,7 +195,7 @@ class UserController extends Controller
                 $oldImage = $userDetail->photo;
 
                 if($oldImage){
-                    $pleaseRemove = '/home/mvlrzxvo/subdomain/api.tepat.co.id/photo-user/'.$oldImage;
+                    $pleaseRemove = '/home/jahitkee/public_html/api.jahitkeeun.my.id/photo-user/'.$oldImage;
 
                     if(file_exists($pleaseRemove)) {
                         unlink($pleaseRemove);
@@ -208,7 +207,7 @@ class UserController extends Controller
 
                 $convectionPhoto = date('YmdHis').'.'.$extension;
 
-                $path = '/home/mvlrzxvo/subdomain/api.tepat.co.id/photo-user/';
+                $path = '/home/jahitkee/public_html/api.jahitkeeun.my.id/photo-user/';
 
                 $request->file('photo')->move($path, $convectionPhoto);
             }
@@ -219,7 +218,7 @@ class UserController extends Controller
                 $oldImage = $userDetail->photo;
 
                 if($oldImage){
-                    $pleaseRemove = '/home/mvlrzxvo/subdomain/api.tepat.co.id/photo-user/'.$oldImage;
+                    $pleaseRemove = '/home/jahitkee/public_html/api.jahitkeeun.my.id/photo-user/'.$oldImage;
 
                     if(file_exists($pleaseRemove)) {
                         unlink($pleaseRemove);
@@ -231,7 +230,7 @@ class UserController extends Controller
 
                 $adminPhoto = date('YmdHis').'.'.$extension;
 
-                $path = '/home/mvlrzxvo/subdomain/api.tepat.co.id/photo-user/';
+                $path = '/home/jahitkee/public_html/api.jahitkeeun.my.id/photo-user/';
 
                 $request->file('photo')->move($path, $adminPhoto);
             }
