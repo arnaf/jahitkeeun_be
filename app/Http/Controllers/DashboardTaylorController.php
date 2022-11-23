@@ -82,7 +82,7 @@ class DashboardTaylorController extends Controller
 
                   update([
 
-                      'orderStatus' => 'Proses Pengerjaan',
+                      'orderStatus' => 'Proses Jahit',
                   ]);
               });
 
