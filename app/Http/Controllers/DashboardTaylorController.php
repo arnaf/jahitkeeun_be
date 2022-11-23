@@ -39,7 +39,7 @@ class DashboardTaylorController extends Controller
                 'c.NAME AS jasa',
                 'b.quantity',
                 'b.price',
-                'a.orderStatus',
+                'b.orderStatus',
                 'a.paymentStatus',
                 'b.pickup',
                 'e.NAME AS namapenjahit',
@@ -82,7 +82,7 @@ class DashboardTaylorController extends Controller
 
                   update([
 
-                      'orderStatus' => 'Proses Pengerjaan',
+                      'orderStatus' => 'Proses Jahit',
                   ]);
               });
 
