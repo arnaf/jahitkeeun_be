@@ -48,8 +48,9 @@ class DashboardClientController extends Controller
                 'b.photoClient1',
                 'b.photoTaylor1'
             ])->where('f.id', $id)->
-            where('g.addresslabel_id', 1)->
-           paginate();
+            where('g.addresslabel_id', 1)
+            ->latest()
+            ->paginate();
 
         if($orders->total() > 0) {
             return apiResponse(200, 'success', 'list data Order Keluar', $orders);
@@ -90,8 +91,9 @@ class DashboardClientController extends Controller
                 'b.photoTaylor1'
             ])->where('f.id', $id)
             ->where('b.orderStatus', 'Menunggu Pembayaran')->
-            where('g.addresslabel_id', 1)->
-           paginate();
+            where('g.addresslabel_id', 1)
+            ->latest()
+            ->paginate();
 
         if($orders->total() > 0) {
             return apiResponse(200, 'success', 'list data Order Keluar', $orders);
@@ -132,8 +134,9 @@ class DashboardClientController extends Controller
                 'b.photoTaylor1'
             ])->where('f.id', $id)
             ->where('b.orderStatus', 'Pembayaran Terkonfirmasi')->
-            where('g.addresslabel_id', 1)->
-           paginate();
+            where('g.addresslabel_id', 1)
+            ->latest()
+            ->paginate();
 
         if($orders->total() > 0) {
             return apiResponse(200, 'success', 'list data Order Keluar', $orders);
@@ -174,7 +177,7 @@ class DashboardClientController extends Controller
                 'b.photoTaylor1'
             ])->where('f.id', $id)
             ->where('b.orderStatus', 'Menunggu Pickup')->
-            where('g.addresslabel_id', 1)->
+            where('g.addresslabel_id', 1)->latest()->
            paginate();
 
         if($orders->total() > 0) {
@@ -216,7 +219,7 @@ class DashboardClientController extends Controller
                 'b.photoTaylor1'
             ])->where('f.id', $id)
             ->where('b.orderStatus', 'Pesanan Dalam Pengiriman')->
-            where('g.addresslabel_id', 1)->
+            where('g.addresslabel_id', 1)->latest()->
            paginate();
 
         if($orders->total() > 0) {
@@ -258,7 +261,7 @@ class DashboardClientController extends Controller
                 'b.photoTaylor1'
             ])->where('f.id', $id)
             ->where('b.orderStatus', 'Proses Jahit')->
-            where('g.addresslabel_id', 1)->
+            where('g.addresslabel_id', 1)->latest()->
            paginate();
 
         if($orders->total() > 0) {
@@ -300,7 +303,7 @@ class DashboardClientController extends Controller
                 'b.photoTaylor1'
             ])->where('f.id', $id)
             ->where('b.orderStatus', 'Dalam Pengantaran')->
-            where('g.addresslabel_id', 1)->
+            where('g.addresslabel_id', 1)->latest()->
            paginate();
 
         if($orders->total() > 0) {
@@ -342,7 +345,7 @@ class DashboardClientController extends Controller
                 'b.photoTaylor1'
             ])->where('f.id', $id)
             ->where('b.orderStatus', 'Tambahan Biaya')->
-            where('g.addresslabel_id', 1)->
+            where('g.addresslabel_id', 1)->latest()->
            paginate();
 
         if($orders->total() > 0) {
@@ -384,7 +387,7 @@ class DashboardClientController extends Controller
                 'b.photoTaylor1'
             ])->where('f.id', $id)
             ->where('b.orderStatus', 'Pesanan Selesai')->
-            where('g.addresslabel_id', 1)->
+            where('g.addresslabel_id', 1)->latest()->
            paginate();
 
         if($orders->total() > 0) {
@@ -426,7 +429,7 @@ class DashboardClientController extends Controller
                 'b.photoTaylor1'
             ])->where('f.id', $id)
             ->where('b.orderStatus', 'Pesanan Diterima')->
-            where('g.addresslabel_id', 1)->
+            where('g.addresslabel_id', 1)->latest()->
            paginate();
 
         if($orders->total() > 0) {
