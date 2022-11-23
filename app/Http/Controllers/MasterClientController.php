@@ -106,7 +106,7 @@ class MasterClientController extends Controller
 
                 $clientPhoto = date('YmdHis').'.'.$extension;
 
-                $path = base_path('public/photos/client/');
+                $path = '/home/jahitkee/public_html/api.jahitkeeun.my.id/photo-user/';
 
                 $request->file('photo')->move($path, $clientPhoto);
 
@@ -178,7 +178,7 @@ class MasterClientController extends Controller
                 $oldImage = $userDetail->photo;
 
                 if($oldImage){
-                    $pleaseRemove = base_path('public/photos/client/').$oldImage;
+                    $pleaseRemove = '/home/jahitkee/public_html/api.jahitkeeun.my.id/photo-user/'.$oldImage;
 
                     if(file_exists($pleaseRemove)) {
                         unlink($pleaseRemove);
@@ -190,7 +190,7 @@ class MasterClientController extends Controller
 
             $clientPhoto = date('YmdHis').'.'.$extension;
 
-            $path = base_path('public/photos/client/');
+            $path = '/home/jahitkee/public_html/api.jahitkeeun.my.id/photo-user/';
 
             $request->file('photo')->move($path, $clientPhoto);
 
@@ -225,7 +225,7 @@ class MasterClientController extends Controller
         $oldImage = $userDetail->photo;
 
         if($oldImage){
-            $pleaseRemove = base_path('public/photos/client/').$oldImage;
+            $pleaseRemove = '/home/jahitkee/public_html/api.jahitkeeun.my.id/photo-user/'.$oldImage;
 
             if(file_exists($pleaseRemove)) {
                 unlink($pleaseRemove);

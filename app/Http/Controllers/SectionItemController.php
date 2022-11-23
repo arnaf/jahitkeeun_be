@@ -164,7 +164,7 @@ class SectionItemController extends Controller
             $extension = $request->file('photoClient1')->getClientOriginalExtension();
             //$name = date('YmdHis').'.'.$extension;
             $name = date('YmdHis').''.$request->service_id.''.$request->user_id.'.'.$extension;
-            $path = '/home/mvlrzxvo/subdomain/api.tepat.co.id/photo-cart/';
+            $path = '/home/jahitkee/public_html/api.jahitkeeun.my.id/photo-cart/';
             $request->file('photoClient1')->move($path, $name);
 
         }

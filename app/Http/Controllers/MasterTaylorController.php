@@ -102,7 +102,7 @@ class MasterTaylorController extends Controller
 
                 $taylorPhoto = date('YmdHis').'.'.$extension;
 
-                $path = base_path('public/photos/taylor/');
+                $path = '/home/jahitkee/public_html/api.jahitkeeun.my.id/photo-user/';
 
                 $request->file('photo')->move($path, $taylorPhoto);
 
@@ -177,7 +177,7 @@ class MasterTaylorController extends Controller
                 $oldImage = $userDetail->photo;
 
                 if($oldImage){
-                    $pleaseRemove = base_path('public/photos/taylor/').$oldImage;
+                    $pleaseRemove = '/home/jahitkee/public_html/api.jahitkeeun.my.id/photo-user/'.$oldImage;
 
                     if(file_exists($pleaseRemove)) {
                         unlink($pleaseRemove);
@@ -189,7 +189,7 @@ class MasterTaylorController extends Controller
 
             $taylorPhoto = date('YmdHis').'.'.$extension;
 
-            $path = base_path('public/photos/taylor/');
+            $path = '/home/jahitkee/public_html/api.jahitkeeun.my.id/photo-user/';
 
             $request->file('photo')->move($path, $taylorPhoto);
 
@@ -225,7 +225,7 @@ class MasterTaylorController extends Controller
         $oldImage = $userDetail->photo;
 
         if($oldImage){
-            $pleaseRemove = base_path('public/photos/taylor/').$oldImage;
+            $pleaseRemove = '/home/jahitkee/public_html/api.jahitkeeun.my.id/photo-user/'.$oldImage;
 
             if(file_exists($pleaseRemove)) {
                 unlink($pleaseRemove);
