@@ -123,14 +123,11 @@ class DashboardTaylorController extends Controller
           try {
               DB::transaction(function () use ($request, $id,$name) {
                   OrderDetail::where('id', $id)->
-
                   update([
-
-                      'orderStatus' => 'Selesai Pengerjaan (Konfirmasi Penerima)',
+                      'orderStatus' => 'Pesanan Selesai',
                       'photoTaylor1'  => $name,
                   ]);
               });
-
               return apiResponse(202, 'success', 'status Order berhasil dirubah');
           } catch(Exception $e) {
               return apiResponse(400, 'error', 'error', $e);
