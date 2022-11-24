@@ -28,6 +28,7 @@ Route::group(
 
         require_once('includes/profile.php');
         require_once('includes/wilayahbandung.php');
+        require_once('includes/wilayah.php');
 
 
 
