@@ -47,7 +47,8 @@ class DashboardTaylorController extends Controller
                 'b.photoTaylor1'
             ])->where('c.taylor_id', $id)
             ->where('g.addresslabel_id', 1)
-            ->paginate();
+            ->latest('a.created_at')
+            ->paginate(10000);
 
         if($orders->total() >0 ) {
             return apiResponse(200, 'success', 'list data Order Masuk', $orders);
