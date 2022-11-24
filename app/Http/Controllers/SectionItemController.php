@@ -204,6 +204,7 @@ class SectionItemController extends Controller
         ->join('addresses as g', 'g.user_id', '=', 'b.id')
 
         ->where('a.user_id', $userid)
+        ->where('g.addresslabel_id', '=', '1')
         ->select([
             'b.id as userId','b.name as namapembeli',
             'g.fullAddress as alamatpembeli',
