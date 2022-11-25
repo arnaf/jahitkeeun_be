@@ -496,7 +496,7 @@ class DashboardClientController extends Controller
             $extension = $request->file('photoTaylor1')->getClientOriginalExtension();
             //$name = date('YmdHis').'.'.$extension;
             $name = date('YmdHis').''.Str::uuid().'.'.$extension;
-            $path = base_path('public/photo-orderdetail/');
+            $path = '/home/jahitkee/public_html/api.jahitkeeun.my.id/photo-cart/';
             $request->file('photoTaylor1')->move($path, $name);
 
 
